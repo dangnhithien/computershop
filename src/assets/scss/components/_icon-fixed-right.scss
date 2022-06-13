@@ -1,0 +1,46 @@
+#icon-fixed-right {
+  width: 50px;
+  position: fixed;
+  right: 5px;
+  top: 250px;
+  z-index: 997;
+  .icon-fixed-right {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-radius: 9999px;
+    font-size: 16px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+}
+.cart_show {
+  width: 300px;
+
+  & img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+.icon-size {
+  width: "28px";
+  height: "28px";
+}
+@media (max-width: 1649px) {
+  #icon-fixed-right a i {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 32px;
+  }
+}
+@media (max-width: 1649px) {
+  #icon-fixed-right a i {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+  }
+}
