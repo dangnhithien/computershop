@@ -20,9 +20,11 @@ import Profile from "../admin/pages/Profile";
 import Order from "../admin/pages/order";
 import Tables from "../admin/pages/Tables";
 import Categories from "../admin/pages/categories";
+import Promotion from "../admin/pages/promotion";
 
 import Accounts from "../admin/pages/account";
 import Provided from "../admin/pages/provided";
+import Notification from "../admin/pages/notification";
 
 const AllRouter = () => {
   return (
@@ -211,6 +213,24 @@ const listRoute = [
     component: (
       <Main>
         <Order />
+      </Main>
+    ),
+  },
+  {
+    exact: true,
+    path: "giam-gia",
+    component: (
+      <Main>
+        <Promotion />
+      </Main>
+    ),
+  },
+  {
+    exact: true,
+    path: "thong-bao",
+    component: (
+      <Main>
+        <Notification />
       </Main>
     ),
   },

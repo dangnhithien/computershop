@@ -1,23 +1,17 @@
-import { Row, Col, Card, Table, Typography, Radio, Select, Modal } from "antd";
-import { Badge, Calendar } from "antd";
-import React, { useState } from "react";
+import { Badge, Calendar, Card, Col, Radio, Row, Typography } from "antd";
 import moment from "moment";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import Detail from "../components/detail/Detail";
-import Profile from "../components/profile/profile";
+import { useState } from "react";
 
-const { Option } = Select;
+import "moment/locale/vi";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import Detail from "../components/detail/Detail";
+import TableCustom from "../components/table/table";
+
+moment.locale("vi_VN");
 
 const { Title } = Typography;
-const TextAlign = styled.div`
-  .table-responsive table tbody tr td {
-    text-align: left !important;
-  }
-  .ant-table-pagination-right {
-    justify-content: center !important;
-  }
-`;
+
 const CalendarStyle = styled.div`
   .ant-select-selector {
     height: 40px !important;
@@ -25,72 +19,11 @@ const CalendarStyle = styled.div`
   .ant-select-selection-item {
     line-height: 40px !important;
   }
+  .ant-picker-calendar-header .ant-picker-calendar-mode-switch {
+    display: none;
+  }
 `;
 // table code start
-const columns = [
-  {
-    title: "Mã đơn hàng",
-    dataIndex: "order",
-    key: "order",
-    filters: [
-      {
-        text: "Joe",
-        value: "Joe",
-      },
-      {
-        text: "Category 1",
-        value: "Category 1",
-      },
-      {
-        text: "Category 2",
-        value: "Category 2",
-      },
-    ],
-    // filterMode: "tree",
-    filterSearch: true,
-    onFilter: (value, record) => record.address.startsWith(value),
-    width: "5%",
-  },
-  {
-    title: "Tên khách hàng",
-    key: "customer",
-    dataIndex: "customer",
-    filters: [
-      {
-        text: "Joe",
-        value: "Joe",
-      },
-      {
-        text: "Category 1",
-        value: "Category 1",
-      },
-      {
-        text: "Category 2",
-        value: "Category 2",
-      },
-    ],
-    // filterMode: "tree",
-    filterSearch: true,
-    onFilter: (value, record) => record.address.startsWith(value),
-    width: "20%",
-  },
-  {
-    title: "Ngày đặt",
-    key: "date",
-    dataIndex: "date",
-  },
-  {
-    title: "Trạng thái",
-    key: "status",
-    dataIndex: "status",
-  },
-  {
-    title: "Tổng tiền",
-    key: "employed",
-    dataIndex: "employed",
-    width: "50%",
-  },
-];
 
 const getListData = (value) => {
   let listData;
@@ -148,36 +81,102 @@ const getListData = (value) => {
 const Order = () => {
   const [value, setValue] = useState(moment());
   const [modalVisible, setModalVisible] = useState(false);
-  const data = [
+  const columns = [
     {
-      key: "1",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>m456</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>Đặng Nhị Thiên</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>22/6/2022</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
+      title: "Mã đơn hàng",
+      dataIndex: "order",
+      key: "order",
+      filters: [
+        {
+          text: "m456",
+          value: "M456",
+        },
+        {
+          text: "Category 1",
+          value: "Category 1",
+        },
+        {
+          text: "Category 2",
+          value: "Category 2",
+        },
+      ],
+      // filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value) => console.log(value, "dd"),
+      render: (_, { order }) => {
+        return (
+          <>
+            <div className="avatar-info">
+              <Title level={5}>{order}</Title>
+            </div>
+          </>
+        );
+      },
+      width: "5%",
+    },
+    {
+      title: "Tên khách hàng",
+      key: "customer",
+      dataIndex: "customer",
+      filters: [
+        {
+          text: "Joe",
+          value: "Joe",
+        },
+        {
+          text: "Category 1",
+          value: "Category 1",
+        },
+        {
+          text: "Category 2",
+          value: "Category 2",
+        },
+      ],
+      // filterMode: "tree",
+      filterSearch: (value) => console.log(value, "dd"),
+      onFilter: (value, record) => record.address.startsWith(value),
+      render: (_, { customer }) => {
+        return (
+          <>
+            <p>{customer}</p>
+          </>
+        );
+      },
+      width: "20%",
+    },
+    {
+      title: "Ngày đặt",
+      key: "date",
+      dataIndex: "date",
+      render: (_, { date }) => {
+        return (
+          <>
+            <p>{date}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
+      render: (_, { status }) => {
+        return (
+          <>
+            <p>{status}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Tổng tiền",
+      key: "total",
+      dataIndex: "total",
+      width: "50%",
+      render: (_, { total }) => {
+        return (
           <div className="ant-employed">
-            <p>12.000.000</p>
+            <p>{total}</p>
 
             <Link to="" onClick={() => setModalVisible(true)}>
               Chi tiết
@@ -187,317 +186,20 @@ const Order = () => {
               setModalVisible={setModalVisible}
             />
           </div>
-        </>
-      ),
+        );
+      },
     },
+  ];
 
+  const data = [
     {
-      key: "2",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
+      key: "1",
+      order: "m456",
 
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-
-    {
-      key: "3",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>1200000000</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "4",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "5",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-
-    {
-      key: "6",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "7",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "8",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "9",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "10",
-      order: (
-        <>
-          <div className="avatar-info">
-            <Title level={5}>NM21</Title>
-          </div>
-        </>
-      ),
-
-      customer: (
-        <>
-          <p>q12,tp HCM</p>
-        </>
-      ),
-      date: (
-        <>
-          <p>08888888888</p>
-        </>
-      ),
-      status: (
-        <>
-          <p>Đang giao</p>
-        </>
-      ),
-      employed: (
-        <>
-          <div className="ant-employed">
-            <p>0</p>
-            <a href="#pablo">Chi tiết</a>
-          </div>
-        </>
-      ),
+      customer: "đặng nhị thiên",
+      date: "20/05/2022",
+      status: "đang giao",
+      total: "1200000 vnđ",
     },
   ];
   const onSelect = (newValue) => {
@@ -521,7 +223,7 @@ const Order = () => {
     <>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col span={24} md={16} className="mb-24">
+          <Col span={24} md={17} className="mb-24">
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -537,20 +239,10 @@ const Order = () => {
               }
               style={{ height: 820 }}
             >
-              <TextAlign>
-                <div className="table-responsive pb-5">
-                  <Table
-                    columns={columns}
-                    dataSource={data}
-                    pagination={{ pageSize: 6 }}
-                    scroll={false}
-                    className="ant-border-space"
-                  />
-                </div>
-              </TextAlign>
+              <TableCustom data={data} columns={columns} />
             </Card>
           </Col>
-          <Col span={24} md={8} className="mb-24">
+          <Col span={24} md={7} className="mb-24">
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -562,6 +254,7 @@ const Order = () => {
                     dateCellRender={dateCellRender}
                     value={value}
                     onSelect={onSelect}
+                    locale={{ lang: { locale: "vi" } }}
                   />
                 </div>
               </CalendarStyle>

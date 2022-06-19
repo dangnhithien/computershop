@@ -8,7 +8,7 @@ const Login = ({ showSingin }) => {
   useEffect(() => {
     document.documentElement.scrollTop = 250;
     setShowSinginForm(showSingin);
-  }, []);
+  }, [showSingin]);
 
   return (
     <>

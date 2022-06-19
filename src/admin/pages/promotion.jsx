@@ -5,8 +5,8 @@ import { FaTimes } from "react-icons/fa";
 
 import styled from "styled-components";
 import TableCustom from "../components/table/table";
-
-const { Title } = Typography;
+import { DatePicker, Space } from "antd";
+const { RangePicker } = DatePicker;
 
 const Group = styled.div`
   /* margin-bottom: 20px; */
@@ -22,9 +22,9 @@ const Group = styled.div`
 // table code start
 const columns = [
   {
-    title: "Tên nhà cung cấp",
-    dataIndex: "name",
-    key: "name",
+    title: "Mã giảm giá",
+    dataIndex: "voucher",
+    key: "voucher",
     filters: [
       {
         text: "m456",
@@ -42,48 +42,48 @@ const columns = [
     // filterMode: "tree",
     filterSearch: true,
     onFilter: (value) => console.log(value, "dd"),
-    render: (_, { name }) => {
+    render: (_, { voucher }) => {
       return (
         <>
-          <div>{name}</div>
+          <div>{voucher}</div>
         </>
       );
     },
     width: "20%",
   },
   {
-    title: "Địa chỉ",
+    title: "Giảm giá",
     key: "address",
     dataIndex: "address",
-    render: (_, { address }) => {
+    render: (_, { discount }) => {
       return (
         <>
-          <p>{address}</p>
+          <p>{discount}</p>
         </>
       );
     },
     width: "30%",
   },
   {
-    title: "Số điện thoại",
-    key: "phone",
-    dataIndex: "phone",
-    render: (_, { phone }) => {
+    title: "bắt đầu",
+    key: "start",
+    dataIndex: "start",
+    render: (_, { start }) => {
       return (
         <>
-          <p>{phone}</p>
+          <p>{start}</p>
         </>
       );
     },
   },
   {
-    title: "Email",
-    key: "email",
-    dataIndex: "email",
-    render: (_, { email }) => {
+    title: "kết thúc",
+    key: "finish",
+    dataIndex: "finish",
+    render: (_, { finish }) => {
       return (
         <>
-          <p>{email}</p>
+          <p>{finish}</p>
         </>
       );
     },
@@ -108,34 +108,14 @@ const columns = [
 const data = [
   {
     key: "1",
-    id: "123",
-    name: "công ty abc",
-
-    address: "q12,tp hcm",
-    phone: "0326834079",
-    email: "abc.@gmail.com",
-  },
-  {
-    key: "2",
-    id: "123",
-    name: "công ty abc",
-
-    address: "q12,tp hcm",
-    phone: "0326834079",
-    email: "abc.@gmail.com",
-  },
-  {
-    key: "3",
-    id: "123",
-    name: "công ty abc",
-
-    address: "q12,tp hcm",
-    phone: "0326834079",
-    email: "abc.@gmail.com",
+    voucher: "m145",
+    discount: "90%",
+    start: "8:00:00 22/6/2019",
+    finish: "9:00:00 22/6/2022",
   },
 ];
 
-const Provided = () => {
+const Promotion = () => {
   const [md, setMd] = useState(24);
   function changeMd() {
     if (md == 16) {
@@ -152,7 +132,7 @@ const Provided = () => {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Nhà cung cấp"
+              title="Giảm giá"
               style={{ height: 520 }}
               extra={
                 md == 24
@@ -195,26 +175,24 @@ const Provided = () => {
                   <Col xs="24" xl={24}>
                     <Group>
                       <div className="Name-provider">
-                        <h6>Tên nhà cung cấp</h6>
+                        <h6>Mã giảm giá</h6>
                         <Input showCount maxLength={256} />
                       </div>
                     </Group>
                     <Group>
                       <div className="address">
-                        <h6>Địa chỉ</h6>
+                        <h6>Giảm</h6>
                         <Input showCount maxLength={256} />
                       </div>
                     </Group>
                     <Group>
                       <div className="phone">
-                        <h6>Số điện thoại</h6>
-                        <Input showCount maxLength={256} />
-                      </div>
-                    </Group>
-                    <Group>
-                      <div className="email">
-                        <h6>Email</h6>
-                        <Input showCount maxLength={256} />
+                        <h6>Thời gian</h6>
+                        <RangePicker
+                          showTime
+                          size="large"
+                          placeholder={["bắt đầu", "kết thúc"]}
+                        />
                       </div>
                     </Group>
                   </Col>
@@ -236,4 +214,4 @@ const Provided = () => {
   );
 };
 
-export default Provided;
+export default Promotion;

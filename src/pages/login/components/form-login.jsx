@@ -1,9 +1,10 @@
-import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input, notification } from "antd";
+import { useRef, useState } from "react";
 import { AiFillFacebook } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
+import LOGIN from "../../../api/login";
 const style = {
   color: "#fff",
   display: " flex",
@@ -21,6 +22,26 @@ const styleSize = {
   height: "30px",
 };
 const FormLogin = () => {
+  const [loading, setLoading] = useState(false);
+
+  const data = useRef({ email: "", password: "" });
+
+  function actionLogin() {
+    setLoading(true);
+    console.log(data.current);
+    LOGIN.post(data.current)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        notification.error({
+          message: "Đăng nhập không thành công",
+          placement: "topRight",
+        });
+      });
+  }
   return (
     <div className="col-lg-6 col-md-6 p-10">
       <h3 className=" text-center ">Chào mừng bạn quay trở lại!</h3>
@@ -42,23 +63,25 @@ const FormLogin = () => {
       >
         <Form.Item
           name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+          rules={[{ required: true, message: "Hãy nhập email" }]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             style={{ height: "50px", fontSize: "16px" }}
-            placeholder="Username"
+            placeholder="email"
+            ref={(el) => (data.current.email = el?.input.value)}
           />
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[{ required: true, message: "Hãy nhập mật khẩu" }]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             style={{ height: "50px", fontSize: "16px" }}
             type="password"
-            placeholder="Password"
+            placeholder="mật khẩu"
+            ref={(el) => (data.current.password = el?.input.value)}
           />
         </Form.Item>
         <Form.Item>
@@ -73,9 +96,10 @@ const FormLogin = () => {
 
         <Form.Item>
           <Button
+            loading={loading}
             type="primary"
-            htmlType="submit"
             className="login-form-button"
+            onClick={actionLogin}
           >
             Đăng nhập
           </Button>

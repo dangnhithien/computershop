@@ -248,6 +248,32 @@ function Sidenav({ color }) {
             <span className="label">Đơn hàng</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="12">
+          <NavLink to="/giam-gia">
+            <span
+              className="icon"
+              style={{
+                background: page === "giam-gia" ? color : "",
+              }}
+            >
+              {add}
+            </span>
+            <span className="label">Giảm giá</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="13">
+          <NavLink to="/thong-bao">
+            <span
+              className="icon"
+              style={{
+                background: page === "thong-bao" ? color : "",
+              }}
+            >
+              {add}
+            </span>
+            <span className="label">Thông báo</span>
+          </NavLink>
+        </Menu.Item>
         <Menu.Item key="9">
           <NavLink to="/san-pham">
             <span
