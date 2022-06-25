@@ -4,11 +4,12 @@ import BgProfile from "../../assets/images/bg-profile.jpg";
 import profilavatar from "../../assets/images/face-1.jpg";
 
 import { Col, Modal, Row, Table, Typography } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { GiPayMoney } from "react-icons/gi";
 import { MdOutlineCreditScore } from "react-icons/md";
+import USER from "../../../api/user";
 
 const { Title } = Typography;
 const BoxIcon = styled.div`
@@ -33,7 +34,7 @@ const BoxIcon = styled.div`
 `;
 const Group = styled.div`
   margin-bottom: 10px;
-  .lable {
+  .label {
     display: inline-block;
     margin-right: 10px;
     color: #8c8c8c;
@@ -418,8 +419,26 @@ const data = [
     ),
   },
 ];
-const Profile = ({ modalVisible, setModalVisible }) => {
+const Profile = ({ modalVisible, setModalVisible, id }) => {
   const [tabVisible, setTabVisible] = useState("info");
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    actionGetSingleUser(id);
+  }, []);
+
+  function actionGetSingleUser(id) {
+    setLoading(true);
+    USER.getSingleUser({ id: id })
+      .then((res) => {
+        setLoading(false);
+        setData(res.data);
+      })
+      .catch((res) => {
+        setLoading(false);
+      });
+  }
 
   function handleVisible({ target: { value } }) {
     setTabVisible(value);
@@ -427,51 +446,56 @@ const Profile = ({ modalVisible, setModalVisible }) => {
   const tabInfo = (
     <div style={{ paddingLeft: 12 }}>
       <Row gutter={[24, 0]}>
-        <Col span={24} md={6} className="mb-24"></Col>
+        <Col span={4}></Col>
+        <Col span={8} className="mb-24">
+          <Tooltip title="Số lần giao dịch" color={TooltipColor.blue}>
+            <BoxIcon>
+              <AiOutlineTransaction className="icon color-yellow" />
 
-        <Col span={24} md={18} className="mb-24">
-          <Row>
-            <Tooltip title="Số lần giao dịch" color={TooltipColor.blue}>
-              <BoxIcon>
-                <AiOutlineTransaction className="icon color-yellow" />
+              <span className="content">120</span>
+            </BoxIcon>
+          </Tooltip>
+          <Tooltip title="số tiền đã mua" color={TooltipColor.blue}>
+            <BoxIcon>
+              <GiPayMoney className="icon color-red" />
 
-                <span className="content">120</span>
-              </BoxIcon>
-            </Tooltip>
-            <Tooltip title="số tiền đã mua" color={TooltipColor.blue}>
-              <BoxIcon>
-                <GiPayMoney className="icon color-red" />
-
-                <span className="content">1200000 đ</span>
-              </BoxIcon>
-            </Tooltip>
-            <Tooltip title="Đánh giá khách hàng" color={TooltipColor.blue}>
-              <BoxIcon>
-                <MdOutlineCreditScore className="icon color-green" />
-
-                <span className="content">Khách hàng thân thiết</span>
-              </BoxIcon>
-            </Tooltip>
-          </Row>
+              <span className="content">1200000 đ</span>
+            </BoxIcon>
+          </Tooltip>
         </Col>
-      </Row>
-      <Row gutter={[24, 0]} style={{ paddingLeft: 100 }}>
-        <Col span={24} md={12} className="mb-24">
+
+        <Col span={8} className="mb-24">
           <Group>
-            <span className="lable">Họ tên:</span>
-            <span className="content">Đặng Nhị Thiên</span>
+            <span className="label">Họ tên:</span>
+            <span className="content">
+              {data.firstName + " " + data.lastName}
+            </span>
           </Group>
           <Group>
-            <span className="lable">Số điện thoại:</span>
-            <span className="content">0326834079</span>
+            <span className="label">Ngày sinh:</span>
+            <span className="content">{data.dob}</span>
           </Group>
           <Group>
-            <span className="lable">Địa chỉ:</span>
-            <span className="content">Q12,tp HCM</span>
+            <span className="label">Giới tính:</span>
+            <span className="content">{data.gender}</span>
           </Group>
           <Group>
-            <span className="lable">Email:</span>
-            <span className="content ">Nhithienv@gmail.com</span>
+            <span className="label">Trạng thái:</span>
+            <span className="content">
+              {data.isActive ? "Hoạt động" : "Đã khóa"}
+            </span>
+          </Group>
+          <Group>
+            <span className="label">Số điện thoại:</span>
+            <span className="content">{data.phoneNumber}</span>
+          </Group>
+          <Group>
+            <span className="label">Email:</span>
+            <span className="content ">{data.email}</span>
+          </Group>
+          <Group>
+            <span className="label">Địa chỉ:</span>
+            <span className="content">{data.address}</span>
           </Group>
         </Col>
       </Row>
@@ -508,11 +532,11 @@ const Profile = ({ modalVisible, setModalVisible }) => {
         style={{
           top: 20,
         }}
-        width={1000}
+        width={800}
         visible={modalVisible}
         onOk={() => setModalVisible(false)}
         onCancel={() => setModalVisible(false)}
-        bodyStyle={{ height: "650px" }}
+        bodyStyle={{ height: 650 }}
         footer={false}
       >
         <div
@@ -531,11 +555,13 @@ const Profile = ({ modalVisible, setModalVisible }) => {
             <Row justify="space-between" align="middle" gutter={[24, 0]}>
               <Col span={24} md={12} className="col-info">
                 <Avatar.Group>
-                  <Avatar size={74} shape="square" src={profilavatar} />
+                  <Avatar size={74} shape="square" src={data.imageUrl} />
 
                   <div className="avatar-info">
-                    <h4 className="font-semibold m-0">Sarah Jacob</h4>
-                    <p>CEO / Co-Founder</p>
+                    <h4 className="font-semibold m-0">
+                      {data.firstName + " " + data.lastName}
+                    </h4>
+                    <p>{data.email}</p>
                   </div>
                 </Avatar.Group>
               </Col>

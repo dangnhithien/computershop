@@ -1,8 +1,8 @@
 import axiosConfig from "../utils/axiosConfig";
 
-const PRODUCT = {
+const SHIPPER = {
   search: (data) => {
-    return axiosConfig.post("v1/products/search", data);
+    return axiosConfig.post("v1/shippers/search", data);
   },
   create: (data) => {
     return axiosConfig.post("v1/products", data);
@@ -12,4 +12,4 @@ const PRODUCT = {
   },
 };
 
-export default PRODUCT;
+export default SHIPPER;

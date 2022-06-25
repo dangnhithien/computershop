@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GoPrimitiveDot } from "react-icons/go";
 import { Segmented } from "antd";
+import { useEffect, useState } from "react";
+import NOTIFICATION from "../../api/notification";
+import SpinCustom from "../components/loading/spinCustom";
 
 const Title = styled.div`
   font-size: 18px;
@@ -73,6 +76,22 @@ const data = [
 ];
 
 const Notification = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    actionGetAllNotification({ keyword: "" });
+  }, []);
+  function actionGetAllNotification(keyword) {
+    setLoading(true);
+    NOTIFICATION.search(keyword)
+      .then((res) => {
+        setLoading(false);
+        setData(res.data);
+      })
+      .catch((res) => {
+        setLoading(false);
+      });
+  }
   return (
     <>
       <div className="tabled">
@@ -93,60 +112,72 @@ const Notification = () => {
                     size="large"
                   />
                 </SegmentedStyle>
-              }  
+              }
             >
               <div className="notification-day">
                 <Title>Mới</Title>
                 <div className="notification">
-                  <List
-                    min-width="100%"
-                    className="header-notifications-dropdown "
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={(item) => (
-                      <NotificationItem>
-                        <Link to="#">
-                          <List.Item>
-                            <List.Item.Meta
-                              avatar={<Avatar src={item.avatar} size={64} />}
-                              title={item.title}
-                              description={item.description}
-                            />
-                            <div className="notification-dot">
-                              <GoPrimitiveDot />
-                            </div>
-                          </List.Item>
-                        </Link>
-                      </NotificationItem>
-                    )}
-                  />
+                  {loading ? (
+                    <SpinCustom />
+                  ) : (
+                    <List
+                      min-width="100%"
+                      className="header-notifications-dropdown "
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={(item) => (
+                        <NotificationItem>
+                          <Link to="#">
+                            <List.Item>
+                              <List.Item.Meta
+                                avatar={
+                                  <Avatar src={item.imageUrl} size={64} />
+                                }
+                                title={item.title}
+                                description={item.description}
+                              />
+                              <div className="notification-dot">
+                                <GoPrimitiveDot />
+                              </div>
+                            </List.Item>
+                          </Link>
+                        </NotificationItem>
+                      )}
+                    />
+                  )}
                 </div>
               </div>
               <div className="notification-day">
                 <Title>Trước đó</Title>
                 <div className="notification">
-                  <List
-                    min-width="100%"
-                    className="header-notifications-dropdown "
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={(item) => (
-                      <NotificationItem>
-                        <Link to="#">
-                          <List.Item>
-                            <List.Item.Meta
-                              avatar={<Avatar src={item.avatar} size={64} />}
-                              title={item.title}
-                              description={item.description}
-                            />
-                            <div className="notification-dot">
-                              <GoPrimitiveDot />
-                            </div>
-                          </List.Item>
-                        </Link>
-                      </NotificationItem>
-                    )}
-                  />
+                  {loading ? (
+                    <SpinCustom />
+                  ) : (
+                    <List
+                      min-width="100%"
+                      className="header-notifications-dropdown "
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={(item) => (
+                        <NotificationItem>
+                          <Link to="#">
+                            <List.Item>
+                              <List.Item.Meta
+                                avatar={
+                                  <Avatar src={item.imageUrl} size={64} />
+                                }
+                                title={item.title}
+                                description={item.description}
+                              />
+                              <div className="notification-dot">
+                                <GoPrimitiveDot />
+                              </div>
+                            </List.Item>
+                          </Link>
+                        </NotificationItem>
+                      )}
+                    />
+                  )}
                 </div>
               </div>
             </Card>

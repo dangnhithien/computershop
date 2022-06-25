@@ -2,7 +2,7 @@ import axios from "axios";
 
 const TOKEN = localStorage.getItem("token");
 const axiosConfig = axios.create({
-  baseURL: "https://api.totostore.tech/api/",
+  baseURL: "https://api.totostore.tech/",
   timeout: 1000,
   headers: {
     Authorization: "Bearer " + TOKEN,

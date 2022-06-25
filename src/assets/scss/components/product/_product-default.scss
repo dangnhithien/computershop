@@ -30,8 +30,9 @@
 
 .product-default-img {
   display: block;
-  min-height: 273px;
+  min-height: 200px;
   width: 100%;
+  aspect-ratio: 3/4;
   object-fit: contain;
 }
 
@@ -41,7 +42,8 @@
   padding-top: 10px;
   margin-bottom: 10px;
   line-height: 1.625;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
 
   &:hover {
     color: $themeColor !important;
@@ -60,7 +62,7 @@
 
 .product-img-warp {
   position: relative;
-  border: 1px solid #eee;
+  background-color: #fff;
   border-bottom: none;
   padding: 5px;
 }

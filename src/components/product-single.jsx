@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import img from "../assets/images/products_images/product1.jpg";
 import RateCustom from "./rateCustom";
 import styled from "styled-components";
@@ -43,12 +43,12 @@ const Price = styled.div`
 `;
 
 const Content = styled.div`
-  background-color: #f1f1f154;
+  background-color: #fff;
   padding: 10px;
-  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
-    rgba(17, 17, 26, 0.1) 0px 0px 8px;
 `;
 const ContainerRibbon = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   .ribbon-custom {
     font-size: 16px;
     font-weight: 500;
@@ -56,83 +56,104 @@ const ContainerRibbon = styled.div`
   .ant-ribbon-text {
     padding: 5px;
   }
+
+  .title {
+    min-height: 65px;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    padding: 10px 0;
+  }
 `;
 
-const ProductSingle = ({ product }) => {
-  const { price, discount, title, meta_title, detail, rate, reviews } = product;
+const ProductSingle = ({ item }) => {
+  // const item = {
+  //   id: "",
+  //   slug: "",
+  //   amount: 1000000,
+  //   promotion: 10,
+  //   name: "New Balance Fresh Foam Kaymin Car Purts ",
+  //   detail: "new-balance-fresh-foam-kaymin-car-purts",
+  //   rate: 4,
+  //   countRate: 5,
+  //   imageUrl: "",
+  // };
   return (
     <>
-      {/* Start Product Defautlt Single */}
-      <div
-        className="product-default-single "
-        data-aos="fade-up"
-        data-aos-delay="0"
-      >
-        <ContainerRibbon>
-          <Badge.Ribbon
-            text={discount + "%"}
-            color="red"
-            className="ribbon-custom"
-          >
-            <div className="product-img-warp">
-              <Link to="" className="product-default-img-link">
-                <img
-                  src={img}
-                  alt=""
-                  className="product-default-img img-fluid"
-                />
-              </Link>
-            </div>
-          </Badge.Ribbon>
-          <Content>
-            <div className="product-review">
-              <RateCustom value={rate} rates={reviews} />
-            </div>
-
-            <Paragraph
-              ellipsis={{
-                rows: 2,
-              }}
+      {item ? (
+        <div
+          className="product-default-single "
+          data-aos="fade-up"
+          data-aos-delay="0"
+        >
+          <ContainerRibbon>
+            <Badge.Ribbon
+              text={item.promotion + "%"}
+              color="red"
+              className="ribbon-custom"
             >
-              <h6 className="product-default-link">
-                <Link to={"/" + meta_title}>{title}</Link>
-              </h6>
-            </Paragraph>
+              <div className="product-img-warp">
+                <Link to="" className="product-default-img-link">
+                  <img
+                    src={item.imageUrl}
+                    alt=""
+                    className="product-default-img img-fluid"
+                  />
+                </Link>
+              </div>
+            </Badge.Ribbon>
+            <Content>
+              <div className="product-review">
+                <RateCustom value={item.rate} rates={item.countRate} />
+              </div>
 
-            <div className="product-default-detail">
-              {detail ? (
+              <Paragraph
+                ellipsis={{
+                  rows: 2,
+                  expandable: false,
+                }}
+              >
+                <Link to={"/" + item.slug} className="title">
+                  {item.name}
+                </Link>
+              </Paragraph>
+
+              <div
+                className="product-default-detail"
+                style={{ marginTop: "-15px" }}
+              >
                 <ul>
                   <li>CPU: Intel Core i5 1135G7</li>
 
                   <li>RAM: 4GB</li>
 
                   <li>Ổ cứng: 256GB SSD</li>
-
-                  <li>VGA: Onboard</li>
-
-                  <li>Màn hình: 15.6 inch FHD</li>
-
-                  <li>HĐH: Fedora</li>
-
-                  <li>Màu: Đen</li>
                 </ul>
-              ) : (
-                ""
-              )}
-            </div>
-            <Price>
-              <div className="promotion-group">
-                Giá gốc :<del className="price-off">{price}₫</del>
               </div>
-              <div className="price">{(price * (100 - discount)) / 100}₫</div>
-              <div className="btn-cart">
-                <GiShoppingCart />
-              </div>
-            </Price>
-          </Content>
-        </ContainerRibbon>
-      </div>
-      {/* End Product Defautlt Single */}
+              <Price>
+                <div className="promotion-group">
+                  Giá gốc :
+                  <del className="price-off">{item.productPrices}₫</del>
+                </div>
+                <div className="price">
+                  {item.productPrices && item.promotion
+                    ? (item.productPrices *
+                        (100 - item.promotion ? item.promotion : 0)) /
+                      100
+                    : "null"}
+                  ₫
+                </div>
+                <div className="btn-cart">
+                  <GiShoppingCart />
+                </div>
+              </Price>
+            </Content>
+          </ContainerRibbon>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

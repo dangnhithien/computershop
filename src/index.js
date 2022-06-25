@@ -8,17 +8,11 @@ import "antd/dist/antd.min.css";
 import "./admin/assets/styles/main.css";
 import "./admin/assets/styles/responsive.css";
 import "../node_modules/react-quill/dist/quill.snow.css";
-import { CookiesProvider } from "react-cookie";
-import { Provider } from "react-redux";
-import store from "./store";
 
 ReactDOM.render(
   // <React.StrictMode>
-  <CookiesProvider>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </CookiesProvider>,
+
+  <App />,
   // </React.StrictMode>
   document.getElementById("root")
 );

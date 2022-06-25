@@ -1,12 +1,12 @@
 const PATH = {
   HOME: "/",
-  PRODUCT: "/product",
-  DETAIL: "/:productName",
+  PRODUCT: "/mua-hang",
+  DETAIL: "/san-pham/:productName",
   CONTACT: "/contact",
-  CHECKOUT: "/checkout",
-  CART: "/cart",
-  SINGIN: "/singin",
-  SINGUP: "/singup",
+  CHECKOUT: "/thanh-toan",
+  CART: "/gio-hang",
+  SINGIN: "/dang-nhap",
+  SINGUP: "/dang-ki",
   ERROR: "*",
   TEST: "/test",
 };

@@ -1,90 +1,150 @@
-import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Button, Form, Input, notification } from "antd";
+import { useState } from "react";
 import { AiFillFacebook } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-const style = {
-  color: "#fff",
-  display: " flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: " 22px",
-  width: "calc((95% - 20px) / 2)",
-  height: "40px",
-  borderRadius: "10px",
-  fontWeight: "700",
-  boxShadow: "0 1px 5px 0px rgb(0 0 0 / 20%)",
-};
-const styleSize = {
-  width: "30px",
-  height: "30px",
-};
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import LOGIN from "../../../api/login";
+const StyleBtnLink = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  padding: 5px;
+  flex-wrap: wrap;
+  a {
+    margin: 0 8px;
+  }
+  span {
+    display: block;
+    font-size: 24px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+  }
+`;
 
+const StyleForm = styled.div`
+  .ant-input {
+    border-radius: 0;
+  }
+  .btn {
+    background: #fff;
+    color: #333;
+    border: 1px solid #c1c1c1;
+    font-size: 16px;
+    &:hover {
+      background-color: #504c4c;
+      color: #fff;
+    }
+  }
+`;
 const FormRegister = () => {
+  const [loading, setLoading] = useState(false);
+  function actionRegister(data) {
+    setLoading(true);
+    LOGIN.register({ ...data, userName: data.email })
+      .then((res) => {
+        notification.success({
+          message: "Đăng nhập không thành công",
+          placement: "topRight",
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        notification.error({
+          message: "Đăng nhập không thành công",
+          placement: "topRight",
+        });
+      });
+  }
   return (
     <>
       <div className="col-lg-6 col-md-6  p-10">
-        <h3 className=" text-center ">Chào mừng bạn quay trở lại!</h3>
-        <div className=" pb-5 justify-content-between d-flex container-fluid px-10">
-          <Link to="" style={{ ...style, backgroundColor: "#3b5998" }}>
-            <AiFillFacebook style={styleSize} />
-            <span className="mx-1">FaceBook</span>
+        <StyleBtnLink>
+          <span>Tạo tài khoản ngay nào!</span>
+          <Link to="">
+            <AiFillFacebook />
           </Link>
-          <Link to="" style={{ ...style, color: "#555555" }}>
-            <FcGoogle style={styleSize} />
-            <span className="mx-1">Google</span>
+          <Link to="">
+            <FcGoogle />
           </Link>
-        </div>
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{ remember: true }}
-          // onFinish={onFinish}
-        >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your Username!" }]}
+        </StyleBtnLink>
+        <StyleForm>
+          <Form
+            name="normal_login"
+            className="login-form"
+            initialValues={{ remember: true }}
+            onFinish={(value) => {
+              actionRegister(value);
+            }}
           >
-            <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              style={{ height: "50px", fontSize: "16px" }}
-              placeholder="Username"
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              style={{ height: "50px", fontSize: "16px" }}
-              type="password"
-              placeholder="Password"
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              style={{ height: "50px", fontSize: "16px" }}
-              type="password"
-              placeholder="Password"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
+            <Form.Item
+              name="firstName"
+              rules={[
+                { required: true, message: "Please input your firstname!" },
+              ]}
+              style={{
+                display: "inline-block",
+                width: "calc(50% - 4px)",
+              }}
             >
-              Đăng kí
-            </Button>
-          </Form.Item>
-        </Form>
+              <Input placeholder="Firstname" />
+            </Form.Item>
+            <Form.Item
+              name="lastName"
+              rules={[
+                { required: true, message: "Please input your lastname!" },
+              ]}
+              style={{
+                display: "inline-block",
+                width: "calc(50% - 4px)",
+                marginLeft: 8,
+              }}
+            >
+              <Input placeholder="Lastname" />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              rules={[
+                { required: true, message: "Please input your Username!" },
+              ]}
+            >
+              <Input placeholder="Email" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
+            >
+              <Input.Password
+                type="password"
+                placeholder="Password"
+                size="small"
+              />
+            </Form.Item>
+            <Form.Item
+              name="confirmPassword"
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
+            >
+              <Input.Password
+                type="password"
+                placeholder="confirmPassword"
+                size="small"
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="btn">
+                Đăng kí
+              </Button>
+            </Form.Item>
+          </Form>
+        </StyleForm>
       </div>
     </>
   );

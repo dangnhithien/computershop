@@ -65,7 +65,7 @@ const Group = styled.div`
 const Created = styled.div`
   font-size: 24px;
   font-weight: bold;
-
+  margin: 20px 12px;
   color: #1890ff;
 `;
 const IconStep = styled.div`
@@ -75,7 +75,7 @@ const IconStep = styled.div`
   }
 `;
 
-const Add = () => {
+const EditProduct = ({ id }) => {
   const [current, setStepCurrent] = useState(0);
 
   const product = useRef({
@@ -87,7 +87,6 @@ const Add = () => {
     status: 0,
     supplierId: "string",
   });
-  const productId = useRef({ id: "" });
   const categories = useRef({
     categoryId: "",
   });
@@ -102,37 +101,6 @@ const Add = () => {
     description: "string",
   });
 
-  const onChangeStep = (value) => {
-    setStepCurrent(value);
-  };
-  function displayStep() {
-    console.log(product);
-    if (current == 0) {
-      return <ChooseTitle setStepCurrent={setStepCurrent} product={product} />;
-    }
-    if (current == 1) {
-      return (
-        <ChooseCategory
-          setStepCurrent={setStepCurrent}
-          categories={categories}
-          nameCategories={nameCategories}
-        />
-      );
-    }
-    if (current == 2) {
-      return (
-        <ChooseContent
-          setStepCurrent={setStepCurrent}
-          product={product}
-          image={image}
-          price={price}
-          nameCategories={nameCategories}
-          categories={categories}
-        />
-      );
-    }
-  }
-
   return (
     <>
       <Row gutter={[24, 0]} className="mb-24">
@@ -146,158 +114,26 @@ const Add = () => {
                 <span style={{ marginLeft: 10 }}>Quay lại</span>
               </Link>
             }
+            extra={
+              <Button type="primary" style={{ minWidth: 80 }}>
+                Lưu
+              </Button>
+            }
           />
-          <IconStep>
-            <Steps current={current}>
-              <Step title="" description="Tên sản phẩm" />
-              <Step title="" description="Loại sản phẩm" />
-              <Step title="" description="Thông tin " />
-            </Steps>
-          </IconStep>
-          {displayStep()}
+          <ChooseContent
+            setStepCurrent={setStepCurrent}
+            product={product}
+            image={image}
+            price={price}
+            nameCategories={nameCategories}
+            categories={categories}
+          />
         </Col>
       </Row>
     </>
   );
 };
 
-const ChooseTitle = ({ setStepCurrent, product }) => {
-  const inintInput = {
-    status: "",
-    playholder: "Nhập tên sản phẩm",
-  };
-  const [validateInput, setValidateInput] = useState(inintInput);
-
-  return (
-    <>
-      <Card className="header-solid mb-10" bordered={false}>
-        <Group>
-          <div className="title">
-            <h6>Tiêu đề</h6>
-            <Input
-              showCount
-              status={validateInput.status}
-              placeholder={validateInput.playholder}
-              prefix={validateInput.prefix ? <ImWarning /> : ""}
-              maxLength={256}
-              onChange={(element) => {
-                setValidateInput(inintInput);
-                product.current.name = element?.target.value;
-              }}
-            />
-          </div>
-        </Group>
-        <Row gutter={[24, 0]}>
-          <Col span={24} className="my-5 text-end">
-            <Button
-              type="primary"
-              onClick={() => {
-                if (product.current.name == "") {
-                  setValidateInput({
-                    status: "warning",
-                    playholder: "Không được bỏ trống",
-                  });
-
-                  return;
-                }
-                setStepCurrent(1);
-              }}
-            >
-              Tiếp theo
-            </Button>
-          </Col>
-        </Row>
-      </Card>
-    </>
-  );
-};
-
-const ChooseCategory = ({ setStepCurrent, categories, nameCategories }) => {
-  const [listCategory, setListCategory] = useState([]);
-  const [disabled, setDisabled] = useState();
-  const inintInput = {
-    status: "",
-    playholder: "Nhập tên sản phẩm",
-  };
-  const [validateInput, setValidateInput] = useState(inintInput);
-
-  function actionSearch(keyword) {
-    CATEGORIES.search(keyword)
-      .then((res) => {
-        setListCategory(res.data.data);
-      })
-      .catch((error) => {
-        console.log("lỗi");
-      });
-  }
-  useEffect(() => {
-    actionSearch({ keyword: "" });
-  }, []);
-  return (
-    <>
-      <Card className="header-solid mb-10" bordered={false}>
-        <Group>
-          <div className="title">
-            <h6>Thể loại</h6>
-            <Select
-              status={validateInput.status}
-              placeholder={validateInput.playholder}
-              size="large"
-              mode="multiple"
-              open={disabled}
-              showArrow
-              tagRender={tagRender}
-              style={{
-                width: "100%",
-                height: 50,
-              }}
-              onChange={(value, option) => {
-                categories.current.categoryId = option.map((item) => item.id);
-                categories.current.categoryId.length >= 3
-                  ? setDisabled(false)
-                  : setDisabled(undefined);
-                nameCategories.current = value;
-              }}
-            >
-              {listCategory?.map((element, key) => {
-                return (
-                  <Option key={key} value={element.name} id={element.id}>
-                    {element.name}
-                  </Option>
-                );
-              })}
-            </Select>
-          </div>
-        </Group>
-        <Row gutter={[24, 0]}>
-          <Col span={12} className="my-5 text-start">
-            <Button type="primary" onClick={() => setStepCurrent(0)}>
-              Trước đó
-            </Button>
-          </Col>
-          <Col span={12} className="my-5 text-end">
-            <Button
-              type="primary"
-              onClick={() => {
-                // if (categories.current.categoryId.length == 0) {
-                //   setValidateInput({
-                //     status: "warning",
-                //     playholder: "Không được bỏ trống",
-                //   });
-
-                //   return;
-                // }
-                setStepCurrent(2);
-              }}
-            >
-              Tiếp theo
-            </Button>
-          </Col>
-        </Row>
-      </Card>
-    </>
-  );
-};
 const ChooseContent = ({
   setStepCurrent,
   image,
@@ -383,20 +219,40 @@ const ChooseContent = ({
       <Row gutter={[24, 0]}>
         <Col xs="24" xl={24}>
           <Group>
-            <Created>{product.current.name}</Created>
+            <Row gutter={[24, 0]}>
+              <Col>
+                <h6>Tên sản phẩm</h6>
+              </Col>
+              <Col span={8}>
+                <Input
+                  showCount
+                  size="small"
+                  maxLength={256}
+                  onChange={(element) => {
+                    product.current.name = element?.target.value;
+                  }}
+                />
+              </Col>
+            </Row>
           </Group>
 
           <Group>
-            <Row>
+            <Row gutter={[24, 0]}>
               <Col span={12}>
                 <Row gutter={[24, 0]}>
                   <Col>
                     <h6>Thể loại</h6>
                   </Col>
-                  <Col>
-                    {nameCategories.current?.map((tag) => (
-                      <Tag color="#f50">{tag}</Tag>
-                    ))}
+                  <Col span={8}>
+                    <Select
+                      size="large"
+                      mode="multiple"
+                      showArrow
+                      tagRender={tagRender}
+                      style={{
+                        width: 200,
+                      }}
+                    ></Select>
                   </Col>
                 </Row>
               </Col>
@@ -452,22 +308,24 @@ const ChooseContent = ({
                   </Col>
                 </Row>
               </Col>
-              <Row gutter={[24, 0]}>
-                <Col>
-                  <h6>Số lượng</h6>
-                </Col>
-                <Col>
-                  <InputNumber
-                    defaultValue={0}
-                    min={0}
-                    max={10000}
-                    size="middle"
-                    onchange={(value) =>
-                      (product.current.quantity = parseInt(value))
-                    }
-                  />
-                </Col>
-              </Row>
+              <Col span={12}>
+                <Row gutter={[24, 0]}>
+                  <Col>
+                    <h6>Số lượng</h6>
+                  </Col>
+                  <Col>
+                    <InputNumber
+                      defaultValue={0}
+                      min={0}
+                      max={10000}
+                      size="middle"
+                      onchange={(value) =>
+                        (product.current.quantity = parseInt(value))
+                      }
+                    />
+                  </Col>
+                </Row>
+              </Col>
             </Row>
           </Group>
 
@@ -546,29 +404,6 @@ const ChooseContent = ({
           </div>
         </div>
       </Group>
-      <Row gutter={[24, 0]}>
-        <Col span={12} className="my-5 text-start">
-          <Button
-            type="primary"
-            onClick={() => {
-              setStepCurrent(1);
-            }}
-          >
-            Trước đó
-          </Button>
-        </Col>
-        <Col span={12} className="my-5 text-end">
-          <Button
-            type="primary"
-            onClick={() => {
-              actionUploadData();
-              console.log("image", fileList);
-            }}
-          >
-            Hoàn thành
-          </Button>
-        </Col>
-      </Row>
     </Card>
   );
 };
@@ -602,4 +437,4 @@ const tagRender = (props) => {
     </Tag>
   );
 };
-export default Add;
+export default EditProduct;

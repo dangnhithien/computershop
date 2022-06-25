@@ -1,7 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import {
   Avatar,
-  Button,
   Card,
   Col,
   Input,
@@ -11,41 +10,57 @@ import {
   Tag,
   Typography,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import USER from "../../api/user";
+import SpinCustom from "../components/loading/spinCustom";
 
-import face2 from "../assets/images/face-2.jpg";
-import Profile from "../components/profile/profile";
+import Profile from "../components/detail/detailUser";
 import TableCustom from "../components/table/table";
 
 const { Title } = Typography;
 const { Option } = Select;
+const Custom = styled.div`
+  display: flex;
+  .custom {
+    font-size: 16px;
+    height: 40px;
+    margin-left: 10px;
+  }
+  .ant-input {
+    height: auto;
+  }
+  .ant-input-group-addon {
+    background-color: #1890ff;
+  }
+`;
 
 const Accounts = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    actionGetAllAccount();
+  }, []);
+  function actionGetAllAccount() {
+    setLoading(true);
+    USER.getAll()
+      .then((res) => {
+        setLoading(false);
+        setData(res.data);
+      })
+      .catch((res) => {
+        setLoading(false);
+      });
+  }
   const columns = [
     {
       title: "Tài khoản",
-      dataIndex: "name",
-      key: "name",
-      filters: [
-        {
-          text: "m456",
-          value: "M456",
-        },
-        {
-          text: "Category 1",
-          value: "Category 1",
-        },
-        {
-          text: "Category 2",
-          value: "Category 2",
-        },
-      ],
-      // filterMode: "tree",
-      filterSearch: true,
-      onFilter: (value) => console.log(value, "dd"),
-      render: (_, { name, avatar, email }) => {
+      dataIndex: "userName",
+      key: "userName",
+
+      render: (_, { userName, imageUrl, email }) => {
         return (
           <>
             <Avatar.Group>
@@ -53,10 +68,10 @@ const Accounts = () => {
                 className="shape-avatar"
                 shape="square"
                 size={64}
-                src={face2}
+                src={imageUrl}
               ></Avatar>
               <div className="avatar-info">
-                <Title level={5}>{name}</Title>
+                <Title level={5}>{userName}</Title>
                 <p>{email}</p>
               </div>
             </Avatar.Group>{" "}
@@ -66,31 +81,12 @@ const Accounts = () => {
       width: "32%",
     },
     {
-      title: "Đánh giá",
-      dataIndex: "consider",
-      key: "consider",
-      filters: [
-        {
-          text: "m456",
-          value: "M456",
-        },
-        {
-          text: "Category 1",
-          value: "Category 1",
-        },
-        {
-          text: "Category 2",
-          value: "Category 2",
-        },
-      ],
-      // filterMode: "tree",
-      filterSearch: (value) => console.log(value, "dd"),
-      onFilter: (value) => console.log(value, "dd"),
-      render: (_, { consider }) => {
+      title: "Tên khách hàng",
+      render: (_, { firstName, lastName }) => {
         return (
           <>
             <div className="author-info">
-              <Title level={5}>{consider}</Title>
+              <Title level={5}>{firstName + " " + lastName}</Title>
             </div>
           </>
         );
@@ -99,28 +95,27 @@ const Accounts = () => {
 
     {
       title: "Trạng thái",
-      key: "status",
-      dataIndex: "status",
-      render: (_, { status }) => {
-        let color = status === "ACTIVE" ? "#00e396" : "#d10101";
+      key: "isActive",
+      dataIndex: "isActive",
+      render: (_, { isActive }) => {
         return (
           <Tag
-            color={color}
+            color={isActive ? "#00e396" : "#d10101"}
             style={{ height: "40px", fontSize: "14px", padding: "10px 20px" }}
           >
-            {status}
+            {isActive ? "Hoạt động" : "Đã khóa"}
           </Tag>
         );
       },
     },
     {
-      title: "Ngày tạo",
-      key: "date",
-      dataIndex: "date",
-      render: (_, { date }) => {
+      title: "Số điện thoại",
+      key: "phoneNumber",
+      dataIndex: "phoneNumber",
+      render: (_, { phoneNumber }) => {
         return (
           <>
-            <div>{date}</div>
+            <div>{phoneNumber}</div>
           </>
         );
       },
@@ -150,20 +145,7 @@ const Accounts = () => {
       },
     },
   ];
-  const data = [
-    {
-      key: "1",
-      id: "",
-      avatar: "",
-      name: "đặng nhị thiên",
-      email: "nhithienv@gamil.com",
-      consider: "Khách hàng thân thiết",
 
-      status: "ACTIVE",
-
-      date: "22/12/2012",
-    },
-  ];
   return (
     <>
       <div className="tabled">
@@ -175,14 +157,50 @@ const Accounts = () => {
               title="Danh sách tài khoản"
               extra={
                 <>
-                  <Radio.Group defaultValue="a">
-                    <Radio.Button value="a">Tất cả</Radio.Button>
-                    <Radio.Button value="b">Hoạt động</Radio.Button>
-                  </Radio.Group>
+                  <Custom>
+                    <div style={{ width: 250, marginRight: 20 }}>
+                      <Input
+                        size="large"
+                        prefix={<SearchOutlined />}
+                        placeholder="Tìm kiếm..."
+                        width={230}
+                        onChange={(element) => {
+                          actionGetAllAccount({
+                            // advancedSearch: {
+                            //   fields: ["name", "code"],
+                            keyword: element?.target.value,
+                            // },
+                          });
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <Radio.Group
+                        defaultValue={2}
+                        // onChange={(element) => {
+                        //         actionGetAllOrder({
+                        //           advancedSearch: {
+                        //             fields: ["status"],
+                        //             keyword: element?.target.value,
+                        //           },
+                        //         });
+                        //       }}
+                      >
+                        <Radio.Button value={2}>Tất cả</Radio.Button>
+                        <Radio.Button value={true}>Hoạt động</Radio.Button>
+                        <Radio.Button value={false}>Hoạt động</Radio.Button>
+                      </Radio.Group>
+                    </div>
+                  </Custom>
                 </>
               }
             >
-              <TableCustom columns={columns} data={data} />
+              {loading ? (
+                <SpinCustom />
+              ) : (
+                <TableCustom columns={columns} data={data} />
+              )}
             </Card>
           </Col>
         </Row>

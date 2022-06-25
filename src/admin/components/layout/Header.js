@@ -263,7 +263,7 @@ function Header({
       </div>
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
-          <Breadcrumb>
+          {/* <Breadcrumb>
             <Breadcrumb.Item>
               <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
@@ -278,7 +278,7 @@ function Header({
             >
               {subName.replace("/", "")}
             </span>
-          </div>
+          </div> */}
         </Col>
         <Col span={24} md={18} className="header-control">
           <Badge size="small" count={4}>

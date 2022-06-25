@@ -1,13 +1,16 @@
-import { Badge, Calendar, Card, Col, Radio, Row, Typography } from "antd";
+import { Card, Col, DatePicker, Input, Radio, Row, Typography } from "antd";
 import moment from "moment";
 import { useState } from "react";
 
+import { SearchOutlined } from "@ant-design/icons";
 import "moment/locale/vi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Detail from "../components/detail/Detail";
+import ORDER from "../../api/order";
+import Detail from "../components/detail/detailOrder";
+import SpinCustom from "../components/loading/spinCustom";
 import TableCustom from "../components/table/table";
-
+const dateFormat = "YYYY-MM-DD";
 moment.locale("vi_VN");
 
 const { Title } = Typography;
@@ -24,85 +27,31 @@ const CalendarStyle = styled.div`
   }
 `;
 // table code start
-
-const getListData = (value) => {
-  let listData;
-
-  switch (value.date()) {
-    case 8:
-      listData = [
-        {
-          type: "warning",
-          content: "4",
-        },
-        {
-          type: "success",
-          content: "3",
-        },
-      ];
-      break;
-
-    case 10:
-      listData = [
-        {
-          type: "warning",
-          content: "3",
-        },
-        {
-          type: "success",
-          content: "6",
-        },
-        {
-          type: "error",
-          content: "9",
-        },
-      ];
-      break;
-
-    case 15:
-      listData = [
-        {
-          type: "warning",
-          content: "5",
-        },
-        {
-          type: "success",
-          content: "8",
-        },
-      ];
-      break;
-
-    default:
+const Custom = styled.div`
+  display: flex;
+  .custom {
+    font-size: 16px;
+    height: 40px;
+    margin-left: 10px;
   }
-
-  return listData || [];
-};
+  .ant-input {
+    height: auto;
+  }
+  .ant-input-group-addon {
+    background-color: #1890ff;
+  }
+`;
 
 const Order = () => {
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(moment());
   const [modalVisible, setModalVisible] = useState(false);
+  // const [data, setData] = useState();
   const columns = [
     {
       title: "Mã đơn hàng",
       dataIndex: "order",
       key: "order",
-      filters: [
-        {
-          text: "m456",
-          value: "M456",
-        },
-        {
-          text: "Category 1",
-          value: "Category 1",
-        },
-        {
-          text: "Category 2",
-          value: "Category 2",
-        },
-      ],
-      // filterMode: "tree",
-      filterSearch: true,
-      onFilter: (value) => console.log(value, "dd"),
       render: (_, { order }) => {
         return (
           <>
@@ -115,30 +64,14 @@ const Order = () => {
       width: "5%",
     },
     {
-      title: "Tên khách hàng",
-      key: "customer",
-      dataIndex: "customer",
-      filters: [
-        {
-          text: "Joe",
-          value: "Joe",
-        },
-        {
-          text: "Category 1",
-          value: "Category 1",
-        },
-        {
-          text: "Category 2",
-          value: "Category 2",
-        },
-      ],
-      // filterMode: "tree",
-      filterSearch: (value) => console.log(value, "dd"),
-      onFilter: (value, record) => record.address.startsWith(value),
-      render: (_, { customer }) => {
+      title: "Khách hàng",
+      key: "customerName",
+      dataIndex: "customerName",
+
+      render: (_, { customerName }) => {
         return (
           <>
-            <p>{customer}</p>
+            <p>{customerName}</p>
           </>
         );
       },
@@ -173,7 +106,7 @@ const Order = () => {
       key: "total",
       dataIndex: "total",
       width: "50%",
-      render: (_, { total }) => {
+      render: (_, { total, id }) => {
         return (
           <div className="ant-employed">
             <p>{total}</p>
@@ -182,6 +115,7 @@ const Order = () => {
               Chi tiết
             </Link>
             <Detail
+              id={id}
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
             />
@@ -190,7 +124,21 @@ const Order = () => {
       },
     },
   ];
+  // useEffect(() => {
+  //   actionGetAllOrder({keyword:""});
+  // }, []);
 
+  function actionGetAllOrder(data) {
+    setLoading(true);
+    ORDER.search(data)
+      .then((res) => {
+        // setData(res.data.data);
+        console.log(data);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }
   const data = [
     {
       key: "1",
@@ -202,62 +150,76 @@ const Order = () => {
       total: "1200000 vnđ",
     },
   ];
-  const onSelect = (newValue) => {
-    setValue(newValue);
-  };
-
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
 
   return (
     <>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col span={24} md={17} className="mb-24">
+          <Col span={24} md={24} className="mb-24">
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
               title="Đơn hàng"
               extra={
-                <>
-                  <Radio.Group defaultValue="all">
-                    <Radio.Button value="all">Đơn mới</Radio.Button>
-                    <Radio.Button value="online">Đang giao</Radio.Button>
-                    <Radio.Button value="store">Hoàn thành</Radio.Button>
-                  </Radio.Group>
-                </>
+                <div>
+                  <Custom>
+                    <div style={{ width: 250, marginRight: 20 }}>
+                      <Input
+                        size="large"
+                        prefix={<SearchOutlined />}
+                        placeholder="Tìm kiếm..."
+                        width={230}
+                        onChange={(element) => {
+                          actionGetAllOrder({
+                            advancedSearch: {
+                              fields: ["name", "code"],
+                              keyword: element?.target.value,
+                            },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div style={{ marginRight: 20 }}>
+                      <DatePicker
+                        placeholder="tất cả"
+                        size="large"
+                        onChange={(element) => {
+                          actionGetAllOrder({
+                            advancedSearch: {
+                              fields: ["dateCreated"],
+                              keyword: element.format("YY-MM-DD"),
+                            },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <Radio.Group
+                        defaultValue={0}
+                        onChange={(element) => {
+                          actionGetAllOrder({
+                            advancedSearch: {
+                              fields: ["status"],
+                              keyword: element?.target.value,
+                            },
+                          });
+                        }}
+                      >
+                        <Radio.Button value={0}>Đơn mới</Radio.Button>
+                        <Radio.Button value={1}>Đang giao</Radio.Button>
+                        <Radio.Button value={2}>Hoàn thành</Radio.Button>
+                      </Radio.Group>
+                    </div>
+                  </Custom>
+                </div>
               }
               style={{ height: 820 }}
             >
-              <TableCustom data={data} columns={columns} />
-            </Card>
-          </Col>
-          <Col span={24} md={7} className="mb-24">
-            <Card
-              bordered={false}
-              className="criclebox tablespace mb-24"
-              style={{ height: 820 }}
-            >
-              <CalendarStyle>
-                <div className="site-calendar-demo-card p-5">
-                  <Calendar
-                    dateCellRender={dateCellRender}
-                    value={value}
-                    onSelect={onSelect}
-                    locale={{ lang: { locale: "vi" } }}
-                  />
-                </div>
-              </CalendarStyle>
+              {loading ? (
+                <SpinCustom />
+              ) : (
+                <TableCustom data={data} columns={columns} />
+              )}
             </Card>
           </Col>
         </Row>

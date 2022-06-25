@@ -1,20 +1,14 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 import Gallery from "../components/gallery";
-import Quantity from "../components/quantity";
-import {
-  Cookie,
-  COOKIE_NAME,
-  COOKIE_PATH,
-  COOKIE_EXPIRES,
-} from "../../../utils/cookie";
-import { useCookies } from "react-cookie";
 
-import Comments from "../../../components/comment";
-import styled from "styled-components";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
+import styled from "styled-components";
+import Comments from "../../../components/comment";
 
-import { FaFacebookMessenger, FaFacebook } from "react-icons/fa";
+import { InputNumber } from "antd";
+import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
+import CART from "../../../api/cart";
 import RateCustom from "../../../components/rateCustom";
 
 const Price = styled.div`
@@ -144,20 +138,61 @@ const PRODUCT = {
 };
 
 const Detail = () => {
-  const [cookies, setCookie] = useCookies([COOKIE_NAME.CART]);
-
-  function revieceProduct(product) {
-    let expires = new Date();
-    expires.setTime(expires.getTime() + COOKIE_EXPIRES * 1000);
-    const cartCookie = new Cookie(cookies);
-    cartCookie.addItem(product);
-
-    setCookie(COOKIE_NAME.CART, cartCookie.getCart(), {
-      path: COOKIE_PATH,
-      expires,
-    });
+  const [loading, setLoading] = useState(false);
+  // const [data, setData] = useState([]);
+  const newItemCart = useRef({
+    productId: "798db27f-04d8-4b12-3b9c-08da51f02e26",
+    customerId: "655a5696-6886-48c9-89da-3700cc3bbcd2",
+    quantity: 1,
+    price: 12,
+  });
+  useEffect(() => {
+    actionCreatCart(newItemCart.current);
+  }, []);
+  function actionGetAllCart(keyword) {
+    setLoading(true);
+    CART.search(keyword)
+      .then((res) => {
+        // setData(res.data.data);
+        setLoading(false);
+      })
+      .catch((res) => {
+        // setLoading(false);
+      });
+  }
+  function actionCreatCart() {
+    setLoading(true);
+    CART.create(newItemCart.current)
+      .then((res) => {
+        // setData(res.data.data);
+        setLoading(false);
+      })
+      .catch((res) => {
+        setLoading(false);
+      });
   }
 
+  const data = {
+    id: "",
+    slug: "",
+    name: "Laptop Dell Latitude 3420 (L3420I3SSD) chính hãng",
+    amount: 12000000,
+    promotion: 10,
+    description: (
+      <p>
+        Laptop Dell Latitude 3420 được thiết kế với kiểu dáng đơn giản, cứng
+        cáp, sản phẩm có trọng lượng tương đối nhẹ để bạn dễ dàng mang theo bên
+        mình Được trang bị bộ vi xử lý Intel Core i3 1115G4, RAM 8GB mang đến
+        cho doanh nghiệp hiệu suất, khả năng quản lý, các tính năng bảo mật tích
+        hợp sẵn. Ổ cứng có dung lượng lớn để bạn lưu trữ được các dữ liệu cần
+        thiết hoặc SSD sẽ giúp khởi động máy nhanh chóng
+      </p>
+    ),
+    detail: "",
+    rate: 4,
+    numberRate: 12000,
+    imgUrl: [],
+  };
   return (
     <>
       {/* Start Product Details Section */}
@@ -175,48 +210,47 @@ const Detail = () => {
               >
                 {/* Start  Product Details Text Area*/}
                 <div className="product-details-text">
-                  <h4 className="title">
-                    Laptop Dell Latitude 3420 (L3420I3SSD) chính hãng{" "}
-                  </h4>
+                  <h4 className="title">{data.name}</h4>
                   <div className=" align-items-center">
                     <div className="product-review">
-                      <RateCustom size="20" value={4.5} rates={13567} />
+                      <RateCustom
+                        size="20"
+                        value={data.rate}
+                        rates={data.numberRate}
+                      />
                     </div>
                   </div>
                   <Price>
                     <div className="price">
                       <p>
-                        Giá gốc: <del>10.000.000 đ</del>
+                        Giá gốc: <del>{data.amount}</del>
                       </p>
 
                       <div className="promotion">
                         <div className=" promotion-price">
-                          <span className="number">9.000.000 đ</span>
+                          <span className="number">
+                            {(data.amount * (100 - data.promotion)) / 100} đ
+                          </span>
                         </div>
                         <div className="discount-price">
                           <div>
                             Ưu đãi:
-                            <span className="number zizag ">10%</span>
+                            <span className="number zizag ">
+                              {data.promotion + "%"}
+                            </span>
                           </div>
                           <div>
                             Tiết kiệm đến:
-                            <span className="number">1 triệu </span>
+                            <span className="number">
+                              {(data.amount * data.promotion) / 100}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </Price>
                   <div>
-                    <p>
-                      Laptop Dell Latitude 3420 được thiết kế với kiểu dáng đơn
-                      giản, cứng cáp, sản phẩm có trọng lượng tương đối nhẹ để
-                      bạn dễ dàng mang theo bên mình Được trang bị bộ vi xử lý
-                      Intel Core i3 1115G4, RAM 8GB mang đến cho doanh nghiệp
-                      hiệu suất, khả năng quản lý, các tính năng bảo mật tích
-                      hợp sẵn. Ổ cứng có dung lượng lớn để bạn lưu trữ được các
-                      dữ liệu cần thiết hoặc SSD sẽ giúp khởi động máy nhanh
-                      chóng
-                    </p>
+                    <p>{data.description}</p>
 
                     <strong>Thông số sản phẩm</strong>
                     <ul>
@@ -230,8 +264,24 @@ const Detail = () => {
                     </ul>
                   </div>
                 </div>{" "}
-                {/* End  Product Details Text Area*/}
-                <Quantity handleCookie={revieceProduct} data={PRODUCT} />
+                <div className="d-flex align-items-center">
+                  <div className="variable-single-item ">
+                    <span>Quantity</span>
+                    <InputNumber
+                      min={1}
+                      max={10}
+                      defaultValue={1}
+                      ref={(element) =>
+                        (newItemCart.current.price = parseInt(element?.value))
+                      }
+                    />
+                  </div>
+                  <div className="product-add-to-cart-btn">
+                    <button to="#" onClick={actionCreatCart}>
+                      Thêm vào giỏ hàng
+                    </button>
+                  </div>
+                </div>
                 <IconHeart>
                   <AiOutlineHeart className="icon-heart" />
                   <span className="text">Yêu thích</span>

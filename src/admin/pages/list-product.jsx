@@ -1,37 +1,34 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
   Card,
-  Checkbox,
   Col,
   Input,
+  notification,
   Popconfirm,
   Radio,
-  Rate,
   Row,
   Tag,
-  Tooltip,
-  Typography,
 } from "antd";
 
 import styled from "styled-components";
 
-import { Select } from "antd";
+import { Modal, Select } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { AiFillEye } from "react-icons/ai";
+import { MdDelete, MdFilterListAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
-import face2 from "../assets/images/face-2.jpg";
-import TableCustom from "../components/table/table";
-import {
-  MdDelete,
-  MdOutlineModeEditOutline,
-  MdFilterListAlt,
-} from "react-icons/md";
+import CATEGORIES from "../../api/categories";
 import PRODUCT from "../../api/product";
-import { useEffect, useMemo, useRef, useState } from "react";
+import SUPPLIERS from "../../api/suppliers";
+import face2 from "../assets/images/face-2.jpg";
+import DetailProduct from "../components/detail/detailProduct";
+import SpinCustom from "../components/loading/spinCustom";
+import TableCustom from "../components/table/table";
 
 const { Option } = Select;
-
-const { Title } = Typography;
+const { confirm } = Modal;
 
 const Custom = styled.div`
   display: flex;
@@ -47,7 +44,17 @@ const Custom = styled.div`
     background-color: #1890ff;
   }
 `;
-
+const StyleTitle = styled.div`
+  line-height: 1.5em;
+  height: 3em;
+  overflow: hidden;
+  white-space: break-spaces;
+  text-overflow: ellipsis;
+  width: 200px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
 // const data = [
 //   {
 //     key: "1",
@@ -71,32 +78,100 @@ const Custom = styled.div`
 
 const ListProduct = () => {
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState({
+    visible: false,
+    data: [],
+  });
   const [data, setData] = useState(null);
-  const [valueStatus, setValueStatus] = useState(true);
+  const [valueStatus, setValueStatus] = useState(2);
+  const [listCategory, setListCategory] = useState([]);
+  const [listSupplier, setListSupplier] = useState([]);
 
-  const datas = useRef({
-    id: "936DA01F-9ABD-4d9d-80C7-02AF85C822A8",
-    name: "",
-    description: "",
-    slug: "thien",
-    level: 0,
-    order: 0,
-    isShowed: true,
-    parentId: "936DA01F-9ABD-4d9d-80C7-02AF85C822A8",
+  const filter = useRef({
+    advancedSearch: {
+      fields: [""],
+      keyword: "",
+    },
+    keyword: "",
+    pageNumber: 0,
+    pageSize: 0,
+    orderBy: [""],
+    supplierId: "",
+    minimumRate: 1,
+    maximumRate: 5,
   });
   useEffect(() => {
-    actionSearch("");
+    actionGetAllProduct({ keyword: "" });
+    actionGetAllCategories();
+    actionGetAllSuppliers();
   }, []);
-  function actionSearch(keyword) {
+
+  function actionGetAllProduct(keyword) {
     setLoading(true);
-    PRODUCT.search({ keyword })
+    PRODUCT.search(keyword)
       .then((res) => {
         setData(res.data.data);
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
       });
   }
+  function actionDeleteSingleProduct(id) {
+    setLoading(true);
+    PRODUCT.delete({ id: id })
+      .then((res) => {
+        setLoading(false);
+        notification.success({
+          message: "Xóa thành công !",
+          placement: "topRight",
+        });
+        actionGetAllProduct();
+      })
+      .catch((error) => {
+        setLoading(false);
+        notification.error({
+          message: "Xóa không thành công !",
+          placement: "topRight",
+        });
+      });
+  }
+  function actionGetAllCategories() {
+    CATEGORIES.search({ keyword: "" })
+      .then((res) => {
+        setListCategory(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  function actionGetAllSuppliers() {
+    SUPPLIERS.search({ keyword: "" })
+      .then((res) => {
+        setListSupplier(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const showDeleteConfirm = (id) => {
+    confirm({
+      title: "Bạn chắc chắn muốn xóa",
+      icon: <ExclamationCircleOutlined />,
+      okText: "Xóa ",
+      okType: "danger",
+      cancelText: "Hủy",
+
+      onOk() {
+        actionDeleteSingleProduct(id);
+      },
+
+      // onCancel() {
+      //   console.log("Cancel");
+      // },
+    });
+  };
+
   const columns = [
     {
       title: "Tên",
@@ -104,9 +179,6 @@ const ListProduct = () => {
       key: "name",
 
       render: (_, { name, avatar }) => {
-        {
-          console.log(name, avatar);
-        }
         return (
           <>
             <Avatar.Group>
@@ -117,13 +189,13 @@ const ListProduct = () => {
                 src={face2}
               ></Avatar>
               <div className="avatar-info">
-                <Title level={5}>{name}</Title>
+                <StyleTitle>{name}</StyleTitle>
               </div>
             </Avatar.Group>
           </>
         );
       },
-      width: "20%",
+      width: "10%",
     },
 
     {
@@ -137,7 +209,7 @@ const ListProduct = () => {
             color={color}
             style={{ height: "40px", fontSize: "14px", padding: "10px 20px" }}
           >
-            {status ? "public" : "private"}
+            {status === 1 ? "public" : "private"}
           </Tag>
         );
       },
@@ -168,40 +240,55 @@ const ListProduct = () => {
         );
       },
     },
-    {
-      title: "Đánh giá",
-      key: "rate",
-      dataIndex: "rate",
+    // {
+    //   title: "Đánh giá",
+    //   key: "rate",
+    //   dataIndex: "rate",
 
-      render: (_, { rate }) => {
-        return (
-          <>
-            <Rate disabled allowHalf defaultValue={rate} />
-          </>
-        );
-      },
-    },
+    //   render: (_, { rate }) => {
+    //     return (
+    //       <>
+    //         <p>{rate}/5 sao </p>
+    //       </>
+    //     );
+    //   },
+    // },
     {
       title: "Số lượng",
       key: "quantity",
       dataIndex: "quantity",
-      render: (_, { quantity }) => {
+      render: (_, item) => {
         return (
           <>
             <div className="ant-employed">
-              <span style={{ width: "50px", textAlign: "center" }}>
-                {quantity}
+              <span
+                style={{ width: "50px", textAlign: "center", marginRight: 50 }}
+              >
+                {item.quantity}
               </span>
               <div className="col-action">
-                <Button type="link" danger style={{ fontSize: 25 }}>
+                <Button
+                  type="link"
+                  danger
+                  style={{ fontSize: 25 }}
+                  onClick={() => showDeleteConfirm(item.id)}
+                >
                   <MdDelete />
                 </Button>
+
                 <Button
                   type="link"
                   className="darkbtn"
                   style={{ fontSize: 25 }}
                 >
-                  <MdOutlineModeEditOutline />
+                  <AiFillEye
+                    onClick={() =>
+                      setModalVisible({
+                        visible: true,
+                        data: item,
+                      })
+                    }
+                  />
                 </Button>
               </div>
             </div>
@@ -213,6 +300,10 @@ const ListProduct = () => {
   ];
   return (
     <>
+      <DetailProduct
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <div className="tabled">
         <Row gutter={[24, 0]}>
           <Col xs="24" xl={24}>
@@ -220,6 +311,7 @@ const ListProduct = () => {
               bordered={false}
               className="criclebox tablespace mb-24"
               title="Danh sách sản phẩm"
+              style={{ minHeight: 500 }}
               extra={[
                 <Custom>
                   <Input
@@ -245,11 +337,11 @@ const ListProduct = () => {
                                         onChange={(e) =>
                                           setValueStatus(e.target.value)
                                         }
-                                        value="all"
+                                        value={valueStatus}
                                       >
-                                        <Radio value="all">All</Radio>
-                                        <Radio value="public">Public</Radio>
-                                        <Radio value="private">Private</Radio>
+                                        <Radio value={2}>All</Radio>
+                                        <Radio value={1}>Public</Radio>
+                                        <Radio value={0}>Private</Radio>
                                       </Radio.Group>
                                     </Row>
                                   </Col>
@@ -263,14 +355,25 @@ const ListProduct = () => {
                                   </Col>
                                   <Col span={16}>
                                     <Select
-                                      defaultValue="lucy"
+                                      size="large"
+                                      mode="multiple"
+                                      showArrow
+                                      tagRender={tagRender}
                                       style={{
-                                        width: 120,
+                                        width: "100%",
+                                        marginTop: "-10px",
                                       }}
+                                      // onChange={(value, option) => {
+                                      //   console.log();
+                                      // }}
                                     >
-                                      <Option value="jack">Jack</Option>
-                                      <Option value="lucy">Lucy</Option>
-                                      <Option value="Yiminghe">yiminghe</Option>
+                                      {listCategory?.map((element, key) => {
+                                        return (
+                                          <Option key={key} value={element.id}>
+                                            {element.name}
+                                          </Option>
+                                        );
+                                      })}
                                     </Select>
                                   </Col>
                                 </Row>
@@ -283,17 +386,61 @@ const ListProduct = () => {
                                   </Col>
                                   <Col span={16}>
                                     <Select
-                                      defaultValue="lucy"
+                                      placeholder="nhãn hàng"
                                       style={{
                                         width: 120,
                                       }}
                                     >
-                                      <Option value="jack">Jack</Option>
-                                      <Option value="lucy">Lucy</Option>
-                                      <Option value="Yiminghe">yiminghe</Option>
+                                      {listSupplier.map((item, key) => {
+                                        return (
+                                          <Option key={key} value={item.id}>
+                                            {item.name}
+                                          </Option>
+                                        );
+                                      })}
                                     </Select>
                                   </Col>
                                 </Row>
+                                {/* <Row>
+                                  <Col span={8}>
+                                    <p>Đánh giá</p>
+                                  </Col>
+                                  <Col span={16}>
+                                    <div>
+                                      <span
+                                        style={{
+                                          marginRight: 10,
+                                          width: 30,
+                                          display: "inline-block",
+                                        }}
+                                      >
+                                        Từ:
+                                      </span>
+                                      <Rate allowHalf defaultValue={0} />
+                                    </div>
+                                    <div
+                                      style={{
+                                        textAlign: "center",
+                                        fontSize: 21,
+                                        marginLeft: "-40px",
+                                      }}
+                                    >
+                                      <BsArrowDownShort />
+                                    </div>
+                                    <div>
+                                      <span
+                                        style={{
+                                          marginRight: 10,
+                                          width: 30,
+                                          display: "inline-block",
+                                        }}
+                                      >
+                                        Đến:
+                                      </span>
+                                      <Rate allowHalf defaultValue={5} />
+                                    </div>
+                                  </Col>
+                                </Row> */}
                               </Col>
                             </Row>
                           </>
@@ -322,7 +469,7 @@ const ListProduct = () => {
                     placeholder="Tìm kiếm..."
                     width={230}
                     onChange={(element) => {
-                      actionSearch(element?.target.value);
+                      actionGetAllProduct({ keyword: element?.target.value });
                     }}
                   />
                   <Button type="primary" className="custom">
@@ -331,7 +478,11 @@ const ListProduct = () => {
                 </Custom>,
               ]}
             >
-              <TableCustom data={data} columns={columns} />
+              {loading ? (
+                <SpinCustom />
+              ) : (
+                <TableCustom data={data} columns={columns} />
+              )}
             </Card>
           </Col>
         </Row>
@@ -339,5 +490,33 @@ const ListProduct = () => {
     </>
   );
 };
+const tagRender = (props) => {
+  const { label, closable, onClose } = props;
 
+  const onPreventMouseDown = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  return (
+    <Tag
+      color="#f50"
+      onMouseDown={onPreventMouseDown}
+      closable={closable}
+      onClose={onClose}
+      style={{
+        margin: 3,
+        fontSize: 14,
+        lineHeight: "20px",
+        minWidth: 100,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        textTransform: "capitalize",
+      }}
+    >
+      {label}
+    </Tag>
+  );
+};
 export default ListProduct;

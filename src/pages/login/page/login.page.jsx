@@ -1,6 +1,36 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { AiFillFacebook, AiFillLock } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 import FormLogin from "../components/form-login";
 import FormRegister from "../components/form-register";
+import { TiUser } from "react-icons/ti";
+const StyleFormLogin = styled.div`
+  margin-top: 100px;
+
+  border: 1px solid;
+  padding: 12px;
+  background: #fff;
+  h6.title {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .icon {
+    font-size: 36px;
+    cursor: pointer;
+    text-align: center;
+  }
+  svg.site-form-item-icon {
+    font-size: 20px;
+  }
+  .ant-input {
+    border-radius: 0;
+  }
+`;
 
 const Login = ({ showSingin }) => {
   const [showSinginForm, setShowSinginForm] = useState(true);
@@ -12,7 +42,6 @@ const Login = ({ showSingin }) => {
 
   return (
     <>
-      {/* ...:::: Start Customer Login Section :::... */}
       <div className="customer_login">
         <div className="container">
           <div className=" pt-100 ">
@@ -46,7 +75,6 @@ const Login = ({ showSingin }) => {
           </div>
         </div>
       </div>
-      {/* ...:::: End Customer Login Section :::... */}
     </>
   );
 };

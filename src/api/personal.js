@@ -1,8 +1,8 @@
 import axiosConfig from "../utils/axiosConfig";
 
-const PRODUCT = {
-  search: (data) => {
-    return axiosConfig.post("v1/products/search", data);
+const PERSONAL = {
+  getUser: () => {
+    return axiosConfig.get("personal/profile");
   },
   create: (data) => {
     return axiosConfig.post("v1/products", data);
@@ -12,4 +12,4 @@ const PRODUCT = {
   },
 };
 
-export default PRODUCT;
+export default PERSONAL;

@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "../admin/components/layout/Main";
 import LayoutClient from "../layout/layout";
 import Cart from "../pages/cart/page/cart.page";
 import Checkout from "../pages/checkout/page/checkout.page";
@@ -9,22 +10,21 @@ import Home from "../pages/home/page/home.page";
 import Login from "../pages/login/page/login.page";
 import Product from "../pages/product/page/product.page";
 import Test from "../pages/test/test.page";
-import Main from "../admin/components/layout/Main";
 
-import { PATH } from "../utils/const";
 import Add from "../admin/pages/add";
-import ListProduct from "../admin/pages/list-product";
-import Dashboard from "../admin/pages/dashboard";
-import Billing from "../admin/pages/Billing";
-import Profile from "../admin/pages/Profile";
-import Order from "../admin/pages/order";
-import Tables from "../admin/pages/Tables";
 import Categories from "../admin/pages/categories";
+import Dashboard from "../admin/pages/dashboard";
+import ListProduct from "../admin/pages/list-product";
+import Order from "../admin/pages/order";
 import Promotion from "../admin/pages/promotion";
 
+import { PATH } from "../utils/const";
+
 import Accounts from "../admin/pages/account";
-import Provided from "../admin/pages/provided";
 import Notification from "../admin/pages/notification";
+import Shipper from "../admin/pages/shipper";
+import Supplier from "../admin/pages/supplier";
+import EditProduct from "../admin/pages/edit-product";
 
 const AllRouter = () => {
   return (
@@ -146,6 +146,15 @@ const listRoute = [
   },
   {
     exact: true,
+    path: "san-pham/sua-san-pham",
+    component: (
+      <Main>
+        <EditProduct />
+      </Main>
+    ),
+  },
+  {
+    exact: true,
     path: "/san-pham",
     component: (
       <Main>
@@ -164,43 +173,27 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "/billing",
+    path: "/shipper",
     component: (
       <Main>
-        <Billing />
+        <Shipper />
       </Main>
     ),
   },
+
   {
     exact: true,
-    path: "/profile",
+    path: "/nhan-hang",
     component: (
       <Main>
-        <Profile />
+        <Supplier />
       </Main>
     ),
   },
+
   {
     exact: true,
-    path: "/nha-cung-cap",
-    component: (
-      <Main>
-        <Provided />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: "tables",
-    component: (
-      <Main>
-        <Tables />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: "account",
+    path: "tai-khoan",
     component: (
       <Main>
         <Accounts />

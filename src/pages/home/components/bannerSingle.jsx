@@ -11,7 +11,6 @@ const BannerSingle = (props) => {
   // }
   return (
     <>
-      {/* Start Banner Single */}
       <div
         className="banner-single mb-30"
         data-aos="fade-up"
@@ -28,7 +27,6 @@ const BannerSingle = (props) => {
           </Link>
         </div>
       </div>
-      {/* End Banner Single */}
     </>
   );
 };

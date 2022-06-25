@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import LOGIN from "../../api/login";
-import axiosConfig from "../../utils/axiosConfig";
-const Test = () => {
-  const [data, setData] = useState(null);
+
+function MyApp() {
+  const [offset, setOffset] = useState(0);
+
   useEffect(() => {
-    axiosConfig.get("v1/dashboard");
+    const onScroll = () => setOffset(window.pageYOffset);
+    // clean up code
+    window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return <></>;
-};
-export default Test;
+  console.log(offset);
+}
+export default MyApp;
