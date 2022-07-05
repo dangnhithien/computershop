@@ -9,13 +9,17 @@ trigger:
 pool:
   totostore-ci
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '16.15.1'
-  displayName: 'Install Node.js'
+variables:
+  buildConfiguration: 'Release'
+  workDir: '/home/hoaith/projects/Totostore.Frontend.Client'
+  webserverDir: '/home/hoaith/projects/Totostore.Webserver.Dev'
 
+steps:
 - script: |
+    git pull
     yarn install
+    rm -rf build
     yarn build
-  displayName: 'yarn install and build'
+    cp -Rf build ${webserverDir}/app/client
+  workingDirectory: $(workDir)
+  displayName: 'Run update stack commands'
