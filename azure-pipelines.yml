@@ -20,6 +20,7 @@ steps:
     yarn install
     rm -rf build
     yarn build
-    cp -Rf build ${webserverDir}/app/client
+    cp -Rf build $(webserverDir)/app/client
+    docker-compose -f $(webserverDir)/docker-compose.yml up --build -d
   workingDirectory: $(workDir)
   displayName: 'Run update stack commands'
