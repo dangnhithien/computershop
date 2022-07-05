@@ -37,6 +37,7 @@ import {
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../assets/images/team-2.jpg";
+import { PATH, PATH_ADIM } from "../../../utils/const";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -414,9 +415,9 @@ function Header({
               </div>
             </div>
           </Drawer>
-          <Link to="/sign-in" className="btn-sign-in">
+          <Link to={PATH.SINGIN} className="btn-sign-in">
             {profile}
-            <span>Sign in</span>
+            <span>Logout</span>
           </Link>
           <Input
             className="header-search"

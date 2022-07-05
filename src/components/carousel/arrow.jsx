@@ -12,6 +12,7 @@ function NextArrow(props) {
       style={{
         right: "-45px",
       }}
+      className="arrow-carousel"
       onClick={onClick}
     >
       <MdOutlineArrowForwardIos />
@@ -27,6 +28,7 @@ function PrevArrow(props) {
       style={{
         left: "-30px",
       }}
+      className="arrow-carousel"
       onClick={onClick}
     >
       <MdOutlineArrowBackIos />

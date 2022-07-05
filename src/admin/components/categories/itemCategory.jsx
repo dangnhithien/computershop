@@ -141,7 +141,7 @@ const ItemCategory = ({ item }) => {
 
   function actionUpdateCategory() {
     setLoading(true);
-    console.log(data.current);
+
     CATEGORIES.put(data.current)
       .then((res) => {
         notification.success({

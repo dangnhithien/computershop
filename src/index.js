@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "./assets/scss/style.scss";
 import "antd/dist/antd.min.css";
-import "./admin/assets/styles/main.css";
+// import "./admin/assets/styles/main.css";
 import "./admin/assets/styles/responsive.css";
 import "../node_modules/react-quill/dist/quill.snow.css";
 

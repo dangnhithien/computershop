@@ -1,74 +1,143 @@
 import Slider from "react-slick";
-import SectionTitle from "../section-title";
+
 import { NextArrow, PrevArrow } from "./arrow";
 
 import { useState } from "react";
-import ProductSingle from "../product-single";
+import ProductSingle from "../product-card/product-single";
+import { Col, Row } from "antd";
+import styled from "styled-components";
+const StyleCarousel = styled.div`
+  margin-top: 12px;
 
+  h4 {
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #ff6f3c;
+    margin: 0;
+    margin-left: 5px;
+  }
+  .arrow-carousel {
+    font-size: 45px;
+    display: block;
+    z-index: 15;
+    height: 60px;
+    width: 60px;
+    opacity: 1;
+    color: #c1c1c1;
+    position: absolute;
+    cursor: pointer;
+    top: 40%;
+    &:hover {
+      color: #ff6f3c;
+    }
+  }
+`;
 const settings = {
   adaptiveHeight: true,
+  // autoplay: true,
   infinite: true,
+  pauseOnFocus: true,
   speed: 1000,
   slidesToShow: 5,
   slidesToScroll: 3,
   variableWidth: false,
-  nextArrow: <NextArrow id="arrowCarousel" />,
-  prevArrow: <PrevArrow id="arrowCarousel" />,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
 };
 
-const Carousel = ({ data }) => {
-  // const [data, setData] = useState([
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     deail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "",
-  //   },
-  // ]);
+const Carousel = ({ datas, title = "" }) => {
+  const data = [
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+  ];
   return (
     <>
-      <div className="product-tab-section section-top-gap-100">
-        <div className="section-content-gap">
-          <div className="container">
-            <div className="row">
-              <SectionTitle content="Sản phẩm" />
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="product-tab-wrapper"
-          data-aos="fade-up"
-          data-aos-delay="50"
-        >
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <div className="tab-content tab-animate-zoom">
-                  <div
-                    className="product-default-slider product-default-slider-4grids-1row"
-                    id="hoverCarousel"
-                  >
-                    <Slider {...settings}>
-                      {data?.map((item, key) => {
-                        return (
-                          <>
-                            <ProductSingle item={item} key={key} />
-                          </>
-                        );
-                      })}
-                    </Slider>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="container">
+        <StyleCarousel>
+          <Row gutter={[24, 0]}>
+            <Col>
+              <h4>{title}</h4>
+            </Col>
+            <Col span={24}>
+              <Slider {...settings}>
+                {data?.map((item, key) => {
+                  return (
+                    <>
+                      <div style={{ margin: "5px 5px" }}>
+                        <ProductSingle item={item} key={key} />
+                      </div>
+                    </>
+                  );
+                })}
+              </Slider>
+            </Col>
+          </Row>
+        </StyleCarousel>
       </div>
     </>
   );

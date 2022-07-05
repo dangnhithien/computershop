@@ -3,177 +3,58 @@ import Gallery from "../components/gallery";
 
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
-import styled from "styled-components";
-import Comments from "../../../components/comment";
 
-import { InputNumber } from "antd";
+import Comments from "../../../components/modal-feed-back/comment";
+
+import { Button, Col, InputNumber, Row, Tabs } from "antd";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
-import CART from "../../../api/cart";
-import RateCustom from "../../../components/rateCustom";
-
-const Price = styled.div`
-  .price {
-    font-size: 14px;
-    margin-top: 20px;
-    color: #8a8a8a;
-  }
-  .number {
-    color: #51c390;
-    font-size: 25px;
-    font-weight: 500;
-    margin-left: 10px;
-  }
-  .promotion {
-    color: #757575;
-    display: flex;
-    align-items: center;
-  }
-
-  .promotion-price {
-    padding: 10px 10px 10px 0;
-    background-color: #f5f6ff;
-    display: flex;
-    align-items: center;
-  }
-  .discount-price {
-    margin-left: 20px;
-    margin-bottom: 10px;
-  }
-  .zizag {
-    color: #fff;
-    background-color: red;
-    position: relative;
-    padding: 2px 15px;
-    font-size: 18px;
-    font-weight: 700;
-    &:before {
-      background: linear-gradient(-137deg, #ff0000 6px, transparent 0) 0 5px,
-        linear-gradient(320deg, #ff0000 5px, #fff 0) 0 5px;
-      background-position: left bottom;
-      background-repeat: repeat-y;
-      background-size: 8px 8px;
-      content: " ";
-      display: block;
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-    }
-    &:after {
-      background: linear-gradient(49deg, #ff0000 6px, transparent 0) 0 5px,
-        linear-gradient(142deg, #ff0000 5px, #fff 0) 0 5px;
-      background-position: right bottom;
-      background-repeat: repeat-y;
-      background-size: 8px 8px;
-      content: " ";
-      display: block;
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
-      width: 100%;
-      height: 100%;
-    }
-  }
-`;
-const IconHeart = styled.div`
-  display: inline-block;
-  color: red;
-  cursor: pointer;
-  margin-bottom: 20px;
-  width: 100px;
-  .icon-heart {
-    font-size: 25px;
-  }
-  .text {
-    margin-left: 5px;
-  }
-  &:hover {
-    color: #51c390;
-  }
-`;
-const Social = styled.div`
-  display: inline-block;
-  font-size: 25px;
-  .social {
-  }
-  .icon-social {
-    margin-left: 10px;
-  }
-  .icon-facebook {
-    color: #3b5999;
-  }
-  .icon-messenger {
-    color: #0384ff;
-  }
-  .icon-twitter {
-    color: #10c2ff;
-  }
-`;
-const PRODUCT = {
-  1: {
-    quantity: 1,
-  },
-  2: {
-    quantity: 1,
-  },
-  3: {
-    quantity: 1,
-  },
-  4: {
-    quantity: 1,
-  },
-  5: {
-    quantity: 1,
-  },
-  6: {
-    quantity: 1,
-  },
-  7: {
-    quantity: 1,
-  },
-  8: {
-    quantity: 1,
-  },
-};
+import { useNavigate, useParams } from "react-router-dom";
+import PRODUCT from "../../../api/product";
+import RateCustom from "../../../components/modal-feed-back/rateCustom";
+import parseMoney from "../../../utils/parseMoney";
+import { PATH } from "../../../utils/const";
+import { RiShoppingCartFill } from "react-icons/ri";
+import { MdCompare } from "react-icons/md";
+import Compare from "../../../components/compare/compare";
+import {
+  StyleContainer,
+  StylePrice,
+  StyleSocial,
+  StyleTable,
+} from "../style/style";
+const { TabPane } = Tabs;
 
 const Detail = () => {
   const [loading, setLoading] = useState(false);
   // const [data, setData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const { productId } = useParams();
+  let navigate = useNavigate();
+  const [number, setNumber] = useState(1);
+
   const newItemCart = useRef({
     productId: "798db27f-04d8-4b12-3b9c-08da51f02e26",
     customerId: "655a5696-6886-48c9-89da-3700cc3bbcd2",
     quantity: 1,
     price: 12,
   });
-  useEffect(() => {
-    actionCreatCart(newItemCart.current);
-  }, []);
-  function actionGetAllCart(keyword) {
-    setLoading(true);
-    CART.search(keyword)
-      .then((res) => {
-        // setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((res) => {
-        // setLoading(false);
-      });
-  }
-  function actionCreatCart() {
-    setLoading(true);
-    CART.create(newItemCart.current)
-      .then((res) => {
-        // setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((res) => {
-        setLoading(false);
-      });
-  }
+  // useEffect(() => {
+  //   actionGetProduct({ id: productId });
+  // }, []);
+  // function actionGetProduct(data) {
+  //   setLoading(true);
+  //   PRODUCT.getSingle(data)
+  //     .then((res) => {
+  //       setData(res.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((res) => {
+  //       setLoading(false);
+  //     });
+  // }
 
   const data = {
-    id: "",
+    id: 1,
     slug: "",
     name: "Laptop Dell Latitude 3420 (L3420I3SSD) chính hãng",
     amount: 12000000,
@@ -195,110 +76,314 @@ const Detail = () => {
   };
   return (
     <>
-      {/* Start Product Details Section */}
-      <div className="product-details-section">
+      {data === undefined || data === null ? (
+        navigate(PATH.ERROR)
+      ) : (
         <div className="container">
-          <div className="row pt-100">
-            <div className="col-md-6">
-              <Gallery />
-            </div>
-            <div className="col-md-6">
-              <div
-                className="product-details-content-area"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                {/* Start  Product Details Text Area*/}
-                <div className="product-details-text">
-                  <h4 className="title">{data.name}</h4>
-                  <div className=" align-items-center">
-                    <div className="product-review">
-                      <RateCustom
-                        size="20"
-                        value={data.rate}
-                        rates={data.numberRate}
-                      />
-                    </div>
-                  </div>
-                  <Price>
-                    <div className="price">
-                      <p>
-                        Giá gốc: <del>{data.amount}</del>
-                      </p>
-
-                      <div className="promotion">
-                        <div className=" promotion-price">
-                          <span className="number">
-                            {(data.amount * (100 - data.promotion)) / 100} đ
-                          </span>
-                        </div>
-                        <div className="discount-price">
-                          <div>
-                            Ưu đãi:
-                            <span className="number zizag ">
-                              {data.promotion + "%"}
-                            </span>
-                          </div>
-                          <div>
-                            Tiết kiệm đến:
-                            <span className="number">
-                              {(data.amount * data.promotion) / 100}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Price>
-                  <div>
-                    <p>{data.description}</p>
-
-                    <strong>Thông số sản phẩm</strong>
-                    <ul>
-                      <li> CPU: Intel Core i3 1115G4 </li>
-                      <li>RAM: 8GB</li>
-                      <li>Ổ cứng: 256GB SSD</li>
-                      <li>VGA: Onboard</li>
-                      <li>Màn hình: 14.0 inch HD</li>
-                      <li>HĐH: Fedora</li>
-                      <li>Màu: Đen</li>
-                    </ul>
-                  </div>
-                </div>{" "}
-                <div className="d-flex align-items-center">
-                  <div className="variable-single-item ">
-                    <span>Quantity</span>
-                    <InputNumber
-                      min={1}
-                      max={10}
-                      defaultValue={1}
-                      ref={(element) =>
-                        (newItemCart.current.price = parseInt(element?.value))
-                      }
-                    />
-                  </div>
-                  <div className="product-add-to-cart-btn">
-                    <button to="#" onClick={actionCreatCart}>
-                      Thêm vào giỏ hàng
-                    </button>
-                  </div>
-                </div>
-                <IconHeart>
-                  <AiOutlineHeart className="icon-heart" />
-                  <span className="text">Yêu thích</span>
-                </IconHeart>
-                <Social>
+          <StyleContainer>
+            <Row gutter={[24, 0]}>
+              <Col span={12}>
+                <Gallery />
+                <StyleSocial>
+                  <span>Chia sẻ: </span>
                   <FaFacebookMessenger className="icon-messenger icon-social" />
                   <FaFacebook className="icon-facebook icon-social" />
                   <BsTwitter className="icon-twitter icon-social" />
-                </Social>
-                <div></div>
-              </div>
-            </div>
-          </div>
-          <Comments />
+                </StyleSocial>
+              </Col>
+              <Col span={12}>
+                <div className="product-details-text">
+                  <h4 className="title">{data.name}</h4>
+
+                  <div className="product-review">
+                    <RateCustom
+                      size="20"
+                      value={data.rate}
+                      rates={data.numberRate}
+                    />
+                  </div>
+
+                  <StylePrice>
+                    <span className="number">
+                      {parseMoney((data.amount * (100 - data.promotion)) / 100)}
+                      &nbsp;vnđ
+                    </span>
+
+                    <del className="price">
+                      {parseMoney(data.amount)}&nbsp;vnđ
+                    </del>
+                    <span class="stamp is-approved">30%</span>
+                  </StylePrice>
+                  <div>
+                    <p>{data.description}</p>
+                  </div>
+                </div>
+
+                <div className="add-to-cart">
+                  <div className="quantity">
+                    <InputNumber
+                      min={1}
+                      max={10}
+                      value={number}
+                      defaultValue={1}
+                      style={{ width: 70 }}
+                    />
+                  </div>
+                  <div className="btn-add-to-cart">
+                    <RiShoppingCartFill />
+                    Thêm vào giỏ
+                  </div>
+                  <div
+                    className="compare btn-add-to-cart"
+                    onClick={() => setModalVisible(true)}
+                  >
+                    <MdCompare />
+                    So Sánh
+                  </div>
+                  <Compare
+                    productCurrent={data}
+                    modalVisible={modalVisible}
+                    setModalVisible={setModalVisible}
+                  />
+                </div>
+                <div className="tag-relation">
+                  <span>Đề xuất</span>
+                  <div className="tag">
+                    <span>Laptop dell</span>
+                    <span>Laptop dell</span>
+                    <span>Laptop dell</span>
+                    <span>Laptop dell</span>
+                    <span>Laptop dell</span>
+                    <span>Laptop dell</span>
+                    <span>Laptop dell</span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+            <Tabs type="card">
+              <TabPane tab="Thông số" key="1">
+                <StyleTable>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td colspan="2">
+                          <p>Mô tả chi tiết</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Hãng sản xuất</p>
+                        </td>
+                        <td>
+                          <p>Dell</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Chủng loại</p>
+                        </td>
+                        <td>
+                          <p>Inspiron 5406</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Part Number</p>
+                        </td>
+                        <td>
+                          <p>3661SLV</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Mầu sắc</p>
+                        </td>
+                        <td>
+                          <p>Xám</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Bộ vi xử lý</p>
+                        </td>
+                        <td>
+                          <p>Intel Core i3 1115G4&nbsp;</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Chipset</p>
+                        </td>
+                        <td>
+                          <p>Intel&nbsp;</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Bộ nhớ trong</p>
+                        </td>
+                        <td>
+                          <p>8GB DDR4 3200MHz&nbsp;</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Số khe cắm</p>
+                        </td>
+                        <td>
+                          <p>2</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Dung lượng tối đa</p>
+                        </td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>VGA</p>
+                        </td>
+                        <td>
+                          <p>Intel UHD Graphics</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Ổ cứng</p>
+                        </td>
+                        <td>
+                          <p>256GB M.2 PCIe NVMe SSD</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Ổ quang</p>
+                        </td>
+                        <td>
+                          <p>No</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Card Reader</p>
+                        </td>
+                        <td>
+                          <p>SD</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Bảo mật, công nghệ</p>
+                        </td>
+                        <td>
+                          <p>Led Keyboard</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Màn hình&nbsp;</p>
+                        </td>
+                        <td>
+                          <p>14.0-inch HD WVA LED-Backlit, Touch Screen</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Webcam</p>
+                        </td>
+                        <td>
+                          <p>HD</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Audio</p>
+                        </td>
+                        <td>
+                          <p>
+                            Realtek High Definition Audio (Speaker : 2 x 2W)
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Giao tiếp mạng</p>
+                        </td>
+                        <td>
+                          <p>Gigabit</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Giao tiếp không dây</p>
+                        </td>
+                        <td>
+                          <p>802.11ac ,Bluetooth 5.1</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Cổng giao tiếp</p>
+                        </td>
+                        <td>
+                          <p>
+                            2x&nbsp; USB 3.2 Gen 1 ports, 1x&nbsp; USB 3.2 Gen 2
+                            Type-C with DisplayPort, 1x HDMI 1.4, 1x Headset
+                            port, 1x DC-in Jack
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Pin</p>
+                        </td>
+                        <td>
+                          <p>3 cell (40Whr)</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Kích thước&nbsp;</p>
+                        </td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Cân nặng</p>
+                        </td>
+                        <td>
+                          <p>1.72kg</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Hệ điều hành</p>
+                        </td>
+                        <td>
+                          <p>Win 10&nbsp;</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p>Phụ kiện đi kèm</p>
+                        </td>
+                        <td>
+                          <p>AC Adapter</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </StyleTable>
+              </TabPane>
+
+              <TabPane tab="Đánh giá" key="3">
+                <Comments />
+              </TabPane>
+            </Tabs>
+          </StyleContainer>
         </div>
-      </div>{" "}
-      {/* End Product Details Section */}
+      )}
     </>
   );
 };

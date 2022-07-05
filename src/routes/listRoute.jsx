@@ -2,12 +2,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "../admin/components/layout/Main";
 import LayoutClient from "../layout/layout";
 import Cart from "../pages/cart/page/cart.page";
-import Checkout from "../pages/checkout/page/checkout.page";
-import Contact from "../pages/contact/page/contact.page";
+
 import Detail from "../pages/detail/page/detail.page";
 import ErrorPage from "../pages/error/page/404.page";
 import Home from "../pages/home/page/home.page";
-import Login from "../pages/login/page/login.page";
+
 import Product from "../pages/product/page/product.page";
 import Test from "../pages/test/test.page";
 
@@ -18,19 +17,24 @@ import ListProduct from "../admin/pages/list-product";
 import Order from "../admin/pages/order";
 import Promotion from "../admin/pages/promotion";
 
-import { PATH } from "../utils/const";
+import { PATH, PATH_ADIM } from "../utils/const";
 
 import Accounts from "../admin/pages/account";
 import Notification from "../admin/pages/notification";
 import Shipper from "../admin/pages/shipper";
 import Supplier from "../admin/pages/supplier";
 import EditProduct from "../admin/pages/edit-product";
+import Profile from "../pages/profile/page/profile.page";
+import { KEY } from "../utils/localStorage";
+import Singin from "../pages/login/page/singin.page";
+import Singup from "../pages/login/page/singup.page";
 
 const AllRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {listRoute.map((e, key) => {
+        {client.map((e, key) => {
+          // if (!localStorage.getItem(KEY.TOKEN) && e.private) return <></>;
           return <Route key={key} path={e.path} element={e.component} />;
         })}
       </Routes>
@@ -39,9 +43,10 @@ const AllRouter = () => {
 };
 export default AllRouter;
 
-const listRoute = [
+const client = [
   {
     exact: true,
+    private: false,
     path: PATH.HOME,
     component: (
       <LayoutClient>
@@ -51,6 +56,7 @@ const listRoute = [
   },
   {
     exact: true,
+    private: false,
     path: PATH.PRODUCT,
     component: (
       <LayoutClient>
@@ -60,33 +66,18 @@ const listRoute = [
   },
   {
     exact: true,
-    path: PATH.DETAIL,
+    private: false,
+    path: PATH.DETAIL(),
     component: (
       <LayoutClient>
         <Detail />
       </LayoutClient>
     ),
   },
+
   {
     exact: true,
-    path: PATH.CONTACT,
-    component: (
-      <LayoutClient>
-        <Contact />
-      </LayoutClient>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH.CHECKOUT,
-    component: (
-      <LayoutClient>
-        <Checkout />
-      </LayoutClient>
-    ),
-  },
-  {
-    exact: true,
+    private: true,
     path: PATH.CART,
     component: (
       <LayoutClient>
@@ -96,39 +87,42 @@ const listRoute = [
   },
   {
     exact: true,
+    private: true,
+    path: PATH.PROFILE,
+    component: (
+      <LayoutClient>
+        <Profile />
+      </LayoutClient>
+    ),
+  },
+  {
+    exact: true,
+    private: false,
     path: PATH.SINGIN,
-    component: (
-      <LayoutClient>
-        <Login key={1} showSingin={true} />
-      </LayoutClient>
-    ),
+    component: <Singin />,
   },
   {
     exact: true,
+    private: false,
     path: PATH.SINGUP,
-    component: (
-      <LayoutClient>
-        <Login key={2} showSingin={false} />
-      </LayoutClient>
-    ),
+    component: <Singup />,
   },
   {
     exact: true,
+    private: false,
     path: PATH.ERROR,
-    component: (
-      <LayoutClient>
-        <ErrorPage />
-      </LayoutClient>
-    ),
+    component: <ErrorPage />,
   },
   {
     exact: true,
     path: PATH.TEST,
     component: <Test />,
   },
+  // ];
+  // const admin = [
   {
     exact: true,
-    path: "/Dashboard",
+    path: PATH_ADIM.DASHBOARD,
     component: (
       <Main>
         <Dashboard />
@@ -137,7 +131,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "san-pham/them-san-pham",
+    path: PATH_ADIM.AAD_PRODUCT,
     component: (
       <Main>
         <Add />
@@ -146,7 +140,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "san-pham/sua-san-pham",
+    path: PATH_ADIM.EDIT_PRODUCT,
     component: (
       <Main>
         <EditProduct />
@@ -155,7 +149,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "/san-pham",
+    path: PATH_ADIM.PRODUCT,
     component: (
       <Main>
         <ListProduct />
@@ -164,7 +158,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "/loai-san-pham",
+    path: PATH_ADIM.CATEGORY,
     component: (
       <Main>
         <Categories />
@@ -173,7 +167,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "/shipper",
+    path: PATH_ADIM.SHIPPER,
     component: (
       <Main>
         <Shipper />
@@ -183,7 +177,7 @@ const listRoute = [
 
   {
     exact: true,
-    path: "/nhan-hang",
+    path: PATH_ADIM.SUPPLIER,
     component: (
       <Main>
         <Supplier />
@@ -193,7 +187,7 @@ const listRoute = [
 
   {
     exact: true,
-    path: "tai-khoan",
+    path: PATH_ADIM.ACCOUNT,
     component: (
       <Main>
         <Accounts />
@@ -202,7 +196,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "don-hang",
+    path: PATH_ADIM.ORDER,
     component: (
       <Main>
         <Order />
@@ -211,7 +205,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "giam-gia",
+    path: PATH_ADIM.PROMOTION,
     component: (
       <Main>
         <Promotion />
@@ -220,7 +214,7 @@ const listRoute = [
   },
   {
     exact: true,
-    path: "thong-bao",
+    path: PATH_ADIM.NOTIFICATION,
     component: (
       <Main>
         <Notification />

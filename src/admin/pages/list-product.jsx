@@ -26,6 +26,7 @@ import face2 from "../assets/images/face-2.jpg";
 import DetailProduct from "../components/detail/detailProduct";
 import SpinCustom from "../components/loading/spinCustom";
 import TableCustom from "../components/table/table";
+import { PATH_ADIM } from "../../utils/const";
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -473,7 +474,7 @@ const ListProduct = () => {
                     }}
                   />
                   <Button type="primary" className="custom">
-                    <Link to="them-san-pham">Thêm sản phẩm</Link>
+                    <Link to={PATH_ADIM.AAD_PRODUCT}>Thêm sản phẩm</Link>
                   </Button>
                 </Custom>,
               ]}

@@ -1,28 +1,30 @@
-import { notification } from "antd";
+import { Col, notification, Row } from "antd";
 import { useEffect, useRef, useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import PRODUCT from "../../../api/product";
 import Carousel from "../../../components/carousel/carousel";
-import Banner from "../components/banner";
-import BannerSingle from "../components/bannerSingle";
+import { FaMoneyBillWave, FaShippingFast } from "react-icons/fa";
+
+import BannerSingle from "../../../components/product-card/bannerSingle";
 import Category from "../components/categories";
+import ImageGallery from "react-image-gallery";
+
+import { MdSupportAgent } from "react-icons/md";
+import { StyleInfoBox, StyleBanner } from "../style/style";
+import BoxProduct from "../../../components/product-card/box-product";
+import useStoreUser from "../../../store/personal";
+
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [listCategory, setListCategory] = useState([]);
   const [data, setData] = useState([]);
-
-  // const data = useRef({
-  //   name: "",
-  //   description: "",
-  //   level: 0,
-  //   order: 0,
-  //   isShowed: true,
-  //   parentId: null,
-  // });
+  const setUser = useStoreUser((state) => state.setUser);
 
   useEffect(() => {
-    actionGetProduct({ keyword: "", status: 1 });
+    setUser();
+    actionGetProduct({ keyword: "", status: 1, pageNumber: 1, pageSize: 10 });
+    console.log("home", data);
   }, []);
 
   function actionGetProduct(keyword) {
@@ -38,21 +40,15 @@ const Home = () => {
   }
   return (
     <>
-      <Banner />
-      <Category />
-      <Carousel key={1} data={data} />
-      <div className="banner-section section-top-gap-100">
-        <div className="banner-wrapper">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 ">
-                <BannerSingle />
-              </div>
-            </div>
-          </div>
-        </div>{" "}
-      </div>{" "}
-      <Carousel key={2} data={data} />
+      <div className="container">
+        <BoxProduct />
+        <Category />
+        <Carousel key={1} data={data} title="Bán chạy" />
+
+        <BannerSingle />
+
+        <Carousel key={2} data={data} title="đánh giá tốt" />
+      </div>
     </>
   );
 };

@@ -7,6 +7,9 @@ const PRODUCT = {
   create: (data) => {
     return axiosConfig.post("v1/products", data);
   },
+  getSingle: (data) => {
+    return axiosConfig.get(`v1/products/${data.id}`, data.id);
+  },
   delete: (data) => {
     return axiosConfig.delete(`v1/products/${data.id}`, data);
   },

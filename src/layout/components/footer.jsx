@@ -1,104 +1,140 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Row,
-  Select,
-  Slider,
-  Steps,
-  Tag,
-  Upload,
-} from "antd";
-import {
-  AiFillFacebook,
-  AiFillYoutube,
-  AiOutlineTwitter,
-} from "react-icons/ai";
-import styled from "styled-components";
-const FooterWrapper = styled.div`
-  height: 300px;
-  width: 100%;
-  padding: 30px;
-  display: flex;
-  margin-top: 100px;
-  background-color: #333333c2;
-  .container {
-    height: 33%;
-    width: 33%;
-    margin: auto;
-  }
-  .center {
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  .icon {
-    font-size: 30px;
-    padding: 10px;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background-color: #fff;
-    color: #3e3e68;
-  }
-  h6 {
-    color: #fff;
-    margin-left: 40px;
-    text-align: center;
-  }
-  .small {
-    font-size: 14px;
-    color: #bdbdbdd1;
-  }
-`;
+import { Col, Row } from "antd";
+import { FaMoneyBillWave, FaShippingFast } from "react-icons/fa";
+import { MdSupportAgent } from "react-icons/md";
+import { Link } from "react-router-dom";
+
+import { PATH } from "../../utils/const";
+import { StyleFooter, StyleInfoBox } from "./style/style";
+
 const Footer = () => {
   return (
     <>
-      <footer className="footer-section ">
-        <FooterWrapper>
-          <div className="container">
-            <Row gutter={[24, 0]} className="center">
-              <Col>
-                <AiFillYoutube className="icon" />
-              </Col>
-              <Col>
-                <AiFillFacebook className="icon" />
-              </Col>
-              <Col>
-                <AiOutlineTwitter className="icon" />
-              </Col>
-            </Row>
+      <StyleInfoBox>
+        <Row gutter={[24, 0]}>
+          <Col span={8}>
+            <div className="item">
+              <div className="icon">
+                <FaShippingFast />
+              </div>
+              <div className="content">
+                <div className="title">Miễn phí vận chuyển</div>
+                <div>Miễn phí vận chuyển với hóa đơn trên 10 triệu </div>
+              </div>
+            </div>
+          </Col>
+          <Col span={8}>
+            <div className="item">
+              <div className="icon">
+                <FaMoneyBillWave />
+              </div>
+              <div className="content">
+                <div className="title">Miễn phí vận chuyển</div>
+                <div>Miễn phí vận chuyển với hóa đơn trên 10 triệu </div>
+              </div>
+            </div>
+          </Col>
+          <Col span={8}>
+            <div className="item">
+              <div className="icon">
+                <MdSupportAgent />
+              </div>
+              <div className="content">
+                <div className="title">Miễn phí vận chuyển</div>
+                <div>Miễn phí vận chuyển với hóa đơn trên 10 triệu </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </StyleInfoBox>
+      <StyleFooter>
+        <footer className="footer">
+          <div className="footer__addr">
+            <h1 className="footer__logo">Totostore</h1>
 
-            <Row gutter={[24, 0]} className="center">
-              <Col span={24}>
-                <h6 className="content">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </h6>
-              </Col>
-            </Row>
+            <h2>Contact</h2>
 
-            <Row gutter={[24, 0]} className="center">
-              <Col span={24}>
-                <h6 className="content">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </h6>
-              </Col>
-            </Row>
-
-            <Row gutter={[24, 0]} className="center">
-              <Col span={24}>
-                <h6 className="content small">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </h6>
-              </Col>
-            </Row>
+            <address>
+              5534 Somewhere In. The World 22193-10212
+              <br />
+              <Link className="footer__btn" to="#">
+                Email Us
+              </Link>
+            </address>
           </div>
-        </FooterWrapper>
-      </footer>{" "}
+
+          <ul className="footer__nav">
+            <li className="nav__item">
+              <h2 className="nav__title">Media</h2>
+
+              <ul className="nav__ul">
+                <li>
+                  <Link to={PATH.HOME}>Online</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Print</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Alternative Ads</Link>
+                </li>
+              </ul>
+            </li>
+
+            <li className="nav__item nav__item--extra">
+              <h2 className="nav__title">Technology</h2>
+
+              <ul className="nav__ul nav__ul--extra">
+                <li>
+                  <Link to={PATH.HOME}>Hardware Design</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Software Design</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Digital Signage</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Automation</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Artificial Intelligence</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>IoT</Link>
+                </li>
+              </ul>
+            </li>
+
+            <li className="nav__item">
+              <h2 className="nav__title">Legal</h2>
+
+              <ul className="nav__ul">
+                <li>
+                  <Link to={PATH.HOME}>Privacy Policy</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Terms of Use</Link>
+                </li>
+
+                <li>
+                  <Link to={PATH.HOME}>Sitemap</Link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <div className="legal">
+            <p>&copy; 2022 Something. All rights reserved.</p>
+          </div>
+        </footer>
+      </StyleFooter>
     </>
   );
 };

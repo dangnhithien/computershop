@@ -24,6 +24,7 @@ import CATEGORIES_PRODUCT from "../../api/categories-product";
 import PRODUCT from "../../api/product";
 import PRODUCT_PRICE from "../../api/product-price";
 import SUPPLIERS from "../../api/suppliers";
+import { PATH_ADIM } from "../../utils/const";
 
 const { TextArea } = Input;
 const { Step } = Steps;
@@ -109,7 +110,7 @@ const EditProduct = ({ id }) => {
             bordered={false}
             className="criclebox tablespace mb-24"
             title={
-              <Link to="/san-pham" style={{ color: "black" }}>
+              <Link to={PATH_ADIM.PRODUCT} style={{ color: "black" }}>
                 <AiOutlineArrowLeft />
                 <span style={{ marginLeft: 10 }}>Quay lại</span>
               </Link>

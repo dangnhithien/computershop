@@ -1,124 +1,68 @@
-import { Col, Empty, InputNumber, Row, Table } from "antd";
+import {
+  Col,
+  Drawer,
+  Empty,
+  InputNumber,
+  notification,
+  Row,
+  Table,
+} from "antd";
 import styled from "styled-components";
 
 import { Avatar, Button } from "antd";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
-import { MdDelete } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const TextAlign = styled.div`
-  min-height: 350px;
-  padding-bottom: 20px;
-  margin-top: 100px;
-  .table-responsive table tbody tr td {
-    text-align: left !important;
-  }
-  .ant-table-pagination-right {
-    justify-content: center !important;
-  }
-`;
-const TableStyle = styled.div`
-  thead {
-    background: #333333 !important;
-    color: #fff !important;
-  }
-  thead tr th {
-    font-size: 14px;
-    color: #fff !important;
-  }
-  .ant-table-filter-trigger.active {
-    color: red;
-  }
-`;
-const StyleTitle = styled.div`
-  line-height: 1.5em;
-  height: 3em;
-  overflow: hidden;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  width: 200px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-`;
-
-const StyleCheckout = styled.div`
-  position: fixed;
-  padding: 15px;
-  bottom: 10px;
-  right: 10px;
-  background: #fff;
-  color: #333333;
-  width: 500px;
-  min-height: 100px;
-  font-size: 16px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  &.position-unset {
-    position: unset;
-    box-shadow: none;
-    margin-left: auto;
-    border: 1px solid #f1f1f1;
-    margin-top: 20px;
-    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
-  .voucher {
-    text-align: right;
-    padding: 10px;
-    color: #0055bd;
-  }
-  .label {
-    text-align: right;
-  }
-
-  .total {
-    font-size: 24px;
-
-    text-transform: capitalize;
-  }
-  .price {
-    font-size: 18px;
-
-    font-weight: 600;
-  }
-  .amount {
-    color: #4fc383;
-  }
-  button.ant-btn.ant-btn-primary.btn-purchase {
-    background: #ea1c26;
-    width: 130px;
-    font-size: 18px;
-    border: none;
-    &:hover {
-      background-color: #ea1c26a9;
-    }
-  }
-`;
+import Carousel from "../../../components/carousel/carousel";
+import { PATH } from "../../../utils/const";
+import Checkout from "../components/checkout";
+import useStoreCart from "../../../store/cart";
+import parseMoney from "../../../utils/parseMoney";
+import {
+  StyleBoxFixed,
+  StyleTable,
+  StyleTextAlign,
+  StyleTitle,
+} from "../style/style";
 
 const { confirm } = Modal;
 const Cart = () => {
   const [offset, setOffset] = useState(0);
   const heightTable = useRef();
 
+  const [selectedRowId, setselectedRowId] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [data, setData] = useState([]);
+  // const dataCart = useStoreCart((state) => state.cart);
+  const dataCart = [
+    {
+      id: 1,
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      imageUrl: "https://picsum.photos/300/600",
+    },
+  ];
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset);
-    // clean up code
     window.removeEventListener("scroll", onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const data = [
-    // {
-    //   id: "",
-    //   imageUrl: "",
-    //   name: "thien thien thien",
-    //   quantity: 10,
-    //   amount: 12000,
-    //   promotion: 30,
-    // },
-  ];
+
   const showDeleteConfirm = (id) => {
     confirm({
       title: "Bạn chắc chắn muốn xóa",
@@ -126,23 +70,93 @@ const Cart = () => {
       okText: "Xóa ",
       okType: "danger",
       cancelText: "Hủy",
-
-      onOk() {
-        // actionDeleteSingleProduct(id);
-      },
-
-      // onCancel() {
-      //   console.log("Cancel");
-      // },
     });
   };
+
+  const item = [
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+    {
+      id: "",
+      slug: "",
+      amount: 1000000,
+      promotion: 10,
+      name: "New Balance Fresh Foam Kaymin Car Purts ",
+      detail: "new-balance-fresh-foam-kaymin-car-purts",
+      rate: 4,
+      countRate: 5,
+      imageUrl: "https://picsum.photos/300/600",
+    },
+  ];
+  const onSelectChange = (newselectedRowId) => {
+    setselectedRowId(newselectedRowId);
+  };
+
+  const rowSelection = {
+    selectedRowId,
+    onChange: onSelectChange,
+  };
+
   const columns = [
     {
       title: "sản phẩm",
       dataIndex: "name",
-      key: "name",
+      key: "id",
 
-      render: (_, { name, avatar }) => {
+      render: (_, { name, imageUrl }) => {
         return (
           <>
             <Avatar.Group>
@@ -150,7 +164,7 @@ const Cart = () => {
                 className="shape-avatar"
                 shape="square"
                 size={64}
-                src=""
+                src={imageUrl}
               ></Avatar>
               <div className="avatar-info">
                 <StyleTitle>{name}</StyleTitle>
@@ -225,57 +239,77 @@ const Cart = () => {
   return (
     <>
       <div className="container">
-        <TextAlign>
-          {data.length > 0 ? (
-            <div className="table-responsive pb-5">
-              <TableStyle>
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  scroll={false}
-                  className="ant-border-space"
-                  ref={heightTable}
-                />
-
-                <StyleCheckout
-                  className={
-                    offset > heightTable.current?.clientHeight - 290
-                      ? "position-unset"
-                      : ""
-                  }
+        <StyleTextAlign>
+          {dataCart.length > 0 ? (
+            <StyleTable>
+              <Table
+                loading={loading}
+                columns={columns}
+                rowKey="id"
+                rowSelection={{ ...rowSelection }}
+                dataSource={dataCart}
+                pagination={false}
+                scroll={false}
+                className="ant-border-space"
+                ref={heightTable}
+              />
+              <div className="delete-all">
+                <MdDelete onClick={showDeleteConfirm} />
+                <span>Xóa đã chọn ({selectedRowId.length} sản phẩm)</span>
+              </div>
+              <StyleBoxFixed
+                className={
+                  offset > heightTable.current?.clientHeight - 290
+                    ? "position-unset"
+                    : ""
+                }
+              >
+                <Row
+                  gutter={[24, 0]}
+                  style={{ alignItems: "center", justifyContent: "end" }}
                 >
-                  <Row
-                    gutter={[24, 0]}
-                    style={{ alignItems: "center", justifyContent: "end" }}
-                  >
-                    <Col span={6}>
-                      <div className="label">Áp dụng: </div>
-                    </Col>
-                    <Col span={6}>
-                      <div class="amount">Giảm 90%</div>
-                    </Col>
-                    <Col span={12}>
-                      <div className="voucher">Chọn mã giảm giá</div>
-                    </Col>
+                  <Col span={6}>
+                    <div className="label">Áp dụng: </div>
+                  </Col>
+                  <Col span={10}>
+                    <div className="amount">Giảm 90%</div>
+                  </Col>
+                  <Col span={8}>
+                    <div className="voucher">Chọn mã giảm giá</div>
+                  </Col>
 
-                    <Col span={8}>
-                      <div className="total">Tổng tiền :</div>
-                    </Col>
-                    <Col>
-                      {" "}
-                      <div className="price">12.000.000 vnđ</div>
-                    </Col>
-                    <Col>
-                      {" "}
-                      <Button type="primary" className="btn-purchase">
-                        Mua hàng
-                      </Button>
-                    </Col>
-                  </Row>
-                </StyleCheckout>
-              </TableStyle>
-            </div>
+                  <Col span={11}>
+                    <div className="total">
+                      Tổng tiền <span>({selectedRowId.length} sản phẩm) </span>:
+                    </div>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <div className="price">{parseMoney(24000000)}vnđ</div>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Button
+                      type="primary"
+                      className="btn-purchase"
+                      onClick={showDrawer}
+                    >
+                      Mua hàng
+                    </Button>
+                    <Drawer
+                      title="Thanh toán"
+                      placement="right"
+                      // size="large"
+                      width={450}
+                      onClose={onClose}
+                      visible={visible}
+                    >
+                      <Checkout />
+                    </Drawer>
+                  </Col>
+                </Row>
+              </StyleBoxFixed>
+            </StyleTable>
           ) : (
             <>
               <Empty
@@ -286,12 +320,13 @@ const Cart = () => {
                 description="Chưa có sản phẩm trong giỏ"
               >
                 <Button type="primary">
-                  <Link to="/mua-hang">Thêm ngay</Link>
+                  <Link to={PATH.PRODUCT}>Thêm ngay</Link>
                 </Button>
               </Empty>
             </>
           )}
-        </TextAlign>
+        </StyleTextAlign>
+        <Carousel data={item} />
       </div>
     </>
   );

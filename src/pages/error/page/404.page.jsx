@@ -1,57 +1,75 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { PATH } from "../../../utils/const";
+const Style = styled.div`
+  .page_404 {
+    padding: 40px 0;
+    background: #fff;
+    font-family: "Arvo", serif;
+  }
 
+  .page_404 img {
+    width: 100%;
+  }
+
+  .four_zero_four_bg {
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+  }
+
+  .four_zero_four_bg h1 {
+    font-size: 80px;
+  }
+
+  .four_zero_four_bg h3 {
+    font-size: 80px;
+  }
+
+  .link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;
+  }
+  .contant_box_404 {
+    margin-top: -50px;
+  }
+`;
 const ErrorPage = () => {
-  useEffect(() => {
-    document.documentElement.scrollTop = 250;
-  }, []);
   return (
-    <>
-      {/* ...:::: Start Error Section :::... */}
-      <div className="error-section">
-        <div className="container">
-          <div className="row pt-100">
-            <div className="error_form">
-              <h1 data-aos="fade-up" data-aos-delay="0">
-                404
-              </h1>
-              <h4 data-aos="fade-up" data-aos-delay="200">
-                Opps! PAGE NOT BE FOUND
-              </h4>
-              <p data-aos="fade-up" data-aos-delay="400">
-                Sorry but the page you are looking for does not exist, have been
-                <br /> removed, name changed or is temporarily unavailable.
-              </p>
-              <div className="row">
-                <div className="col-10 offset-1 col-md-6 offset-md-3">
-                  <div
-                    className="default-search-style d-flex"
-                    data-aos="fade-up"
-                    data-aos-delay="600"
-                  >
-                    <input
-                      className="default-search-style-input-box border-around border-right-none"
-                      type="search"
-                      placeholder="Search entire store here ..."
-                      required
-                    />
-                    <button
-                      className="default-search-style-input-btn"
-                      type="submit"
-                    >
-                      <i className="icon-search"></i>
-                    </button>
-                  </div>
-                  <a href="index.html" data-aos="fade-up" data-aos-delay="800">
-                    Back to home page
-                  </a>
+    <Style>
+      <section className="page_404">
+        <div
+          className="container"
+          style={{
+            marginLeft: 270,
+          }}
+        >
+          <div className="row">
+            <div className="col-sm-12 ">
+              <div className="col-sm-10 col-sm-offset-1  text-center">
+                <div className="four_zero_four_bg">
+                  <h1 className="text-center ">404</h1>
+                </div>
+
+                <div className="contant_box_404">
+                  <h3 className="h2">Không tìm thấy</h3>
+
+                  <p>Không tìm thấy trang này!</p>
+
+                  <Link to={PATH.HOME} className="link_404">
+                    Về trang chủ
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>{" "}
-      {/* ...:::: End Error Section :::... */}
-    </>
+      </section>
+    </Style>
   );
 };
 export default ErrorPage;

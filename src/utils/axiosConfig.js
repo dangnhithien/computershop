@@ -1,11 +1,12 @@
 import axios from "axios";
+import { API_URL } from "./const";
+import { KEY } from "./localStorage";
 
-const TOKEN = localStorage.getItem("token");
 const axiosConfig = axios.create({
-  baseURL: "https://api.totostore.tech/",
+  baseURL: API_URL.one,
   timeout: 1000,
   headers: {
-    Authorization: "Bearer " + TOKEN,
+    Authorization: "Bearer " + localStorage.getItem(KEY.TOKEN),
     "Content-Type": "application/json",
     tenant: "root",
   },

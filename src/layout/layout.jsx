@@ -1,18 +1,11 @@
-import React, { useEffect } from "react";
-import FixedRight from "../components/fixed-right/fixedRight";
-import useStore from "../store/personal";
+import MenuVertical from "../components/menu-vertical/menuVertical";
 import Footer from "./components/footer";
 import Header from "./components/header";
 
 const LayoutClient = ({ children }) => {
-  const setUserProfile = useStore((state) => state.getUser);
-
-  useEffect(setUserProfile, [setUserProfile]);
-
   return (
     <>
-      <FixedRight />
-
+      <MenuVertical />
       <Header />
       <main>{children}</main>
       <Footer />

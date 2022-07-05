@@ -1,78 +1,28 @@
-import React, { useState } from "react";
-import PriceRange from "../../../components/priceRange";
-import {
-  Collapse,
-  Row,
-  Col,
-  Checkbox,
-  Rate,
-  Radio,
-  Space,
-  notification,
-} from "antd";
-import styled from "styled-components";
-import CATEGORIES from "../../../api/categories";
+import { CaretRightOutlined } from "@ant-design/icons";
+import { Col, Collapse, Radio, Rate, Row, Select, Space } from "antd";
+import { min } from "moment";
+import { useEffect } from "react";
+import { useState } from "react";
+import PRODUCT from "../../../api/product";
+
+import PriceRange from "../../../components/price-range/priceRange";
+import useStoreCategory from "../../../store/category";
+import useStoreSupplier from "../../../store/supplier";
+import { StyleFilterPanel, StyleSidebar } from "../style/style";
+const { Option } = Select;
 
 const { Panel } = Collapse;
-const SingleWidget = styled.div`
-  border-bottom: 3px solid #fff;
-  margin-bottom: 10px;
-  font-weight: 500;
-  box-shadow: rgb(17 17 26 / 5%) 3px 3px 5px, rgb(17 17 26 / 10%) 0px 0px 10px;
-`;
 
-const options = [
-  {
-    label: "Apple",
-    value: "Apple",
-  },
-  {
-    label: "Pear",
-    value: "Pear",
-  },
-  {
-    label: "Orange",
-    value: "Orange",
-  },
-];
 const SidebarSingleWidget = ({ title, children }) => {
-  const [price, setPrice] = useState({ min: "", nax: "" });
-  const [categories, setCategories] = useState([]);
-  const [suplier, setSuplier] = useState();
-  const [rate, setRate] = useState();
-  const [loading, setLoading] = useState(false);
-
-  const filter = useState({
-    price: [0, 10000],
-    categoryId: [],
-    suplier: "",
-    rate: 0,
-  });
-
-  function actionGetAllCategory(keyword) {
-    setLoading(true);
-    CATEGORIES.search(keyword)
-      .then((res) => {
-        notification.success({
-          message: " Thành công",
-          placement: "topRight",
-        });
-        setLoading(false);
-      })
-      .catch((res) => {
-        setLoading(false);
-        notification.error({
-          message: "Không thành công",
-          placement: "topRight",
-        });
-      });
-  }
   return (
     <>
-      <SingleWidget>
+      <StyleFilterPanel>
         <Collapse
           bordered={false}
           defaultActiveKey={["1"]}
+          expandIcon={({ isActive }) => (
+            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+          )}
           expandIconPosition="end"
           style={{
             backgroundColor: "#fff",
@@ -82,50 +32,127 @@ const SidebarSingleWidget = ({ title, children }) => {
             {children}
           </Panel>
         </Collapse>
-      </SingleWidget>
+      </StyleFilterPanel>
     </>
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ setData, setLoading }) => {
+  const [request, setResquest] = useState({
+    status: true, //default
+    categoryIds: [],
+    supplierId: 0,
+    minimumRate: 0,
+    maximumRate: 5, //default
+    // price:[],
+  });
+  const { minimumRate, supplierId } = request;
+  const categories = useStoreCategory((state) => state.categories);
+  const suppliers = useStoreSupplier((state) => state.suppliers);
+  useEffect(() => {
+    setLoading(true);
+    PRODUCT.search(request)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }, [request]);
+
+  function handleCategories(e) {
+    const { categoryId } = request;
+    const { value, checked } = e.target;
+    if (checked) {
+      setResquest({ ...request, categoryId: [...categoryId, value] });
+    } else {
+      setResquest({
+        ...request,
+        categoryId: categoryId.filter((e) => e !== value),
+      });
+    }
+  }
+  function handleSupplier(e) {
+    setResquest({ ...request, supplierId: e.target.value });
+  }
+  function handleRate(e) {
+    setResquest({ ...request, minimumRate: e });
+  }
   return (
     <>
-      <div className="siderbar-section" data-aos="fade-up" data-aos-delay="0">
-        <Row gutter={[24, 0]}>
-          <Col span={24}>
-            <SidebarSingleWidget title="Giá bán">
-              <PriceRange />
-            </SidebarSingleWidget>
-          </Col>
+      <div className="siderbar-section">
+        <StyleSidebar>
+          <div className="title">
+            <h6>Lọc</h6>
+            <Select
+              defaultValue={1}
+              style={{
+                width: 120,
+              }}
+            >
+              <Option value={1}>Giá tăng dần</Option>
+              <Option value={2}>Giá giảm dần</Option>
+            </Select>
+          </div>
+          <Row gutter={[24, 0]}>
+            <Col span={24}>
+              <SidebarSingleWidget title="Giá bán">
+                <PriceRange />
+              </SidebarSingleWidget>
+            </Col>
 
-          <Col span={24}>
-            <SidebarSingleWidget title="Loại sản phẩm">
-              <Checkbox.Group
-                options={options}
-                style={{ display: "flex", flexDirection: "column" }}
-                onChange={(value) => console.log(value)}
-              />
-            </SidebarSingleWidget>
-          </Col>
-          <Col span={24}>
-            <SidebarSingleWidget title="Nhãn hàng">
-              <Radio.Group value={1} buttonStyle="solid">
-                <Space direction="vertical">
-                  <Radio value={1}>Option A</Radio>
-                  <Radio value={2}>Option B</Radio>
-                  <Radio value={3}>Option C</Radio>
-                </Space>
-              </Radio.Group>
-            </SidebarSingleWidget>
-          </Col>
-          <Col span={24}>
-            <SidebarSingleWidget title="Đánh giá">
-              <Rate allowHalf defaultValue={2.5} />
-              &nbsp;
-              <span>2.5 sao trở lên</span>
-            </SidebarSingleWidget>
-          </Col>
-        </Row>
+            <Col span={24}>
+              <SidebarSingleWidget title="Loại sản phẩm">
+                <ul className="list">
+                  {categories?.map((item) => {
+                    return (
+                      <li className="list__item">
+                        <label className="label--checkbox">
+                          <input
+                            type="checkbox"
+                            className="checkbox"
+                            value={item.id}
+                            onChange={handleCategories}
+                          />
+                          {item.name}
+                        </label>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </SidebarSingleWidget>
+            </Col>
+            <Col span={24}>
+              <SidebarSingleWidget title="Nhãn hàng">
+                <Radio.Group
+                  value={supplierId}
+                  buttonStyle="solid"
+                  onChange={handleSupplier}
+                >
+                  <Space direction="vertical">
+                    {suppliers.map((e, key) => {
+                      <Radio key={key} value={e.id}>
+                        {e.name}
+                      </Radio>;
+                    })}
+                  </Space>
+                </Radio.Group>
+              </SidebarSingleWidget>
+            </Col>
+            <Col span={24}>
+              <SidebarSingleWidget title="Đánh giá">
+                <Rate
+                  allowHalf
+                  defaultValue={minimumRate}
+                  onChange={handleRate}
+                />
+                &nbsp;
+                <span>{minimumRate} sao trở lên</span>
+              </SidebarSingleWidget>
+            </Col>
+          </Row>
+        </StyleSidebar>
       </div>
     </>
   );

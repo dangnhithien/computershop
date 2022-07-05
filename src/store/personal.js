@@ -1,15 +1,17 @@
 import create from "zustand";
 import PERSONAL from "../api/personal";
 
-const useStore = create((set) => ({
+const useStoreUser = create((set) => ({
   profile: {},
   loading: false,
-  getUser: () => {
+  setUser: () => {
     set(() => ({ loading: true }));
+
     PERSONAL.getUser()
       .then((res) => {
+        console.log(res);
         set((state) => ({
-          profile: (state.profile = res.data),
+          profile: res.data,
           loading: false,
         }));
       })
@@ -19,4 +21,4 @@ const useStore = create((set) => ({
   },
 }));
 
-export default useStore;
+export default useStoreUser;
