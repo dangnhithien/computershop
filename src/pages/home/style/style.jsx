@@ -7,7 +7,7 @@ const StyleCategory = styled.div`
   margin-top: 12px;
   position: relative;
   overflow: hidden;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 6px;
   box-shadow: 0;
   transform: scale(0.95);
   transition: box-shadow 0.5s, transform 0.5s;

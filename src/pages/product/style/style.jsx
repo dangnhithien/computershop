@@ -38,15 +38,16 @@ const StyleFilterPanel = styled.div`
     text-transform: uppercase;
   }
   .ant-radio-inner {
-    border: 2px solid #129e91;
+    border: 2px solid #ff9a3c;
   }
   .ant-radio-inner:after {
-    background-color: #129e91 !important;
+    background-color: #ff9a3c !important;
   }
   input {
     width: auto !important;
   }
   .list {
+    margin-bottom: 0;
   }
 
   .list__item {
@@ -68,7 +69,7 @@ const StyleFilterPanel = styled.div`
 
   .checkbox {
     position: relative;
-    top: -0.375rem;
+    top: 0%;
     margin: 0 1rem 0 0;
     cursor: pointer;
   }
@@ -91,7 +92,7 @@ const StyleFilterPanel = styled.div`
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
     height: 0.5rem;
-    border-color: #009688;
+    border-color: #ff9a3c;
     border-top-style: none;
     border-right-style: none;
   }
@@ -112,7 +113,7 @@ const StyleFilterPanel = styled.div`
     transition: 0.3s background ease-in-out;
     width: 2rem;
     height: 2rem;
-    background: #5677fc;
+    background: #ff9a3c;
     border-radius: 50%;
     box-shadow: 0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.25);
     color: #fff;
@@ -125,7 +126,7 @@ const StyleFilterPanel = styled.div`
     vertical-align: middle;
   }
   .button--round:hover {
-    background: #3b50ce;
+    background: #ff9a3c;
   }
 
   .button--sticky {
@@ -197,7 +198,7 @@ const StyleFilterPanel = styled.div`
     background: #9faab7;
   }
   .option-input:checked {
-    background: #40e0d0;
+    background: #ff9a3c;
   }
   .option-input:checked::before {
     width: 40px;
@@ -215,7 +216,7 @@ const StyleFilterPanel = styled.div`
     -webkit-animation: click-wave 0.65s;
     -moz-animation: click-wave 0.65s;
     animation: click-wave 0.65s;
-    background: #40e0d0;
+    background: #ff9a3c;
     content: "";
     display: block;
     position: relative;

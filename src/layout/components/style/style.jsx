@@ -156,6 +156,11 @@ const StyleLogo = styled.div`
   color: #ff6f3c;
   text-shadow: -2px 1px 0px #ff6f3c75;
   font-family: "Pacifico", cursive;
+  width: 140px;
+  height: 75px;
+  img {
+    height: 100%;
+  }
 `;
 const StyleContentDropdown = styled.div`
   font-size: 16px;

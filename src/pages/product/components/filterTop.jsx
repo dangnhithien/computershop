@@ -30,7 +30,6 @@ const FilterTop = ({ value = "all" }) => {
   }, []);
   function handleActiveClass(values) {
     let index = init.findIndex(({ value }) => value === values);
-    console.log(index);
     let clone = init.filter((e) => true);
     clone[index].status = true;
     setActiveClass([...clone]);

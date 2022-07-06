@@ -16,14 +16,19 @@ const ProductSingle = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const addToCart = useStoreCart((state) => state.addToCart);
   const userProfile = useStoreUser((state) => state.profile);
+  const setCart = useStoreCart((state) => state.setCart);
+
   function handleAddToCart() {
+    console.log(userProfile);
     const request = {
-      productId: "798db27f-04d8-4b12-3b9c-08da51f02e26",
-      customerId: userProfile.id,
+      productId: "5ABAC941-AC2B-4D77-2170-08DA5EB982B6",
+      userid: userProfile.id,
       quantity: 1,
       price: 5000,
     };
-    addToCart(request);
+    addToCart(request).then(() => {
+      setCart(userProfile.id);
+    });
   }
 
   return (

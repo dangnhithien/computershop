@@ -20,28 +20,10 @@ import {
 } from "./style/style";
 
 const MenuVertical = () => {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const userProfile = useStoreUser((state) => state.profile);
   const dataCart = useStoreCart((state) => state.cart);
-  console.log("dd", userProfile);
-  useEffect(() => {
-    actionGetAllProduct({ keyword: "" });
 
-    return;
-  }, []);
-
-  function actionGetAllProduct(keyword) {
-    setLoading(true);
-    PRODUCT.search(keyword)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-  }
   const logout = () => {
     localStorage.removeItem("token");
     window.location.href = PATH.HOME;
@@ -68,10 +50,10 @@ const MenuVertical = () => {
                         />
                       </Col>
                       <Col span={24}>
-                        <div className="username">nhithien</div>
+                        <div className="username">{userProfile.name}</div>
                       </Col>
                       <Col span={24}>
-                        <div className="email">nhithienv@gmail.com</div>
+                        <div className="email">{userProfile.email}</div>
                       </Col>
 
                       <Col span={24} className="row-sub">
@@ -145,7 +127,7 @@ const MenuVertical = () => {
                                   <Row gutter={[24, 0]}>
                                     <Col span={24}>
                                       <h6 className="title">
-                                        {item.name ?? "null"}
+                                        {item.productName ?? "null"}
                                       </h6>
                                     </Col>
                                     <Col span={8}>

@@ -10,7 +10,7 @@ function NextArrow(props) {
     <div
       id={props.id}
       style={{
-        right: "-45px",
+        right: 0,
       }}
       className="arrow-carousel"
       onClick={onClick}
@@ -26,7 +26,7 @@ function PrevArrow(props) {
     <div
       id={props.id}
       style={{
-        left: "-30px",
+        left: 0,
       }}
       className="arrow-carousel"
       onClick={onClick}

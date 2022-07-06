@@ -111,7 +111,7 @@ const StyleSearchBar = styled.div`
       margin-top: 5px;
       font-size: 13px;
       font-weight: bolder;
-      color: #d70018;
+      color: #ff6a3c;
     }
     .image {
       width: 60px;

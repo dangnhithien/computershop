@@ -8,26 +8,39 @@ import { Col, Row } from "antd";
 import styled from "styled-components";
 const StyleCarousel = styled.div`
   margin-top: 12px;
+  &:hover .arrow-carousel {
+    visibility: visible;
+    transition: all 1s ease-in;
+  }
 
   h4 {
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 26px;
+    font-weight: 600;
     text-transform: uppercase;
-    color: #ff6f3c;
+    color: #155263;
     margin: 0;
     margin-left: 5px;
+    border-bottom: 2px solid #ff9a3c;
   }
   .arrow-carousel {
-    font-size: 45px;
+    visibility: hidden;
+    font-size: 30px;
     display: block;
     z-index: 15;
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     opacity: 1;
-    color: #c1c1c1;
+    color: #ffc93c;
     position: absolute;
     cursor: pointer;
     top: 40%;
+    background: #fff;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ffc93c;
     &:hover {
       color: #ff6f3c;
     }

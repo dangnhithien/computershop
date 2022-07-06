@@ -31,7 +31,7 @@ const Detail = () => {
   const { productId } = useParams();
   let navigate = useNavigate();
   const [number, setNumber] = useState(1);
-
+  useEffect(() => window.scrollTo(0, 0), []);
   const newItemCart = useRef({
     productId: "798db27f-04d8-4b12-3b9c-08da51f02e26",
     customerId: "655a5696-6886-48c9-89da-3700cc3bbcd2",

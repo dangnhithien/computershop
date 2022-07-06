@@ -113,4 +113,50 @@ const StyleForm = styled.div`
     }
   }
 `;
-export { StyleBtnLink, StyleForm, StyleLogin };
+const StyleView = styled.div`
+  .confirm-email {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+  }
+  .ant-input-number.number {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    margin: 8px;
+    border-radius: 6px;
+    display: inline-block;
+    input {
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .numbers {
+    display: flex;
+  }
+  .title {
+    color: #155263;
+  }
+  .btn {
+    background: #ff6a3c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    width: 125px;
+    height: 40px;
+    &:hover {
+      background-color: #ff9a3c;
+    }
+  }
+`;
+export { StyleBtnLink, StyleForm, StyleLogin, StyleView };

@@ -1,16 +1,34 @@
 import React, { useState } from "react";
-import { Slider, InputNumber } from "antd";
-
-const PriceRange = () => {
-  const defaultValue = [1000, 10000];
+import { Slider, InputNumber, Button } from "antd";
+import parseMoney from "../../utils/parseMoney";
+import styled from "styled-components";
+const StylePrice = styled.div`
+  .btn {
+    width: 120px;
+    background: #ff6a3c;
+    color: #fff;
+    text-transform: uppercase;
+    margin-top: 12px;
+    margin-left: 50px;
+  }
+`;
+const PriceRange = ({ request, setRequest }) => {
+  const defaultValue = [1000000, 100000000];
   const [currentValue, setCurrentValue] = useState(defaultValue);
+  function handlePrice() {
+    setRequest({
+      ...request,
+      minPrice: currentValue[0],
+      maxPrice: currentValue[1],
+    });
+  }
   return (
     <>
       <Slider
         range
-        step={1000}
-        min={1000}
-        max={100000}
+        step={100000}
+        min={1000000}
+        max={100000000}
         defaultValue={defaultValue}
         onChange={(value) => {
           setCurrentValue(value);
@@ -23,12 +41,16 @@ const PriceRange = () => {
           border: "5px solid #ff6a3c ",
         }}
       />
-      <div className="filter-type-price">
-        <span>Price:</span>
+      <StylePrice>
+        <span>Giá bán:</span>
         <span>
-          {currentValue[0]} - {currentValue[1]}
+          {parseMoney(currentValue[0])}&nbsp;vnđ - {parseMoney(currentValue[1])}
+          &nbsp;vnđ
         </span>
-      </div>
+        <Button onClick={handlePrice} className="btn">
+          lọc
+        </Button>
+      </StylePrice>
     </>
   );
 };
