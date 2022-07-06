@@ -1,5 +1,6 @@
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Col, Collapse, Radio, Rate, Row, Select, Space } from "antd";
+import axios from "axios";
 import { min } from "moment";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -38,18 +39,21 @@ const SidebarSingleWidget = ({ title, children }) => {
 };
 
 const Sidebar = ({ setData, setLoading }) => {
-  const [request, setResquest] = useState({
-    status: true, //default
+  const [request, setRequest] = useState({
+    status: 1, //default
     categoryIds: [],
-    supplierId: 0,
+    supplierId: "",
     minimumRate: 0,
     maximumRate: 5, //default
-    // price:[],
+    minPrice: 0,
+    maxPrice: 100000000,
   });
   const { minimumRate, supplierId } = request;
   const categories = useStoreCategory((state) => state.categories);
   const suppliers = useStoreSupplier((state) => state.suppliers);
+  console.log(request);
   useEffect(() => {
+    const source = axios.CancelToken.source();
     setLoading(true);
     PRODUCT.search(request)
       .then((res) => {
@@ -59,25 +63,26 @@ const Sidebar = ({ setData, setLoading }) => {
       .catch((error) => {
         setLoading(false);
       });
+    return () => source.cancel();
   }, [request]);
 
   function handleCategories(e) {
-    const { categoryId } = request;
+    const { categoryIds } = request;
     const { value, checked } = e.target;
     if (checked) {
-      setResquest({ ...request, categoryId: [...categoryId, value] });
+      setRequest({ ...request, categoryIds: [...categoryIds, value] });
     } else {
-      setResquest({
+      setRequest({
         ...request,
-        categoryId: categoryId.filter((e) => e !== value),
+        categoryIds: categoryIds.filter((e) => e !== value),
       });
     }
   }
   function handleSupplier(e) {
-    setResquest({ ...request, supplierId: e.target.value });
+    setRequest({ ...request, supplierId: e.target.value });
   }
   function handleRate(e) {
-    setResquest({ ...request, minimumRate: e });
+    setRequest({ ...request, minimumRate: e });
   }
   return (
     <>
@@ -98,7 +103,7 @@ const Sidebar = ({ setData, setLoading }) => {
           <Row gutter={[24, 0]}>
             <Col span={24}>
               <SidebarSingleWidget title="Giá bán">
-                <PriceRange />
+                <PriceRange request={request} setRequest={setRequest} />
               </SidebarSingleWidget>
             </Col>
 
@@ -126,15 +131,17 @@ const Sidebar = ({ setData, setLoading }) => {
             <Col span={24}>
               <SidebarSingleWidget title="Nhãn hàng">
                 <Radio.Group
-                  value={supplierId}
+                  // value={supplierId}
                   buttonStyle="solid"
                   onChange={handleSupplier}
                 >
                   <Space direction="vertical">
                     {suppliers.map((e, key) => {
-                      <Radio key={key} value={e.id}>
-                        {e.name}
-                      </Radio>;
+                      return (
+                        <Radio key={key} value={e.id}>
+                          {e.name}
+                        </Radio>
+                      );
                     })}
                   </Space>
                 </Radio.Group>

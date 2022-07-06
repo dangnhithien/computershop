@@ -3,11 +3,11 @@ import styled from "styled-components";
 const StyleMenuVertical = styled.div`
   position: fixed;
   top: 182px;
-  right: 10px;
+  right: 0px;
   font-size: 25px;
   z-index: 1000;
 
-  padding: 15px;
+  padding: 12px;
   color: #f1f1f1;
   border-radius: 20px;
 

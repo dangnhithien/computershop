@@ -4,11 +4,11 @@ const CART = {
   search: (data) => {
     return axiosConfig.post("v1/carts/search", data);
   },
+  put: (data) => {
+    return axiosConfig.put(`v1/carts/${data.id}`, data);
+  },
   create: (data) => {
     return axiosConfig.post("v1/carts", data);
-  },
-  delete: (data) => {
-    return axiosConfig.delete(`v1/products/${data.id}`, data);
   },
 };
 

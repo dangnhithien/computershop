@@ -28,6 +28,8 @@ import {
   StyleTextAlign,
   StyleTitle,
 } from "../style/style";
+import CART from "../../../api/cart";
+import useStoreUser from "../../../store/personal";
 
 const { confirm } = Modal;
 const Cart = () => {
@@ -38,16 +40,11 @@ const Cart = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
-  // const dataCart = useStoreCart((state) => state.cart);
-  const dataCart = [
-    {
-      id: 1,
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      imageUrl: "https://picsum.photos/300/600",
-    },
-  ];
+  const dataCart = useStoreCart((state) => state.cart);
+  const setCart = useStoreCart((state) => state.setCart);
+
+  const userProfile = useStoreUser((state) => state.profile);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const showDrawer = () => {
     setVisible(true);
@@ -56,6 +53,7 @@ const Cart = () => {
   const onClose = () => {
     setVisible(false);
   };
+  useEffect(() => window.scrollTo(0, 0), []);
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset);
     window.removeEventListener("scroll", onScroll);
@@ -142,9 +140,26 @@ const Cart = () => {
     },
   ];
   const onSelectChange = (newselectedRowId) => {
+    setTotalPrice(
+      dataCart
+        .filter((item) => newselectedRowId.includes(item.id))
+        .reduce((total, current) => {
+          return (total += current.price * current.quantity);
+        }, 0)
+    );
     setselectedRowId(newselectedRowId);
   };
-
+  function actionPutCart(item) {
+    setLoading(true);
+    CART.put(item)
+      .then((res) => {
+        setLoading(false);
+        setCart(userProfile.id);
+      })
+      .catch((res) => {
+        setLoading(false);
+      });
+  }
   const rowSelection = {
     selectedRowId,
     onChange: onSelectChange,
@@ -153,10 +168,10 @@ const Cart = () => {
   const columns = [
     {
       title: "sản phẩm",
-      dataIndex: "name",
+      dataIndex: "productName",
       key: "id",
 
-      render: (_, { name, imageUrl }) => {
+      render: (_, { productName, imageUrl }) => {
         return (
           <>
             <Avatar.Group>
@@ -167,7 +182,7 @@ const Cart = () => {
                 src={imageUrl}
               ></Avatar>
               <div className="avatar-info">
-                <StyleTitle>{name}</StyleTitle>
+                <StyleTitle>{productName}</StyleTitle>
               </div>
             </Avatar.Group>
           </>
@@ -177,10 +192,10 @@ const Cart = () => {
 
     {
       title: "Đơn giá",
-      key: "amount",
-      dataIndex: "amount",
-      render: (_, { amount }) => {
-        return <p>{amount}</p>;
+      key: "price",
+      dataIndex: "price",
+      render: (_, { price }) => {
+        return <p>{price}</p>;
       },
     },
     {
@@ -188,10 +203,21 @@ const Cart = () => {
       key: "quantity",
       dataIndex: "quantity",
 
-      render: (_, { quantity }) => {
+      render: (_, data) => {
         return (
           <>
-            <InputNumber min={1} max={10} defaultValue={quantity} />
+            <InputNumber
+              min={1}
+              max={20}
+              value={data.quantity}
+              onChange={(value) => {
+                actionPutCart({
+                  ...data,
+                  quantity: value,
+                  userid: userProfile.id,
+                });
+              }}
+            />
           </>
         );
       },
@@ -201,10 +227,10 @@ const Cart = () => {
       key: "price",
       dataIndex: "price",
 
-      render: (_, { quantity, amount, promotion }) => {
+      render: (_, { quantity, price }) => {
         return (
           <>
-            <p>{(promotion * amount * quantity) / 100}</p>
+            <p>{price * quantity}</p>
           </>
         );
       },
@@ -285,7 +311,9 @@ const Cart = () => {
                   </Col>
                   <Col>
                     {" "}
-                    <div className="price">{parseMoney(24000000)}vnđ</div>
+                    <div className="price">
+                      {parseMoney(totalPrice)}&nbsp;vnđ
+                    </div>
                   </Col>
                   <Col>
                     {" "}
@@ -304,7 +332,7 @@ const Cart = () => {
                       onClose={onClose}
                       visible={visible}
                     >
-                      <Checkout />
+                      <Checkout total={totalPrice} />
                     </Drawer>
                   </Col>
                 </Row>

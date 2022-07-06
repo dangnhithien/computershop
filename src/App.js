@@ -11,11 +11,14 @@ function App() {
   const setCategories = useStoreCategory((state) => state.setCategories);
   const setSuppliers = useStoreSupplier((state) => state.setSuppliers);
   const setCart = useStoreCart((state) => state.setCart);
+  const user = useStoreUser((state) => state.profile);
 
   useEffect(setUserProfile, [setUserProfile]);
   useEffect(setCategories, [setCategories]);
   useEffect(setSuppliers, [setSuppliers]);
-  useEffect(setCart, [setCart]);
+  useEffect(() => {
+    setCart(user.id);
+  }, []);
   // axiosConfig.defaults.headers.common["Authorization"] =
   //   "Bearer " + localStorage.getItem("token"); //the token is a variable which holds the token
 

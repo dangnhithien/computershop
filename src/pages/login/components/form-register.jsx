@@ -1,17 +1,19 @@
-import { Button, Col, Form, Input, notification } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import { useState } from "react";
 import { AiFillFacebook } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+
 import LOGIN from "../../../api/login";
-import { useNavigate } from "react-router-dom";
-import { StyleBtnLink, StyleForm } from "../style/style";
+
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { StyleForm } from "../style/style";
+import ConfirmEmail from "./confirmEmail";
 
 const FormRegister = () => {
   const [loading, setLoading] = useState(false);
-  let navigate = useNavigate();
+  const [modalVisible, setModalVisible] = useState(false);
+
   function actionRegister(data) {
     setLoading(true);
     LOGIN.register({
@@ -22,10 +24,12 @@ const FormRegister = () => {
     })
       .then((res) => {
         setLoading(false);
-        navigate("");
+
+        setModalVisible(true);
       })
       .catch((error) => {
         setLoading(false);
+        setModalVisible(true);
         notification.error({
           message: "Đăng nhập không thành công",
           placement: "topRight",
@@ -34,6 +38,10 @@ const FormRegister = () => {
   }
   return (
     <>
+      <ConfirmEmail
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <StyleForm>
         <div className="logo">totostore</div>
         <p>Đăng kí</p>
@@ -59,7 +67,7 @@ const FormRegister = () => {
           </Form.Item>
           <span className="text-small">Mật khẩu</span>
           <Form.Item
-            name="passWord"
+            name="password"
             rules={[{ required: true, message: "Hãy nhập mật khẩu" }]}
           >
             <Input.Password
@@ -74,13 +82,30 @@ const FormRegister = () => {
           <span className="text-small">Nhập lại mật khẩu</span>
           <Form.Item
             name="confirmPassword"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập mật khẩu!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Hai mật khẩu không giống nhau!")
+                  );
+                },
+              }),
+            ]}
           >
             <Input.Password
               type="password"
               prefix={<LockOutlined className="site-form-item-icon" />}
               style={{ height: "50px", fontSize: "16px" }}
-              placeholder="confirmPassword"
+              placeholder="Nhập lại mật khẩu"
               size="small"
             />
           </Form.Item>

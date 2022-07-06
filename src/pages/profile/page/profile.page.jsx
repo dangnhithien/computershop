@@ -1,20 +1,23 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Col, Input, Row, Upload, Modal, Avatar } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { StyleProfile } from "../style/styleProfile";
 import Info from "../components/info";
 import Notification from "../components/notification";
 import Transaction from "../components/transaction";
-import { FaBell } from "react-icons/fa";
+
+import Password from "../components/password";
 
 const Profile = () => {
   const [display, setDisplay] = useState("info");
+  useEffect(() => window.scrollTo(0, 0), []);
   function handleDisplay() {
     console.log(display);
     if (display === "info") return <Info />;
     if (display === "transaction") return <Transaction />;
     if (display === "notification") return <Notification />;
+    if (display === "password") return <Password />;
     return <></>;
   }
   return (
@@ -52,6 +55,18 @@ const Profile = () => {
                       onClick={() => setDisplay("transaction")}
                     >
                       Giao dịch
+                    </div>
+                  </Col>
+                  <Col>
+                    <div
+                      className={
+                        display === "password"
+                          ? "active tab"
+                          : "notification tab"
+                      }
+                      onClick={() => setDisplay("password")}
+                    >
+                      Mật khẩu
                     </div>
                   </Col>
                   <Col>

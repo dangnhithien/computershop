@@ -101,6 +101,8 @@ const StyleTable = styled.div`
   .ant-checkbox-checked .ant-checkbox-inner {
     background-color: #ff6a3c !important;
     border-color: #f1f1f1;
+    width: 20px;
+    height: 20px;
   }
   .delete-all {
     width: 230px;

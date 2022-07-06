@@ -13,7 +13,7 @@ const StylePrice = styled.div`
     font-size: 24px;
     font-weight: 900;
     margin-right: 24px;
-    color: #6a675e;
+    color: #ff6a3c;
   }
   .promotion {
     color: #757575;
@@ -87,17 +87,18 @@ const StyleSocial = styled.div`
 `;
 const StyleContainer = styled.div`
   background-color: #fff;
-  padding: 50px 20px 20px;
+  padding: 20px;
   .product-details-text {
     padding-bottom: 10px;
     margin-bottom: 20px;
-    border-bottom: 1px solid $borderColor;
+    border-bottom: 1px solid #f1f1f1;
     .title {
       font-family: Arial, Helvetica, sans-serif;
       line-height: 20px;
       font-size: 22px;
       font-weight: 600;
       margin-bottom: 22px;
+      color: #155263;
     }
 
     .customer-review {
@@ -107,7 +108,7 @@ const StyleContainer = styled.div`
     .price {
       display: block;
       font-size: 20px;
-      color: $themeColor;
+      color: #155263;
       margin: 10px 0;
       del {
         color: #8a8a8a;
@@ -129,7 +130,7 @@ const StyleContainer = styled.div`
 
     font-weight: bold;
     cursor: pointer;
-    color: #ea2c26;
+    color: #ff6a3c;
 
     .btn-add-to-cart {
       margin-left: 20px;
@@ -140,7 +141,7 @@ const StyleContainer = styled.div`
       align-items: center;
       padding: 3px;
       &:hover {
-        color: #ff4700;
+        color: #ff9a3c;
       }
       svg {
         width: 20px;
@@ -176,8 +177,8 @@ const StyleContainer = styled.div`
         border-radius: 4px;
         cursor: pointer;
         &:hover {
-          color: #ea2c26;
-          border: 1px solid #ea2c26;
+          color: #ff6a3c;
+          border: 1px solid #ff6a3c;
         }
       }
     }

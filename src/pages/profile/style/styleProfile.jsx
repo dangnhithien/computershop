@@ -56,6 +56,9 @@ const StyleProfile = styled.div`
       background: #ff6a3c;
       color: #fff;
       width: 70px;
+      &:hover {
+        background-color: #ff9a3c;
+      }
     }
     .border-white {
       border: 1px solid #fff;
@@ -66,6 +69,24 @@ const StyleProfile = styled.div`
       font-weight: 700;
       padding-bottom: 25px;
       border-bottom: 1px solid #155263;
+    }
+    form {
+      .ant-input {
+        border: 1px solid #155263;
+      }
+      .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        border: 1px solid #155263;
+      }
+      .ant-form-item-label > label {
+        color: #155263;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+        display: none !important;
+      }
     }
     .group {
       font-size: 16px;
@@ -154,7 +175,7 @@ const StyleProfile = styled.div`
 `;
 const StyleDetail = styled.div`
   .swapper {
-    height: 350px;
+    max-height: 350px;
     overflow-y: scroll;
     ::-webkit-scrollbar {
       width: 10px;
@@ -208,7 +229,7 @@ const StyleDetail = styled.div`
 `;
 const StyleNotification = styled.div`
   display: flex;
-  border: 1px solid #f1f1f1;
+  border: 1px solid #1552636b;
   padding: 20px 30px;
   border-radius: 6px;
   align-items: center;
@@ -239,4 +260,12 @@ const StyleNotification = styled.div`
     color: #cdad3b;
   }
 `;
-export { StyleDetail, StyleNotification, StyleProfile };
+const StylePassword = styled.div`
+  .ant-input-affix-wrapper {
+    border: 1px solid #155263;
+  }
+  .ant-input {
+    border: none !important;
+  }
+`;
+export { StyleDetail, StyleNotification, StyleProfile, StylePassword };
