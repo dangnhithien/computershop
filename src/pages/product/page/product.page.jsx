@@ -124,7 +124,11 @@ const Product = () => {
                         data.map((item, key) => {
                           return (
                             <Col span={6} style={{ paddingLeft: 0 }}>
-                              <ProductSingle key={key} item={item} />
+                              <ProductSingle
+                                key={key}
+                                item={item}
+                                index={key}
+                              />
                             </Col>
                           );
                         })

@@ -144,7 +144,7 @@ const Carousel = ({ data, title = "" }) => {
                   return (
                     <>
                       <div style={{ margin: "5px 5px" }}>
-                        <ProductSingle item={item} key={key} />
+                        <ProductSingle item={item} key={key} index={key} />
                       </div>
                     </>
                   );

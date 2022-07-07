@@ -205,7 +205,7 @@ const StyleProduct = styled.div`
       border-radius: 6px;
       opacity: 0.85;
       aspect-ratio: 3/4;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
   .ribbon-custom {
