@@ -70,24 +70,7 @@ const StyleProfile = styled.div`
       padding-bottom: 25px;
       border-bottom: 1px solid #155263;
     }
-    form {
-      .ant-input {
-        border: 1px solid #155263;
-      }
-      .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-        border: 1px solid #155263;
-      }
-      .ant-form-item-label > label {
-        color: #155263;
-        font-size: 16px;
-        font-weight: bold;
-        text-transform: capitalize;
-      }
-      .ant-form-item-label
-        > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
-        display: none !important;
-      }
-    }
+
     .group {
       font-size: 16px;
       display: flex;
@@ -171,6 +154,12 @@ const StyleProfile = styled.div`
         color: #155263;
       }
     }
+  }
+  .label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #155263;
+    display: block;
   }
 `;
 const StyleDetail = styled.div`

@@ -10,7 +10,6 @@ import PriceRange from "../../../components/price-range/priceRange";
 import useStoreCategory from "../../../store/category";
 import useStoreSupplier from "../../../store/supplier";
 import { StyleFilterPanel, StyleSidebar } from "../style/style";
-const { Option } = Select;
 
 const { Panel } = Collapse;
 

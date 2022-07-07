@@ -8,81 +8,70 @@ import { PROVINCE } from "../../../utils/addresss/province";
 import useStoreUser from "../../../store/personal.js";
 import CUSTOMER from "../../../api/customer.js";
 import { RiAdminFill } from "react-icons/ri";
+import { useForm, Controller } from "react-hook-form";
 const { Option } = Select;
 
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 6,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 18,
-    },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 0,
-    },
-  },
-};
-
 const Info = () => {
-  const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState({
-    province: null,
-    district: null,
-    award: null,
-    addressInput: "",
+  const { register, handleSubmit, control, watch, reset, setValue } = useForm({
+    defaultValues: {
+      name: "",
+      dob: "2022-07-07T13:11:01.022Z",
+      gender: true,
+      mail: "",
+      phoneNumber: "",
+      addressId: "",
+      address: {
+        id: "",
+        city: "",
+        district: "",
+        ward: "",
+        stayingAddress: "",
+      },
+    },
   });
 
   const userProfile = useStoreUser((state) => state.profile);
-  console.log("ddd", userProfile);
   useEffect(() => {
-    if (!userProfile.id) {
-      return;
-    }
-
+    // if (!userProfile.id) {
+    //   return;
+    // }
     setLoading(true);
-    CUSTOMER.search({ userId: "b1e9c1c7-1f8c-4b0e-931f-12cb42e0dbce" })
+    CUSTOMER.search({ userId: userProfile.id })
       .then((res) => {
-        setData(res.data.data[0]);
+        setData(res.data.data);
         setLoading(false);
-        console.log(res.data.data[0]);
       })
       .catch((error) => {
         setLoading(false);
       });
   }, []);
-
   useEffect(() => {
-    setAddress((address) => ({ ...address, district: null, award: null }));
-  }, [address.province]);
-  useEffect(() => {
-    setAddress((address) => ({ ...address, award: null }));
-  }, [address.district]);
+    if (data.length) {
+      reset({ ...data.at(0), email: userProfile.email });
+    }
+  }, [data]);
 
-  const onFinish = (values) => {
+  const actionPutForm = (values) => {
+    const request = {
+      id: data[0].id,
+      userId: userProfile.id,
+      name: values.name,
+      dob: "2022-07-07T13:11:01.033Z",
+      gender: true,
+      mail: userProfile.email,
+      phoneNumber: values.phoneNumber,
+      city: values.address.city,
+      district: "q12",
+      ward: "tch",
+      stayingAddress: values.address.stayingAddress,
+
+      // ...values,...values.address
+    };
     setLoading(true);
-    CUSTOMER.get({ ...values, address })
+    CUSTOMER.put(request)
       .then((res) => {
-        setData(res.data.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -94,159 +83,180 @@ const Info = () => {
     <Row gutter={[24, 0]} className="main">
       <Col span={16}>
         <h5 className="title">Hồ sơ của tôi</h5>
-        <Form
-          {...formItemLayout}
-          form={form}
-          name="register"
-          onFinish={onFinish}
-          scrollToFirstError
-        >
-          <Form.Item name="email" label="E-mail">
-            <Input disabled={true} defaultValue="admin.root@gmail.com" />
-          </Form.Item>
 
-          <Form.Item
-            name="userName"
-            label="Họ tên"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập tên của bạn!",
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input defaultValue={data.name} />
-          </Form.Item>
+        <form onSubmit={handleSubmit(actionPutForm)} method="post">
+          <Row gutter={[8, 8]}>
+            <Col span={24}>
+              <span className="label">Email</span>
+              <Controller
+                name="email"
+                control={control}
+                // rules={{ required: true }}
+                render={({ field }) => <Input {...field} />}
+              />
+            </Col>
 
-          <Form.Item
-            name="address"
-            label="Địa chỉ"
-            rules={[
-              {
-                type: "array",
-                // required: true,
-                message: "Hãy nhập địa chỉ của bạn",
-              },
-            ]}
-          >
-            <Select
-              value={address.province}
-              style={{
-                width: 150,
-                marginRight: 8,
-              }}
-              placeholder="Chọn tỉnh"
-              onChange={(value) => setAddress({ ...address, province: value })}
-            >
-              {PROVINCE.map((element, key) => {
-                return (
-                  <>
-                    <Option key={key} value={element.province_id}>
-                      {element.province_name}
-                    </Option>
-                  </>
-                );
-              })}
-            </Select>
-            {address.province ? (
-              <Select
-                value={address.district}
-                style={{
-                  width: 150,
-                  marginRight: 8,
-                }}
-                placeholder="Chọn huyện"
-                onChange={(value) =>
-                  setAddress({ ...address, district: value })
-                }
-              >
-                {DISTRICT.map((element, key) => {
-                  if (element.province_id != address.province) return;
+            <Col span={24}>
+              <span className="label">Họ tên</span>
+              <Controller
+                name="name"
+                control={control}
+                // rules={{ required: true }}
+                render={({ field }) => <Input {...field} />}
+              />
+            </Col>
+
+            <Col span={24}>
+              <span className="label">Địa chỉ</span>
+              <Controller
+                name="address.city"
+                control={control}
+                // rules={{ required: true }}
+                render={({ field }) => {
                   return (
-                    <>
-                      <Option key={key} value={element.district_id}>
-                        {element.district_name}
-                      </Option>
-                    </>
+                    <Select
+                      {...field}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue("address.district", "");
+                        setValue("address.ward", "");
+                      }}
+                      style={{
+                        width: 200,
+                        marginRight: 8,
+                      }}
+                      placeholder="Chọn tỉnh"
+                    >
+                      {PROVINCE.map((element, key) => {
+                        return (
+                          <>
+                            <Option key={key} value={element.province_id}>
+                              {element.province_name}
+                            </Option>
+                          </>
+                        );
+                      })}
+                    </Select>
                   );
-                })}
-              </Select>
-            ) : (
-              ""
-            )}
-            {address.district ? (
-              <Select
-                value={address.award}
-                style={{
-                  width: 150,
                 }}
-                placeholder="Chọn xã"
-                onChange={(value) => setAddress({ ...address, award: value })}
-              >
-                {AWARD.map((element, key) => {
-                  if (element.district_id != address.district) return;
+              />
+
+              <Controller
+                name="address.district"
+                control={control}
+                // rules={{ required: true }}
+                render={({ field }) => {
                   return (
-                    <>
-                      <Option key={key} value={element.ward_id}>
-                        {element.ward_name}
-                      </Option>
-                    </>
+                    <Select
+                      {...field}
+                      onChange={(value) => {
+                        field.onChange(value);
+
+                        setValue("address.ward", "");
+                      }}
+                      style={{
+                        width: 200,
+                        marginRight: 8,
+                      }}
+                      placeholder="Chọn huyện"
+                      disabled={!watch("address.city")}
+                    >
+                      {DISTRICT.map((element, key) => {
+                        if (element.province_id != watch("address.city"))
+                          return;
+                        return (
+                          <>
+                            <Option key={key} value={element.district_id}>
+                              {element.district_name}
+                            </Option>
+                          </>
+                        );
+                      })}
+                    </Select>
                   );
-                })}
-              </Select>
-            ) : (
-              ""
-            )}
-            <Input
-              placeholder="tên đường/số nhà"
-              defaultValue={address.addressInput}
-              style={{ marginTop: 12 }}
-              onChange={(value) => {
-                setAddress({ ...address, addressInput: value.target.value });
-              }}
-            />
-          </Form.Item>
+                }}
+              />
+              <Controller
+                name="address.ward"
+                control={control}
+                // rules={{ required: true }}
+                render={({ field }) => {
+                  return (
+                    <Select
+                      {...field}
+                      style={{
+                        width: 200,
+                      }}
+                      placeholder="Chọn xã"
+                      disabled={!watch("address.district")}
+                    >
+                      {AWARD.map((element, key) => {
+                        if (element.district_id != watch("address.district"))
+                          return;
+                        return (
+                          <>
+                            <Option key={key} value={element.ward_id}>
+                              {element.ward_name}
+                            </Option>
+                          </>
+                        );
+                      })}
+                    </Select>
+                  );
+                }}
+              />
+              <Controller
+                name="address.stayingAddress"
+                control={control}
+                // rules={{ required: true }}
+                render={({ field }) => {
+                  return (
+                    <Input
+                      {...field}
+                      placeholder="tên đường/số nhà"
+                      style={{ marginTop: 12 }}
+                    />
+                  );
+                }}
+              />
+            </Col>
 
-          <Form.Item
-            name="phone"
-            label="Số điện thoại"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập số điện thoại của bạn!",
-              },
-            ]}
-          >
-            <Input
-              style={{
-                width: "100%",
-              }}
-            />
-          </Form.Item>
+            <Col span={24}>
+              <span className="label">Số điện thoại</span>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => <Input {...field} />}
+              />
+            </Col>
 
-          <Form.Item
-            name="gender"
-            label="giới tính"
-            rules={[
-              {
-                required: true,
-                message: "Nhập giới tính của bạn!",
-              },
-            ]}
-          >
-            <Select placeholder="Chọn giới tính" style={{ width: 120 }}>
-              <Option value="male">Nam </Option>
-              <Option value="female">Nữ</Option>
-            </Select>
-          </Form.Item>
+            <Col span={24}>
+              <span className="label">Giới tính</span>
+              <Controller
+                name="gender"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder="Chọn giới tính"
+                    style={{ width: 120 }}
+                  >
+                    <Option value={true}>Nam </Option>
+                    <Option value={false}>Nữ</Option>
+                  </Select>
+                )}
+              />
+            </Col>
 
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" className="btn-save">
-              lưu
-            </Button>
-          </Form.Item>
-        </Form>
+            <Col span={24}>
+              <Button type="primary" htmlType="submit" className="btn-save">
+                lưu
+              </Button>
+            </Col>
+          </Row>
+        </form>
       </Col>
       <Col
         span={8}
