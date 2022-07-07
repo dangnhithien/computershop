@@ -225,11 +225,11 @@ const StyleProduct = styled.div`
     font-weight: 500;
     text-transform: capitalize;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     white-space: normal;
     margin: 10px 0;
-    height: 65px;
+    height: 45px;
     &:hover {
       color: #ff6f3c;
     }

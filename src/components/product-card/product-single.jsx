@@ -12,14 +12,13 @@ import { StylePrice, StyleProduct, StyleView } from "./style/style";
 import useStoreCart from "../../store/cart";
 import useStoreUser from "../../store/personal";
 
-const ProductSingle = ({ item }) => {
+const ProductSingle = ({ item, image }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const addToCart = useStoreCart((state) => state.addToCart);
   const userProfile = useStoreUser((state) => state.profile);
   const setCart = useStoreCart((state) => state.setCart);
 
   function handleAddToCart() {
-    console.log(userProfile);
     const request = {
       productId: "5ABAC941-AC2B-4D77-2170-08DA5EB982B6",
       userid: userProfile.id,
@@ -46,7 +45,7 @@ const ProductSingle = ({ item }) => {
             <StyleView>
               <div className="card">
                 <div className="photo">
-                  <img src="https://picsum.photos/300/600" />
+                  <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU" />
                 </div>
                 <div className="description">
                   <h2>{item.name}</h2>
@@ -86,7 +85,10 @@ const ProductSingle = ({ item }) => {
               <span>30%</span>
             </div>
             <Link to={PATH.DETAIL(item.id)} className="image">
-              <img src="https://picsum.photos/200/300?random=1" alt="" />
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU"
+                alt=""
+              />
             </Link>
 
             <div className="content">

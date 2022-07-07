@@ -1,7 +1,7 @@
 import React from "react";
-import { supplier, categories } from "./seed";
+import { supplier, categories, product } from "./seed";
 const Test = () => {
-  return <>{categories()}</>;
+  return <>{product()}</>;
 };
 
 export default Test;

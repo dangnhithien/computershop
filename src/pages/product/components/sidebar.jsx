@@ -42,11 +42,12 @@ const Sidebar = ({ setData, setLoading }) => {
   const [request, setRequest] = useState({
     status: 1, //default
     categoryIds: [],
-    supplierId: "",
+    // supplierId: "",
     minimumRate: 0,
     maximumRate: 5, //default
     minPrice: 0,
     maxPrice: 100000000,
+    pageSize: 12,
   });
   const { minimumRate, supplierId } = request;
   const categories = useStoreCategory((state) => state.categories);
