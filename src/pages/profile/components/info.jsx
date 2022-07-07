@@ -44,7 +44,7 @@ const tailFormItemLayout = {
 const Info = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState([false]);
+  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
     province: null,
     district: null,
@@ -53,18 +53,24 @@ const Info = () => {
   });
 
   const userProfile = useStoreUser((state) => state.profile);
-
+  console.log("ddd", userProfile);
   useEffect(() => {
+    if (!userProfile.id) {
+      return;
+    }
+
     setLoading(true);
-    CUSTOMER.search({ userId: userProfile.id })
+    CUSTOMER.search({ userId: "b1e9c1c7-1f8c-4b0e-931f-12cb42e0dbce" })
       .then((res) => {
-        setData(res.data.data);
+        setData(res.data.data[0]);
         setLoading(false);
+        console.log(res.data.data[0]);
       })
       .catch((error) => {
         setLoading(false);
       });
   }, []);
+
   useEffect(() => {
     setAddress((address) => ({ ...address, district: null, award: null }));
   }, [address.province]);
@@ -110,7 +116,7 @@ const Info = () => {
               },
             ]}
           >
-            <Input />
+            <Input defaultValue={data.name} />
           </Form.Item>
 
           <Form.Item

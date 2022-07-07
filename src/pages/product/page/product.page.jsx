@@ -16,6 +16,8 @@ const Product = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
+  useEffect(() => window.scrollTo(0, 0), []);
+
   // useEffect(() => {
   //   actionGetAllProduct({ keyword: "", pageSize: 10 });
   // }, []);
