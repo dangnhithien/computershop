@@ -18,9 +18,9 @@ steps:
 - script: |
     git pull
     yarn install
-    rm -rf build
     yarn build
-    cp -Rf build $(webserverDir)/app/client
+    rm -rf $(webserverDir)/app/client
+    mv ./build $(webserverDir)/app/client
     docker-compose -f $(webserverDir)/docker-compose.yml up --build -d
   workingDirectory: $(workDir)
   displayName: 'Run update stack commands'
