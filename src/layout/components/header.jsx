@@ -72,11 +72,11 @@ const Header = (props) => {
     let current = active?.filter((e) => e.status == true);
     switch (current[0]?.id) {
       case 0:
-        return <Horizoncard keyword={{ keyword: "" }} />;
+        return <Horizoncard keyword={{ keyword: "", pageSize: 4 }} />;
       case 1:
-        return <Horizoncard keyword={{ keyword: "" }} />;
+        return <Horizoncard keyword={{ keyword: "", pageSize: 4 }} />;
       case 2:
-        return <Horizoncard keyword={{ keyword: "" }} />;
+        return <Horizoncard keyword={{ keyword: "", pageSize: 4 }} />;
       case 3:
         return <Tags data={categories} />;
       case 4:

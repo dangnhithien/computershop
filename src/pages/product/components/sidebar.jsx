@@ -10,7 +10,6 @@ import PriceRange from "../../../components/price-range/priceRange";
 import useStoreCategory from "../../../store/category";
 import useStoreSupplier from "../../../store/supplier";
 import { StyleFilterPanel, StyleSidebar } from "../style/style";
-const { Option } = Select;
 
 const { Panel } = Collapse;
 
@@ -42,11 +41,12 @@ const Sidebar = ({ setData, setLoading }) => {
   const [request, setRequest] = useState({
     status: 1, //default
     categoryIds: [],
-    supplierId: "",
+    // supplierId: "",
     minimumRate: 0,
     maximumRate: 5, //default
     minPrice: 0,
     maxPrice: 100000000,
+    pageSize: 12,
   });
   const { minimumRate, supplierId } = request;
   const categories = useStoreCategory((state) => state.categories);
@@ -90,7 +90,7 @@ const Sidebar = ({ setData, setLoading }) => {
         <StyleSidebar>
           <div className="title">
             <h6>Lọc</h6>
-            <Select
+            {/* <Select
               defaultValue={1}
               style={{
                 width: 120,
@@ -98,7 +98,7 @@ const Sidebar = ({ setData, setLoading }) => {
             >
               <Option value={1}>Giá tăng dần</Option>
               <Option value={2}>Giá giảm dần</Option>
-            </Select>
+            </Select> */}
           </div>
           <Row gutter={[24, 0]}>
             <Col span={24}>

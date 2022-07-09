@@ -124,7 +124,6 @@ const Detail = () => {
                     <InputNumber
                       min={1}
                       max={10}
-                      value={number}
                       defaultValue={1}
                       style={{ width: 70 }}
                     />

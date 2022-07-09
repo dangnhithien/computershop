@@ -16,21 +16,23 @@ const Product = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    actionGetAllProduct({ keyword: "" });
-  }, []);
+  useEffect(() => window.scrollTo(0, 0), []);
 
-  function actionGetAllProduct(keyword) {
-    setLoading(true);
-    PRODUCT.search(keyword)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-  }
+  // useEffect(() => {
+  //   actionGetAllProduct({ keyword: "", pageSize: 10 });
+  // }, []);
+
+  // function actionGetAllProduct(keyword) {
+  //   setLoading(true);
+  //   PRODUCT.search(keyword)
+  //     .then((res) => {
+  //       setData(res.data.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setLoading(false);
+  //     });
+  // }
 
   const item = [
     {
@@ -118,25 +120,33 @@ const Product = () => {
                 <Row gutter={[24, 0]}>
                   {loading ? (
                     <SpinCustom />
-                  ) : data.lenght > 0 ? (
-                    data?.map((item, key) => {
-                      return (
-                        <Col span={6} style={{ paddingLeft: 0 }}>
-                          <ProductSingle key={key} item={item} />
-                        </Col>
-                      );
-                    })
                   ) : (
-                    <StyleEmpty className="empty">
-                      Không tìm thấy sản phẩm
-                    </StyleEmpty>
+                    <>
+                      {data.length > 0 ? (
+                        data.map((item, key) => {
+                          return (
+                            <Col span={6} style={{ paddingLeft: 0 }}>
+                              <ProductSingle
+                                key={key}
+                                item={item}
+                                index={key}
+                              />
+                            </Col>
+                          );
+                        })
+                      ) : (
+                        <StyleEmpty className="empty">
+                          Không tìm thấy sản phẩm
+                        </StyleEmpty>
+                      )}
+                    </>
                   )}
                 </Row>
               </Col>
             </Row>
           </Col>
         </Row>
-        <Carousel key={3} data={item} title="gợi ý cho bạn" />
+        <Carousel key={3} data={data} title="gợi ý cho bạn" />
       </div>
     </>
   );

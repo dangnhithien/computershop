@@ -124,17 +124,17 @@ const Horizoncard = ({ keyword }) => {
                 <span>{e.amount}</span>
               </div>
               <div className="image">
-                <img src="https://picsum.photos/200" />
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU" />
               </div>
               <div className="content">
-                <div className="title">{e.title}</div>
+                <div className="title">{e.name}</div>
                 <div className="rate">
                   <Rate
                     disabled
                     defaultValue={e.rate}
                     style={{ fontSize: 14 }}
                   />
-                  &nbsp;2.0
+                  &nbsp;{e.rate}
                 </div>
                 <div className="purchase">Đã bán: {parseMoney(12000000)}</div>
               </div>

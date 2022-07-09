@@ -34,7 +34,7 @@ const AllRouter = () => {
     <BrowserRouter>
       <Routes>
         {client.map((e, key) => {
-          if (!localStorage.getItem(KEY.TOKEN) && e.private) return <></>;
+          // if (!localStorage.getItem(KEY.TOKEN) && e.private) return <></>;
           return <Route key={key} path={e.path} element={e.component} />;
         })}
       </Routes>
@@ -118,8 +118,8 @@ const client = [
     path: PATH.TEST,
     component: <Test />,
   },
-];
-const admin = [
+  // ];
+  // const admin = [
   {
     exact: true,
     path: PATH_ADIM.DASHBOARD,
