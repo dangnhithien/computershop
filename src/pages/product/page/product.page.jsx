@@ -146,9 +146,9 @@ const Product = () => {
               <Col span={24}>
                 <Sidebar request={request} setRequest={setRequest} />
               </Col>
-              <Col span={24}>
+              {/* <Col span={24}>
                 <Suggest />
-              </Col>
+              </Col> */}
             </Row>
           </Col>
           <Col span={18}>
