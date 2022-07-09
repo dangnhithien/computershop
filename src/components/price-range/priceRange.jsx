@@ -4,7 +4,7 @@ import parseMoney from "../../utils/parseMoney";
 import styled from "styled-components";
 const StylePrice = styled.div`
   .btn {
-    width: 120px;
+    width: 100px;
     background: #ff6a3c;
     color: #fff;
     text-transform: uppercase;
@@ -42,7 +42,7 @@ const PriceRange = ({ request, setRequest }) => {
         }}
       />
       <StylePrice>
-        <span>Giá bán:</span>
+        <div>Giá bán:</div>
         <span>
           {parseMoney(currentValue[0])}&nbsp;vnđ - {parseMoney(currentValue[1])}
           &nbsp;vnđ

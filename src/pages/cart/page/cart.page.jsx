@@ -290,10 +290,7 @@ const Cart = () => {
                     : ""
                 }
               >
-                <Row
-                  gutter={[24, 0]}
-                  style={{ alignItems: "center", justifyContent: "end" }}
-                >
+                <Row gutter={[8, 8]} justify="end" align="middle">
                   <Col span={6}>
                     <div className="label">Áp dụng: </div>
                   </Col>

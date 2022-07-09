@@ -1,90 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
-import SearchBar from "../../components/search/searchBar";
-import { Row, Col, Avatar, Rate } from "antd";
-import clsx from "clsx";
-import useStoreCategory from "../../store/category";
-import { PATH } from "../../utils/const";
-import parseMoney from "../../utils/parseMoney";
-import Feedback from "../../components/modal-feed-back/feedback";
-import { StyleContentDropdown, StyleHeader, StyleLogo } from "./style/style";
-import useStoreSupplier from "../../store/supplier";
+import { Col, Row } from "antd";
 import LOGO from "../../assets/images/logo/ToroStore.png";
+import Feedback from "../../components/modal-feed-back/feedback";
+import SearchBar from "../../components/search/searchBar";
 import useStoreUser from "../../store/personal";
+import { PATH } from "../../utils/const";
+import { StyleHeader, StyleLogo } from "./style/style";
 
-import axios from "axios";
-import Horizoncard from "./components/horizon-card";
-import Tags from "./components/tags";
+import DropdownContent from "./components/dropdown-content";
 
 const Header = (props) => {
-  const init = [
-    {
-      id: 0,
-      name: "bán chạy",
-      status: false,
-    },
-    {
-      id: 1,
-      name: "đánh giá",
-
-      status: false,
-    },
-    {
-      id: 2,
-      name: "giảm giá",
-
-      status: false,
-    },
-    {
-      id: 3,
-      name: "loại sản phẩm",
-
-      status: false,
-    },
-    {
-      id: 4,
-      name: "nhãn hàng",
-
-      status: false,
-    },
-  ];
-
-  // const [listCategory, setListCategory] = useState([]);
-
-  const [active, setActive] = useState([]);
-  const categories = useStoreCategory((state) => state.categories);
-  const suppliers = useStoreSupplier((state) => state.suppliers);
   const [modalVisible, setModalVisible] = useState(false);
   const userProfile = useStoreUser((state) => state.profile);
-  useEffect(() => {
-    handleActive(0);
-  }, []);
 
-  function handleActive(current) {
-    init[current].status = true;
-    setActive(init);
-  }
-
-  function handleDisplay() {
-    let current = active?.filter((e) => e.status == true);
-    switch (current[0]?.id) {
-      case 0:
-        return <Horizoncard keyword={{ keyword: "", pageSize: 4 }} />;
-      case 1:
-        return <Horizoncard keyword={{ keyword: "", pageSize: 4 }} />;
-      case 2:
-        return <Horizoncard keyword={{ keyword: "", pageSize: 4 }} />;
-      case 3:
-        return <Tags data={categories} />;
-      case 4:
-        return <Tags data={suppliers} />;
-      default:
-        return;
-    }
-  }
   return (
     <>
       <StyleHeader>
@@ -108,36 +39,7 @@ const Header = (props) => {
                       </Link>
 
                       <div className="mega-menu">
-                        <StyleContentDropdown>
-                          <Row gutter={[24, 0]}>
-                            <Col span={24}>
-                              <div className="title">Sản phẩm</div>
-                            </Col>
-                            <Col span={4} className="side-bar">
-                              <div>
-                                {active.map((Element, key) => {
-                                  return (
-                                    <div
-                                      key={key}
-                                      className={clsx("type", {
-                                        active: Element.status,
-                                      })}
-                                      onClick={() => {
-                                        handleActive(Element.id);
-                                      }}
-                                    >
-                                      {Element.name}
-                                      <IoIosArrowForward />
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </Col>
-                            <Col span={20}>
-                              <Row gutter={[24, 0]}>{handleDisplay()}</Row>
-                            </Col>
-                          </Row>
-                        </StyleContentDropdown>
+                        <DropdownContent />
                       </div>
                     </li>
                     <li>

@@ -1,18 +1,26 @@
 import { Empty } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import PRODUCT from "../../api/product";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PATH } from "../../utils/const";
 import { StyleSearchBar } from "./style/style";
 import parseMoney from "../../utils/parseMoney";
+import SpinCustom from "../spin/Spin";
 
 const SearchBar = ({ isRedict = true, setSelectItem }) => {
   const [searchValue, setSearchValue] = useState("");
   const [resultSearch, setResultSearch] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [blur, setBlur] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    setSearchValue("");
+    setResultSearch([]);
+  }, [location.pathname]);
 
   function actionGetProduct(keyword) {
     setLoading(true);
@@ -26,9 +34,9 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
       });
   }
   function handleClick(item) {
+    console.log("dd", item);
     if (isRedict) {
-      setResultSearch([]);
-      setSearchValue("");
+      console.log(item);
       return navigate(PATH.DETAIL(item.id));
     } else {
       setSelectItem({ ...item });
@@ -50,32 +58,38 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
           name="product-search"
           id="product-search"
           placeholder="Tìm kiếm..."
-          onBlur={() => setResultSearch([])}
+          onBlur={() => setBlur(true)}
+          onFocus={() => setBlur(false)}
         />
 
-        {resultSearch.length > 0 ? (
+        {resultSearch.length > 0 && !blur ? (
           <div className="results-wrap">
             <div className="result">
-              {resultSearch.map((item) => {
-                return (
-                  <>
-                    <div
-                      className="product-item"
-                      onClick={() => handleClick(item)}
-                    >
-                      <div className="image">
-                        <img src="https://picsum.photos/300/600" />
-                      </div>
-                      <div className="content">
-                        <div className="title">{item.name}</div>
-                        <div className="price">
-                          {parseMoney(item.productPrice ?? 12000000)}&nbsp;vnđ
+              {loading ? (
+                <SpinCustom />
+              ) : (
+                resultSearch.map((item) => {
+                  return (
+                    <>
+                      <div
+                        className="product-item"
+                        onMouseDown={() => handleClick(item)}
+                        // onClick={() => handleClick(item)}
+                      >
+                        <div className="image">
+                          <img src="https://picsum.photos/300/600" />
+                        </div>
+                        <div className="content">
+                          <div className="title">{item.name}</div>
+                          <div className="price">
+                            {parseMoney(item.productPrice ?? 12000000)}&nbsp;vnđ
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                );
-              })}
+                    </>
+                  );
+                })
+              )}
             </div>
           </div>
         ) : (

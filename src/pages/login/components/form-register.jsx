@@ -24,7 +24,7 @@ const FormRegister = () => {
     })
       .then((res) => {
         setLoading(false);
-
+        console.log(res);
         setModalVisible(true);
       })
       .catch((error) => {

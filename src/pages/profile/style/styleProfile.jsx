@@ -104,8 +104,8 @@ const StyleProfile = styled.div`
     }
   }
   .containers {
-    height: 400px;
-    overflow-y: scroll;
+    max-height: 400px;
+    overflow-y: auto;
     ::-webkit-scrollbar {
       width: 10px;
     }
@@ -165,7 +165,7 @@ const StyleProfile = styled.div`
 const StyleDetail = styled.div`
   .swapper {
     max-height: 350px;
-    overflow-y: scroll;
+    overflow-y: auto;
     ::-webkit-scrollbar {
       width: 10px;
     }

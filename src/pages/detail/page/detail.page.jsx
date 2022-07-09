@@ -1,82 +1,73 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Gallery from "../components/gallery";
-
-import { AiOutlineHeart } from "react-icons/ai";
+import RateCustom from "components/modal-feed-back/rateCustom";
 import { BsTwitter } from "react-icons/bs";
-
-import Comments from "../../../components/modal-feed-back/comment";
-
-import { Button, Col, InputNumber, Row, Tabs } from "antd";
+import useStoreCart from "store/cart";
+import useStoreUser from "store/personal";
+import { PATH } from "utils/const";
+import parseMoney from "utils/parseMoney";
+import { StylePrice } from "../style/style";
+import Comments from "components/modal-feed-back/comment";
+import { Col, InputNumber, Row, Tabs, Button } from "antd";
+import CATEGORIES from "api/categories";
+import PRODUCT from "api/product";
+import Compare from "components/compare/compare";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import PRODUCT from "../../../api/product";
-import RateCustom from "../../../components/modal-feed-back/rateCustom";
-import parseMoney from "../../../utils/parseMoney";
-import { PATH } from "../../../utils/const";
-import { RiShoppingCartFill } from "react-icons/ri";
 import { MdCompare } from "react-icons/md";
-import Compare from "../../../components/compare/compare";
-import {
-  StyleContainer,
-  StylePrice,
-  StyleSocial,
-  StyleTable,
-} from "../style/style";
+import { RiShoppingCartFill } from "react-icons/ri";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { StyleContainer, StyleSocial, StyleTable } from "../style/style";
+
 const { TabPane } = Tabs;
 
 const Detail = () => {
-  const [loading, setLoading] = useState(false);
-  // const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const { productId } = useParams();
   let navigate = useNavigate();
-  const [number, setNumber] = useState(1);
+  const setCart = useStoreCart((state) => state.setCart);
+  const loading = useStoreCart((state) => state.loading);
+  const addToCart = useStoreCart((state) => state.addToCart);
+  const userProfile = useStoreUser((state) => state.profile);
+  const quantity = useRef(1);
   useEffect(() => window.scrollTo(0, 0), []);
-  const newItemCart = useRef({
-    productId: "798db27f-04d8-4b12-3b9c-08da51f02e26",
-    customerId: "655a5696-6886-48c9-89da-3700cc3bbcd2",
-    quantity: 1,
-    price: 12,
-  });
-  // useEffect(() => {
-  //   actionGetProduct({ id: productId });
-  // }, []);
-  // function actionGetProduct(data) {
-  //   setLoading(true);
-  //   PRODUCT.getSingle(data)
-  //     .then((res) => {
-  //       setData(res.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((res) => {
-  //       setLoading(false);
-  //     });
-  // }
+  function handleAddToCart() {
+    const request = {
+      productId: productId,
+      userid: userProfile.id,
+      quantity: quantity.current,
+      price: data.price,
+    };
+    addToCart(request).then(() => {
+      setCart(userProfile.id);
+    });
+  }
 
-  const data = {
-    id: 1,
-    slug: "",
-    name: "Laptop Dell Latitude 3420 (L3420I3SSD) chính hãng",
-    amount: 12000000,
-    promotion: 10,
-    description: (
-      <p>
-        Laptop Dell Latitude 3420 được thiết kế với kiểu dáng đơn giản, cứng
-        cáp, sản phẩm có trọng lượng tương đối nhẹ để bạn dễ dàng mang theo bên
-        mình Được trang bị bộ vi xử lý Intel Core i3 1115G4, RAM 8GB mang đến
-        cho doanh nghiệp hiệu suất, khả năng quản lý, các tính năng bảo mật tích
-        hợp sẵn. Ổ cứng có dung lượng lớn để bạn lưu trữ được các dữ liệu cần
-        thiết hoặc SSD sẽ giúp khởi động máy nhanh chóng
-      </p>
-    ),
-    detail: "",
-    rate: 4,
-    numberRate: 12000,
-    imgUrl: [],
-  };
+  const actionGetProduct = useCallback((data) => {
+    PRODUCT.getSingle(data)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((res) => {});
+  }, []);
+
+  const actionGetAllCategories = useCallback((keyword) => {
+    CATEGORIES.search(keyword)
+      .then((res) => {
+        setCategories(res.data.data);
+      })
+      .catch((error) => {});
+  }, []);
+  useEffect(() => {
+    actionGetProduct({ id: productId });
+  }, [actionGetProduct]);
+  useEffect(() => {
+    actionGetAllCategories({ keyword: "", pageSize: 7 });
+  }, [actionGetAllCategories]);
   return (
     <>
-      {data === undefined || data === null ? (
+      {!data ? (
         navigate(PATH.ERROR)
       ) : (
         <div className="container">
@@ -105,12 +96,12 @@ const Detail = () => {
 
                   <StylePrice>
                     <span className="number">
-                      {parseMoney((data.amount * (100 - data.promotion)) / 100)}
+                      {parseMoney(data.productPrice)}
                       &nbsp;vnđ
                     </span>
 
                     <del className="price">
-                      {parseMoney(data.amount)}&nbsp;vnđ
+                      {parseMoney(data.productPrice)}&nbsp;vnđ
                     </del>
                     <span class="stamp is-approved">30%</span>
                   </StylePrice>
@@ -128,17 +119,21 @@ const Detail = () => {
                       style={{ width: 70 }}
                     />
                   </div>
-                  <div className="btn-add-to-cart">
+                  <Button
+                    className="btn-add-to-cart"
+                    onClick={handleAddToCart}
+                    loading={loading}
+                  >
                     <RiShoppingCartFill />
                     Thêm vào giỏ
-                  </div>
-                  <div
+                  </Button>
+                  <Button
                     className="compare btn-add-to-cart"
                     onClick={() => setModalVisible(true)}
                   >
                     <MdCompare />
                     So Sánh
-                  </div>
+                  </Button>
                   <Compare
                     productCurrent={data}
                     modalVisible={modalVisible}
@@ -148,13 +143,13 @@ const Detail = () => {
                 <div className="tag-relation">
                   <span>Đề xuất</span>
                   <div className="tag">
-                    <span>Laptop dell</span>
-                    <span>Laptop dell</span>
-                    <span>Laptop dell</span>
-                    <span>Laptop dell</span>
-                    <span>Laptop dell</span>
-                    <span>Laptop dell</span>
-                    <span>Laptop dell</span>
+                    {categories?.map((e, key) => {
+                      return (
+                        <Link to={PATH.PRODUCT}>
+                          <span>{e.name}</span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </Col>

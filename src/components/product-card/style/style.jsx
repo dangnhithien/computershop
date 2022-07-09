@@ -140,8 +140,6 @@ const StyleProduct = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   overflow: hidden;
   position: relative;
-  margin-top: 12px;
-
   padding-bottom: 0;
   .ribbon {
     position: absolute;

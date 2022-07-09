@@ -1,47 +1,38 @@
-import { logDOM } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { StyleTopProduct } from "../style/style";
 const FilterTop = ({ value = "all" }) => {
-  const init = [
+  const router_filter = [
     {
+      id: 1,
       name: "Tất cả",
       value: "all",
-      status: false,
     },
     {
+      id: 2,
       name: "Bán chạy",
       value: "bestselling",
-      status: false,
     },
     {
+      id: 3,
       name: "giảm giá",
       value: "promotion",
-      status: false,
     },
     {
+      id: 4,
       name: "Đánh giá tốt",
       value: "rate",
-      status: false,
     },
   ];
-  const [activeClass, setActiveClass] = useState(init);
-  useEffect(() => {
-    handleActiveClass(value);
-  }, []);
-  function handleActiveClass(values) {
-    let index = init.findIndex(({ value }) => value === values);
-    let clone = init.filter((e) => true);
-    clone[index].status = true;
-    setActiveClass([...clone]);
-  }
+  const [activeClass, setActiveClass] = useState({ id: 1 });
   return (
     <StyleTopProduct>
-      {activeClass.map((e, key) => {
+      {router_filter.map((e, key) => {
         return (
           <span
-            className={e.status ? "active" : ""}
+            key={key}
+            className={e.id === activeClass.id ? "active" : ""}
             onClick={() => {
-              handleActiveClass(e.value);
+              setActiveClass(e);
             }}
           >
             {e.name}

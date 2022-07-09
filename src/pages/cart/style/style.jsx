@@ -160,7 +160,6 @@ const StyleBoxFixed = styled.div`
   }
   .voucher {
     text-align: right;
-    padding: 10px;
     color: #ff9a3c;
   }
   .label {
@@ -168,7 +167,7 @@ const StyleBoxFixed = styled.div`
   }
 
   .total {
-    font-size: 20px;
+    font-size: 18px;
 
     text-transform: capitalize;
   }

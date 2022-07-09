@@ -3,7 +3,7 @@ import { HiShoppingCart } from "react-icons/hi";
 
 import RateCustom from "../modal-feed-back/rateCustom";
 
-import { Modal } from "antd";
+import { Modal, Button } from "antd";
 import { IoMdEye } from "react-icons/io";
 import { Link } from "react-router-dom";
 import parseMoney from "../../utils/parseMoney";
@@ -38,10 +38,11 @@ const ProductSingle = ({ item, index }) => {
   const addToCart = useStoreCart((state) => state.addToCart);
   const userProfile = useStoreUser((state) => state.profile);
   const setCart = useStoreCart((state) => state.setCart);
+  const loading = useStoreCart((state) => state.loading);
 
   function handleAddToCart() {
     const request = {
-      productId: "5ABAC941-AC2B-4D77-2170-08DA5EB982B6",
+      productId: item.id,
       userid: userProfile.id,
       quantity: 1,
       price: 5000,
@@ -92,10 +93,10 @@ const ProductSingle = ({ item, index }) => {
                       <li>Màu: Đen</li>
                     </ul>
                   </div>
-                  <button onClick={handleAddToCart}>
+                  <Button onClick={handleAddToCart} loading={loading}>
                     <HiShoppingCart />
                     &nbsp;Thêm vào giỏ
-                  </button>
+                  </Button>
                 </div>
               </div>
             </StyleView>

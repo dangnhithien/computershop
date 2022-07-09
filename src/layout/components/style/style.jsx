@@ -165,21 +165,12 @@ const StyleLogo = styled.div`
 const StyleContentDropdown = styled.div`
   font-size: 16px;
   .active {
-    background-color: #ff6f3c;
-    color: #fff;
+    color: #ff6f3c;
     transition: all 2s ease;
   }
-  .title {
-    font-size: 18px;
-    text-transform: capitalize;
-    font-weight: bold;
-    color: black;
-    margin-bottom: 12px;
-  }
+
   .type {
-    margin-left: 10px;
-    padding: 8px;
-    padding-left: 15px;
+    padding-bottom: 8px;
     display: flex;
     align-items: center;
     margin-bottom: 2px;
@@ -187,8 +178,7 @@ const StyleContentDropdown = styled.div`
     text-transform: capitalize;
     font-weight: 600;
     &:hover {
-      background-color: #ff9a3c;
-      color: #fff;
+      color: #ff9a3c;
     }
 
     svg {

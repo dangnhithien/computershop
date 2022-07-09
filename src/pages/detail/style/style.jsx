@@ -140,6 +140,8 @@ const StyleContainer = styled.div`
       display: flex;
       align-items: center;
       padding: 3px;
+      color: #ff6a3c;
+      font-weight: 600;
       &:hover {
         color: #ff9a3c;
       }

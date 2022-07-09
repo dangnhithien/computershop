@@ -62,8 +62,8 @@ const StyleSearchBar = styled.div`
     z-index: 9999999;
     padding: 0 8px 20px;
     .result {
-      height: 11rem;
-      overflow-y: scroll;
+      max-height: 12rem;
+      overflow-y: auto;
       ::-webkit-scrollbar {
         width: 10px;
       }

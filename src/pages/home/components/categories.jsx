@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -30,10 +30,8 @@ const image = [
 const Categories = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  useEffect(() => {
-    actionGetAllCategories({ keyword: "", pageSize: 6 });
-  }, []);
-  function actionGetAllCategories(keyword) {
+
+  const actionGetAllCategories = useCallback((keyword) => {
     setLoading(true);
     CATEGORIES.search(keyword)
       .then((res) => {
@@ -43,7 +41,10 @@ const Categories = () => {
       .catch((error) => {
         setLoading(false);
       });
-  }
+  }, []);
+  useEffect(() => {
+    actionGetAllCategories({ keyword: "", pageSize: 6 });
+  }, [actionGetAllCategories]);
   return (
     <>
       <div className="container">

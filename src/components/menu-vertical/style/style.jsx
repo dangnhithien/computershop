@@ -75,15 +75,14 @@ const StyleSubContent = styled.div`
     .title {
       font-size: 14px;
       font-weight: 600;
-
+      margin-top: 12px;
       line-height: 1.5em;
-      height: 3em;
       overflow: hidden;
 
       text-overflow: ellipsis;
       width: 100%;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
     }
     .image {

@@ -111,10 +111,10 @@ const MenuVertical = () => {
                         {dataCart?.slice(0, 3).map((item, key) => {
                           return (
                             <Col key={key} span={24} className="row-cart">
-                              <Row>
+                              <Row gutter={[8, 8]}>
                                 <Col span={8}>
                                   <Avatar
-                                    size={64}
+                                    size={80}
                                     shape="square"
                                     src={
                                       item.imgUrl ??
@@ -130,12 +130,12 @@ const MenuVertical = () => {
                                         {item.productName ?? "null"}
                                       </h6>
                                     </Col>
-                                    <Col span={8}>
+                                    <Col span={6}>
                                       <span className="quantity">
                                         x{item.quantity ?? "null"}
                                       </span>
                                     </Col>
-                                    <Col span={16}>
+                                    <Col span={18}>
                                       <span className="price">
                                         {item.price ?? "null"} &nbsp; vnđ
                                       </span>

@@ -1,24 +1,23 @@
 import styled from "styled-components";
-import PRODUCT from "../../../api/product";
 
 import { Col, Rate } from "antd";
 import parseMoney from "../../../utils/parseMoney";
-import { useEffect } from "react";
-import { useState } from "react";
 
 const StyleBox = styled.div`
   border-radius: 5px;
   border: 1px solid #f1f1f1;
-  box-shadow: rgb(99 99 99 / 9%) 0px 2px 4px 0px;
+
   padding: 0.5px;
-  height: 85px;
-  margin-top: 12px;
+
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
   &:hover {
-    background-color: #94bacb1f;
+    border: 1px solid #ff6a3c;
+    .title {
+      color: #ff6a3c;
+    }
   }
   .ribbon {
     position: absolute;
@@ -72,17 +71,34 @@ const StyleBox = styled.div`
   }
   .content {
     margin-left: 12px;
+    margin-top: 8px;
     .title {
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: capitalize;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      color: #333333;
+      font-weight: 500;
+      text-transform: capitalize;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      white-space: normal;
     }
     .rate {
       font-size: 14px;
       font-weight: bold;
       color: black;
+      .ant-rate-star:not(:last-child) {
+        margin-right: 1px !important;
+      }
     }
   }
   .image {
     width: 85px;
+    flex-shrink: 0;
     height: 100%;
     img {
       max-width: 100%;
@@ -97,31 +113,15 @@ const StyleBox = styled.div`
   }
 `;
 
-const Horizoncard = ({ keyword }) => {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    actionGetProduct();
-  }, [keyword]);
-  function actionGetProduct() {
-    setLoading(true);
-    PRODUCT.search(keyword)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-  }
+const Horizoncard = ({ data }) => {
   return (
     <>
-      {data.map((e) => {
+      {data.map((e, key) => {
         return (
-          <Col span={12}>
+          <Col key={key} span={8}>
             <StyleBox>
               <div className="ribbon">
-                <span>{e.amount}</span>
+                <span>{e.amount ?? "12%"}</span>
               </div>
               <div className="image">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU" />
@@ -134,7 +134,7 @@ const Horizoncard = ({ keyword }) => {
                     defaultValue={e.rate}
                     style={{ fontSize: 14 }}
                   />
-                  &nbsp;{e.rate}
+                  &nbsp;{parseFloat(e.rate)}
                 </div>
                 <div className="purchase">Đã bán: {parseMoney(12000000)}</div>
               </div>

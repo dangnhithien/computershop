@@ -1,7 +1,6 @@
 import { notification } from "antd";
 import create from "zustand";
 import CART from "../api/cart";
-import useStoreUser from "./personal";
 
 const useStoreCart = create((set) => ({
   cart: [],

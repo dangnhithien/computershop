@@ -1,15 +1,12 @@
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Col, Collapse, Radio, Rate, Row, Select, Space } from "antd";
-import axios from "axios";
-import { min } from "moment";
-import { useEffect } from "react";
-import { useState } from "react";
-import PRODUCT from "../../../api/product";
+import { Col, Collapse, Radio, Rate, Row, Space } from "antd";
+
+import { useEffect, useState } from "react";
+import CATEGORIES from "../../../api/categories";
+import SUPPLIERS from "../../../api/suppliers";
 
 import PriceRange from "../../../components/price-range/priceRange";
-import useStoreCategory from "../../../store/category";
-import useStoreSupplier from "../../../store/supplier";
-import { StyleFilterPanel, StyleSidebar } from "../style/style";
+import { StyleContent, StyleFilterPanel, StyleSidebar } from "../style/style";
 
 const { Panel } = Collapse;
 
@@ -37,34 +34,13 @@ const SidebarSingleWidget = ({ title, children }) => {
   );
 };
 
-const Sidebar = ({ setData, setLoading }) => {
-  const [request, setRequest] = useState({
-    status: 1, //default
-    categoryIds: [],
-    // supplierId: "",
-    minimumRate: 0,
-    maximumRate: 5, //default
-    minPrice: 0,
-    maxPrice: 100000000,
-    pageSize: 12,
-  });
+const Sidebar = ({ request, setRequest }) => {
   const { minimumRate, supplierId } = request;
-  const categories = useStoreCategory((state) => state.categories);
-  const suppliers = useStoreSupplier((state) => state.suppliers);
-  console.log(request);
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    setLoading(true);
-    PRODUCT.search(request)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-    return () => source.cancel();
-  }, [request]);
+  const [categories, setCategories] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+
+  useEffect(actionGetCategoties, [actionGetCategoties]);
+  useEffect(actionGetSuppliers, [actionGetSuppliers]);
 
   function handleCategories(e) {
     const { categoryIds } = request;
@@ -84,6 +60,20 @@ const Sidebar = ({ setData, setLoading }) => {
   function handleRate(e) {
     setRequest({ ...request, minimumRate: e });
   }
+  function actionGetCategoties() {
+    CATEGORIES.search({ keyword: "" })
+      .then((res) => {
+        setCategories(res.data.data);
+      })
+      .catch((res) => {});
+  }
+  function actionGetSuppliers() {
+    SUPPLIERS.search({ keyword: "" })
+      .then((res) => {
+        setSuppliers(res.data.data);
+      })
+      .catch((res) => {});
+  }
   return (
     <>
       <div className="siderbar-section">
@@ -100,7 +90,7 @@ const Sidebar = ({ setData, setLoading }) => {
               <Option value={2}>Giá giảm dần</Option>
             </Select> */}
           </div>
-          <Row gutter={[24, 0]}>
+          <Row gutter={[8, 0]}>
             <Col span={24}>
               <SidebarSingleWidget title="Giá bán">
                 <PriceRange request={request} setRequest={setRequest} />
@@ -109,42 +99,46 @@ const Sidebar = ({ setData, setLoading }) => {
 
             <Col span={24}>
               <SidebarSingleWidget title="Loại sản phẩm">
-                <ul className="list">
-                  {categories?.map((item) => {
-                    return (
-                      <li className="list__item">
-                        <label className="label--checkbox">
-                          <input
-                            type="checkbox"
-                            className="checkbox"
-                            value={item.id}
-                            onChange={handleCategories}
-                          />
-                          {item.name}
-                        </label>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <StyleContent>
+                  <ul className="list">
+                    {categories?.map((item) => {
+                      return (
+                        <li className="list__item">
+                          <label className="label--checkbox">
+                            <input
+                              type="checkbox"
+                              className="checkbox"
+                              value={item.id}
+                              onChange={handleCategories}
+                            />
+                            {item.name}
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </StyleContent>
               </SidebarSingleWidget>
             </Col>
             <Col span={24}>
               <SidebarSingleWidget title="Nhãn hàng">
-                <Radio.Group
-                  // value={supplierId}
-                  buttonStyle="solid"
-                  onChange={handleSupplier}
-                >
-                  <Space direction="vertical">
-                    {suppliers.map((e, key) => {
-                      return (
-                        <Radio key={key} value={e.id}>
-                          {e.name}
-                        </Radio>
-                      );
-                    })}
-                  </Space>
-                </Radio.Group>
+                <StyleContent>
+                  <Radio.Group
+                    // value={supplierId}
+                    buttonStyle="solid"
+                    onChange={handleSupplier}
+                  >
+                    <Space direction="vertical">
+                      {suppliers.map((e, key) => {
+                        return (
+                          <Radio key={key} value={e.id}>
+                            {e.name}
+                          </Radio>
+                        );
+                      })}
+                    </Space>
+                  </Radio.Group>
+                </StyleContent>
               </SidebarSingleWidget>
             </Col>
             <Col span={24}>

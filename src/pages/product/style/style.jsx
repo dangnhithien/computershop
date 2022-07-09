@@ -16,13 +16,34 @@ const StyleTopProduct = styled.div`
     text-align: center;
     cursor: pointer;
     &.borderx {
-      border-left: 1px solid #f1f1f1;
-      border-right: 1px solid #f1f1f1;
+      border-left: 1px solid #ff6a3c;
+      border-right: 1px solid #ff6a3c;
     }
     &.active {
       background: #ff6a3c;
       color: #fff;
     }
+  }
+`;
+const StyleContent = styled.div`
+  padding-left: 30px;
+  overflow-y: auto;
+  max-height: 200px;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background: #888;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 `;
 const StyleFilterPanel = styled.div`
@@ -43,6 +64,7 @@ const StyleFilterPanel = styled.div`
   .ant-radio-inner:after {
     background-color: #ff9a3c !important;
   }
+
   input {
     width: auto !important;
   }
@@ -51,7 +73,6 @@ const StyleFilterPanel = styled.div`
   }
 
   .list__item {
-    /* margin: 0 0 0.5rem 0; */
     padding: 0;
     display: flex;
     align-items: center;
@@ -83,7 +104,7 @@ const StyleFilterPanel = styled.div`
     z-index: 1;
     width: 1rem;
     height: 1rem;
-    border: 2px solid #c1c1c1;
+    border: 2px solid #ff9a3c;
   }
   .checkbox:checked:before {
     -webkit-transform: rotate(-45deg);
@@ -273,4 +294,30 @@ const StyleEmpty = styled.div`
   align-items: center;
   justify-content: center;
 `;
-export { StyleSidebar, StyleTopProduct, StyleFilterPanel, StyleEmpty };
+const StylePagination = styled.div`
+  text-align: center;
+  margin-top: 16px;
+  .ant-pagination-item {
+    border: none;
+  }
+  .ant-pagination-next .ant-pagination-item-link,
+  .ant-pagination-prev .ant-pagination-item-link {
+    border: none;
+  }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border: none;
+  }
+  .ant-pagination-item-active a {
+    color: #fff;
+    background: #ff6a3c;
+    border-radius: 50%;
+  }
+`;
+export {
+  StyleSidebar,
+  StyleTopProduct,
+  StyleFilterPanel,
+  StyleEmpty,
+  StyleContent,
+  StylePagination,
+};
