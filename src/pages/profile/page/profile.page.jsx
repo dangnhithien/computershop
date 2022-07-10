@@ -25,7 +25,7 @@ const Profile = () => {
       <div className="container">
         <div className="row">
           <StyleProfile>
-            <Row gutter={[24, 0]}>
+            <Row gutter={[8, 8]}>
               <Col span={24}>
                 <div className="banner">
                   <img
@@ -36,7 +36,7 @@ const Profile = () => {
                 </div>
               </Col>
               <Col span={4}>
-                <Row gutter={[24, 0]} className="sidebar">
+                <Row gutter={[8, 8]} className="sidebar">
                   <Col>
                     <div
                       className={display === "info" ? "active tab" : "info tab"}

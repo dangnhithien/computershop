@@ -4,8 +4,8 @@ const PERSONAL = {
   getUser: () => {
     return axiosConfig.get("personal/profile");
   },
-  create: (data) => {
-    return axiosConfig.post("v1/products", data);
+  changePassword: (data) => {
+    return axiosConfig.put("personal/change-password", data);
   },
   delete: (data) => {
     return axiosConfig.delete(`v1/products/${data.id}`, data);

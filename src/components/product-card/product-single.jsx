@@ -106,7 +106,7 @@ const ProductSingle = ({ item, index }) => {
             <div className="ribbon">
               <span>30%</span>
             </div>
-            <Link to={PATH.DETAIL(item.id)} className="image">
+            <Link to={PATH.DETAIL(item.id, item.slug)} className="image">
               <img src={images[index]} alt="" />
             </Link>
 
@@ -115,7 +115,7 @@ const ProductSingle = ({ item, index }) => {
                 <RateCustom value={item.rate} rates={item.countRate} />
               </div>
 
-              <Link to={PATH.DETAIL(item.id)} className="title">
+              <Link to={PATH.DETAIL(item.id, item.slug)} className="title">
                 {item.name}
               </Link>
             </div>

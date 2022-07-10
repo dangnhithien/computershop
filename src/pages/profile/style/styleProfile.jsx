@@ -28,7 +28,6 @@ const StyleProfile = styled.div`
       font-weight: 600;
       border-radius: 6px;
       padding: 5px;
-      margin-bottom: 12px;
       background-color: #fff;
       cursor: pointer;
       &:hover {
@@ -56,7 +55,7 @@ const StyleProfile = styled.div`
       background: #ff6a3c;
       color: #fff;
       width: 70px;
-      &:hover {
+      text-transform:capitalize &:hover {
         background-color: #ff9a3c;
       }
     }
@@ -251,10 +250,7 @@ const StyleNotification = styled.div`
 `;
 const StylePassword = styled.div`
   .ant-input-affix-wrapper {
-    border: 1px solid #155263;
-  }
-  .ant-input {
-    border: none !important;
+    border-radius: 4px;
   }
 `;
 export { StyleDetail, StyleNotification, StyleProfile, StylePassword };

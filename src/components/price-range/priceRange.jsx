@@ -42,7 +42,6 @@ const PriceRange = ({ request, setRequest }) => {
         }}
       />
       <StylePrice>
-        <div>Giá bán:</div>
         <span>
           {parseMoney(currentValue[0])}&nbsp;vnđ - {parseMoney(currentValue[1])}
           &nbsp;vnđ

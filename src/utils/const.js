@@ -1,8 +1,10 @@
 const PATH = {
   HOME: "/",
   PRODUCT: "/mua-hang",
-  DETAIL: (id) =>
-    id ? `/chi-tiet-san-pham/${id}` : "/chi-tiet-san-pham/:productId",
+  DETAIL: (id, slug) =>
+    id
+      ? `/chi-tiet-san-pham/${slug}/${id}`
+      : "/chi-tiet-san-pham/:slug/:productId",
   CONTACT: "/contact",
   CHECKOUT: "/thanh-toan",
   CART: "/gio-hang",

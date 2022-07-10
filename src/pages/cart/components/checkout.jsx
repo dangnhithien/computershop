@@ -6,32 +6,64 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import parseMoney from "../../../utils/parseMoney";
 import { StyleCheckout } from "../style/style";
 import Success from "./success";
+import useStoreUser from "store/personal";
+import { PATH } from "utils/const";
+import CUSTOMER from "api/customer";
+import { Link } from "react-router-dom";
 
 const Checkout = ({ total }) => {
   const [buttonPayal, setButonPaypal] = useState(false);
   const [response, setRes] = useState(false);
+  const [data, setData] = useState(null);
   const [usd, setUsd] = useState(23);
-
+  const userProfile = useStoreUser((state) => state.profile);
+  // const { city, district, ward, stayingAddress } = data?.address;
   useEffect(() => {
     fetch("https://api.exchangerate.host/latest")
       .then((res) => res.json())
       .then((res) => {
         setUsd(res.rates["VND"]);
       });
-  });
+  }, []);
+  useEffect(() => {
+    // if (!userProfile.id) {
+    //   return;
+    // }
 
+    CUSTOMER.search({ userId: userProfile.id })
+      .then((res) => {
+        console.log(res);
+        setData(res.data.data.at(3));
+      })
+      .catch((error) => {});
+  }, []);
   return (
     <>
       {response && <Success details={response} />}
       <StyleCheckout>
         <div className="title">Địa chỉ nhận hàng</div>
-        <div className="name">Đặng Nhị Thiên (+84) 326834079</div>
-        <div className="wrapper">
-          <div className="address">
-            134/8 Tch 18, Phường Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh
-          </div>
-        </div>
-        <div className="choose-address">Thay đổi</div>
+        {data ? (
+          <>
+            <div className="name">{data.name + " " + data.phoneNumber}</div>
+            <div className="wrapper">
+              <div className="address">
+                {data.address.stayingAddress +
+                  "," +
+                  data.address.ward +
+                  "," +
+                  data.address.district +
+                  "," +
+                  data.address.city}
+              </div>
+            </div>
+            <div className="choose-address">Thay đổi</div>
+          </>
+        ) : (
+          <>
+            <span>Cần cập nhật đầy đủ thông tin trước khi thanh toán</span>
+            <Link to={PATH.PROFILE}>Thêm thông tin</Link>
+          </>
+        )}
         <div className="pay">
           <h6>Phương thức thanh toán</h6>
           <Row>

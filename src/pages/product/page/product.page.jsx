@@ -13,21 +13,23 @@ import SpinCustom from "../../../components/spin/Spin";
 import { StyleEmpty, StylePagination } from "../style/style";
 import axios from "axios";
 import Suggest from "../components/suggest-product";
-
+export const initializationQuestion = {
+  keyword: "",
+  pageNumber: 1,
+  pageSize: 12,
+  orderBy: [],
+  categoryIds: [],
+  status: 1,
+  supplierId: null,
+  isSortRate: true,
+  minPrice: 0,
+  maxPrice: 100000000,
+  rate: 0,
+};
 const Product = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  const [request, setRequest] = useState({
-    status: 1, //default
-    categoryIds: [],
-    // supplierId: "",
-    minimumRate: 0,
-    maximumRate: 5, //default
-    minPrice: 0,
-    maxPrice: 100000000,
-    pageSize: 12,
-    pageNumber: 1,
-  });
+  const [request, setRequest] = useState({ ...initializationQuestion });
   useEffect(
     () =>
       window.scrollTo({
@@ -67,74 +69,6 @@ const Product = () => {
   //     });
   // }
 
-  const item = [
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-  ];
   return (
     <>
       <div className="container">

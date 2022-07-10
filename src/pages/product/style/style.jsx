@@ -26,7 +26,7 @@ const StyleTopProduct = styled.div`
   }
 `;
 const StyleContent = styled.div`
-  padding-left: 30px;
+  padding-left: 15px;
   overflow-y: auto;
   max-height: 200px;
   ::-webkit-scrollbar {

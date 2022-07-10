@@ -23,14 +23,16 @@ const Info = () => {
       addressId: "",
       address: {
         id: "",
+        cityCode: "",
         city: "",
+        districtCode: "",
         district: "",
+        wardCode: "",
         ward: "",
         stayingAddress: "",
       },
     },
   });
-
   const userProfile = useStoreUser((state) => state.profile);
   useEffect(() => {
     // if (!userProfile.id) {
@@ -39,6 +41,7 @@ const Info = () => {
     setLoading(true);
     CUSTOMER.search({ userId: userProfile.id })
       .then((res) => {
+        console.log(res);
         setData(res.data.data);
         setLoading(false);
       })
@@ -46,27 +49,21 @@ const Info = () => {
         setLoading(false);
       });
   }, []);
+
   useEffect(() => {
     if (data.length) {
-      reset({ ...data.at(0), email: userProfile.email });
+      reset({ ...data.at(3), email: userProfile.email });
     }
   }, [data]);
 
   const actionPutForm = (values) => {
+    delete values.address.id;
     const request = {
-      id: data[0].id,
+      id: data[3].id,
       userId: userProfile.id,
-      name: values.name,
-      dob: "2022-07-07T13:11:01.033Z",
-      gender: true,
       mail: userProfile.email,
-      phoneNumber: values.phoneNumber,
-      city: values.address.city,
-      district: "q12",
-      ward: "tch",
-      stayingAddress: values.address.stayingAddress,
-
-      // ...values,...values.address
+      ...values,
+      ...values.address,
     };
     setLoading(true);
     CUSTOMER.put(request)
@@ -120,17 +117,20 @@ const Info = () => {
                 <Col span={24}>
                   <span className="label">Địa chỉ</span>
                   <Controller
-                    name="address.city"
+                    name="address.cityCode"
                     control={control}
                     // rules={{ required: true }}
                     render={({ field }) => {
                       return (
                         <Select
                           {...field}
-                          onChange={(value) => {
+                          onChange={(value, option) => {
                             field.onChange(value);
                             setValue("address.district", "");
                             setValue("address.ward", "");
+                            setValue("address.districtCode", "");
+                            setValue("address.wardCode", "");
+                            setValue("address.city", option.children);
                           }}
                           style={{
                             width: 200,
@@ -153,27 +153,31 @@ const Info = () => {
                   />
 
                   <Controller
-                    name="address.district"
+                    name="address.districtCode"
                     control={control}
                     // rules={{ required: true }}
                     render={({ field }) => {
                       return (
                         <Select
                           {...field}
-                          onChange={(value) => {
+                          onChange={(value, option) => {
                             field.onChange(value);
 
                             setValue("address.ward", "");
+                            setValue("address.wardCode", "");
+                            setValue("address.district", option.children);
                           }}
                           style={{
                             width: 200,
                             marginRight: 8,
                           }}
                           placeholder="Chọn huyện"
-                          disabled={!watch("address.city")}
+                          disabled={!watch("address.cityCode")}
                         >
                           {DISTRICT.map((element, key) => {
-                            if (element.province_id != watch("address.city"))
+                            if (
+                              element.province_id !== watch("address.cityCode")
+                            )
                               return;
                             return (
                               <>
@@ -188,22 +192,27 @@ const Info = () => {
                     }}
                   />
                   <Controller
-                    name="address.ward"
+                    name="address.wardCode"
                     control={control}
                     // rules={{ required: true }}
                     render={({ field }) => {
                       return (
                         <Select
                           {...field}
+                          onChange={(value, option) => {
+                            field.onChange(value);
+                            setValue("address.ward", option.children);
+                          }}
                           style={{
                             width: 200,
                           }}
                           placeholder="Chọn xã"
-                          disabled={!watch("address.district")}
+                          disabled={!watch("address.districtCode")}
                         >
                           {AWARD.map((element, key) => {
                             if (
-                              element.district_id != watch("address.district")
+                              element.district_id !==
+                              watch("address.districtCode")
                             )
                               return;
                             return (

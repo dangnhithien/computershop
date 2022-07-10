@@ -1,11 +1,12 @@
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Col, Collapse, Radio, Rate, Row, Space } from "antd";
+import { Button, Col, Collapse, Radio, Rate, Row, Space } from "antd";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CATEGORIES from "../../../api/categories";
 import SUPPLIERS from "../../../api/suppliers";
 
 import PriceRange from "../../../components/price-range/priceRange";
+import { initializationQuestion } from "../page/product.page";
 import { StyleContent, StyleFilterPanel, StyleSidebar } from "../style/style";
 
 const { Panel } = Collapse;
@@ -35,10 +36,23 @@ const SidebarSingleWidget = ({ title, children }) => {
 };
 
 const Sidebar = ({ request, setRequest }) => {
-  const { minimumRate, supplierId } = request;
+  const { rate, supplierId } = request;
   const [categories, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
-
+  const actionGetCategoties = useCallback(() => {
+    CATEGORIES.search({ keyword: "" })
+      .then((res) => {
+        setCategories(res.data.data);
+      })
+      .catch((res) => {});
+  }, []);
+  const actionGetSuppliers = useCallback(() => {
+    SUPPLIERS.search({ keyword: "" })
+      .then((res) => {
+        setSuppliers(res.data.data);
+      })
+      .catch((res) => {});
+  }, []);
   useEffect(actionGetCategoties, [actionGetCategoties]);
   useEffect(actionGetSuppliers, [actionGetSuppliers]);
 
@@ -58,22 +72,9 @@ const Sidebar = ({ request, setRequest }) => {
     setRequest({ ...request, supplierId: e.target.value });
   }
   function handleRate(e) {
-    setRequest({ ...request, minimumRate: e });
+    setRequest({ ...request, rate: e });
   }
-  function actionGetCategoties() {
-    CATEGORIES.search({ keyword: "" })
-      .then((res) => {
-        setCategories(res.data.data);
-      })
-      .catch((res) => {});
-  }
-  function actionGetSuppliers() {
-    SUPPLIERS.search({ keyword: "" })
-      .then((res) => {
-        setSuppliers(res.data.data);
-      })
-      .catch((res) => {});
-  }
+
   return (
     <>
       <div className="siderbar-section">
@@ -124,7 +125,7 @@ const Sidebar = ({ request, setRequest }) => {
               <SidebarSingleWidget title="Nhãn hàng">
                 <StyleContent>
                   <Radio.Group
-                    // value={supplierId}
+                    value={supplierId}
                     buttonStyle="solid"
                     onChange={handleSupplier}
                   >
@@ -143,15 +144,16 @@ const Sidebar = ({ request, setRequest }) => {
             </Col>
             <Col span={24}>
               <SidebarSingleWidget title="Đánh giá">
-                <Rate
-                  allowHalf
-                  defaultValue={minimumRate}
-                  onChange={handleRate}
-                />
+                <Rate allowHalf defaultValue={rate} onChange={handleRate} />
                 &nbsp;
-                <span>{minimumRate} sao trở lên</span>
+                <span>{rate} sao trở lên</span>
               </SidebarSingleWidget>
             </Col>
+            {/* <Col span={24}>
+              <Button onClick={() => setRequest(initializationQuestion)}>
+                Mặc định
+              </Button>
+            </Col> */}
           </Row>
         </StyleSidebar>
       </div>
