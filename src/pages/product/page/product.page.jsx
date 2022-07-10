@@ -17,14 +17,14 @@ export const initializationQuestion = {
   keyword: "",
   pageNumber: 1,
   pageSize: 12,
-  orderBy: [],
-  categoryIds: [],
-  status: 1,
-  supplierId: null,
-  isSortRate: true,
-  minPrice: 0,
-  maxPrice: 100000000,
-  rate: 0,
+  // // orderBy: [],
+  // categoryIds: [],
+  // status: 1,
+  // supplierId: null,
+  // isSortRate: true,
+  // minPrice: 0,
+  // maxPrice: 100000000,
+  // rate: 0,
 };
 const Product = () => {
   const [loading, setLoading] = useState(false);

@@ -6,7 +6,6 @@ import CATEGORIES from "../../../api/categories";
 import SUPPLIERS from "../../../api/suppliers";
 
 import PriceRange from "../../../components/price-range/priceRange";
-import { initializationQuestion } from "../page/product.page";
 import { StyleContent, StyleFilterPanel, StyleSidebar } from "../style/style";
 
 const { Panel } = Collapse;
@@ -57,15 +56,19 @@ const Sidebar = ({ request, setRequest }) => {
   useEffect(actionGetSuppliers, [actionGetSuppliers]);
 
   function handleCategories(e) {
-    const { categoryIds } = request;
     const { value, checked } = e.target;
     if (checked) {
-      setRequest({ ...request, categoryIds: [...categoryIds, value] });
-    } else {
-      setRequest({
+      setRequest((request) => ({
         ...request,
-        categoryIds: categoryIds.filter((e) => e !== value),
-      });
+        categoryIds: request.categories
+          ? [...request?.categoryIds, value]
+          : [value],
+      }));
+    } else {
+      setRequest((request) => ({
+        ...request,
+        categoryIds: request?.categoryIds.filter((e) => e !== value),
+      }));
     }
   }
   function handleSupplier(e) {
