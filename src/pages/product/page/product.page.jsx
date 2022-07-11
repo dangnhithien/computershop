@@ -1,18 +1,19 @@
 import Carousel from "../../../components/carousel/carousel";
 
-import { Col, notification, Row, Pagination } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Col, Pagination, Row } from "antd";
+import { useEffect, useState } from "react";
 import PRODUCT from "../../../api/product";
 import BannerSingle from "../../../components/product-card/bannerSingle";
 
 import ProductSingle from "../../../components/product-card/product-single";
 import Sidebar from "../components/sidebar";
 
-import FilterTop from "../components/filterTop";
-import SpinCustom from "../../../components/spin/Spin";
-import { StyleEmpty, StylePagination } from "../style/style";
 import axios from "axios";
+import SpinCustom from "../../../components/spin/Spin";
+import FilterTop from "../components/filterTop";
 import Suggest from "../components/suggest-product";
+import { StyleEmpty, StylePagination } from "../style/style";
+import { useLocation } from "react-router-dom";
 export const initializationQuestion = {
   keyword: "",
   pageNumber: 1,
@@ -29,7 +30,13 @@ export const initializationQuestion = {
 const Product = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  const [request, setRequest] = useState({ ...initializationQuestion });
+  const [request, setRequest] = useState({
+    ...initializationQuestion,
+  });
+  const location = useLocation();
+  useEffect(() => {
+    setRequest({ ...request, ...location.state });
+  }, [location]);
   useEffect(
     () =>
       window.scrollTo({
@@ -44,30 +51,15 @@ const Product = () => {
     setLoading(true);
     PRODUCT.search(request)
       .then((res) => {
-        console.log("dd", res.data);
         setData(res.data);
         setLoading(false);
       })
       .catch((error) => {
+        setData(null);
         setLoading(false);
       });
     return () => source.cancel();
   }, [request]);
-  // useEffect(() => {
-  //   actionGetAllProduct({ keyword: "", pageSize: 10 });
-  // }, []);
-
-  // function actionGetAllProduct(keyword) {
-  //   setLoading(true);
-  //   PRODUCT.search(keyword)
-  //     .then((res) => {
-  //       setData(res.data.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setLoading(false);
-  //     });
-  // }
 
   return (
     <>
@@ -80,9 +72,9 @@ const Product = () => {
               <Col span={24}>
                 <Sidebar request={request} setRequest={setRequest} />
               </Col>
-              {/* <Col span={24}>
+              <Col span={24}>
                 <Suggest />
-              </Col> */}
+              </Col>
             </Row>
           </Col>
           <Col span={18}>
@@ -100,7 +92,7 @@ const Product = () => {
                         <>
                           {data?.data.map((item, key) => {
                             return (
-                              <Col span={6}>
+                              <Col key={key} span={6}>
                                 <ProductSingle
                                   key={key}
                                   item={item}
@@ -113,12 +105,13 @@ const Product = () => {
                             <StylePagination>
                               <Pagination
                                 total={data?.totalCount}
-                                showSizeChanger
+                                // showSizeChanger
                                 current={data?.currentPage}
                                 showTotal={(total) =>
                                   `Tổng số ${total} sản phẩm`
                                 }
-                                pageSize={data?.pageSize ?? 0}
+                                // pageSize={data?.pageSize ?? 0}
+                                showSizeChanger={false}
                                 onChange={(value) => {
                                   setRequest({ ...request, pageNumber: value });
                                 }}
@@ -138,6 +131,7 @@ const Product = () => {
             </Row>
           </Col>
         </Row>
+
         <Carousel key={3} data={data?.data} title="gợi ý cho bạn" />
       </div>
     </>
