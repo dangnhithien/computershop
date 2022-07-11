@@ -14,7 +14,6 @@ const useStoreCart = create((set) => ({
           cart: res.data.data,
           loading: false,
         }));
-        console.log(res.data.data.lenght);
       })
       .catch((error) => {
         set(() => ({ loading: false }));

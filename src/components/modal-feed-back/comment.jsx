@@ -1,4 +1,4 @@
-import { Tooltip } from "antd";
+import { Col, Row, Tooltip } from "antd";
 import { Comment, Avatar, Form, Button, List, Input } from "antd";
 import React, { createElement, useState } from "react";
 import moment from "moment";
@@ -95,8 +95,6 @@ const Editor = () => (
 const Comments = () => {
   return (
     <StyleComment>
-      <h5>ĐÁNH GIÁ SẢN PHẨM</h5>
-
       <div className="overview">
         <div className="briefing">
           <h1 className="rating-core">4.5</h1>
@@ -105,12 +103,26 @@ const Comments = () => {
           </div>
         </div>
         <div className="filters">
-          <Button className="filters-item">Tất cả</Button>
-          <Button className="filters-item">5 Sao(1,1k)</Button>
-          <Button className="filters-item">4 Sao(1,2k)</Button>
-          <Button className="filters-item">3 Sao(1k)</Button>
-          <Button className="filters-item">2 Sao(45)</Button>
-          <Button className="filters-item">1 Sao(0)</Button>
+          <Row gutter={[8, 8]}>
+            <Col>
+              <Button className="filters-item">Tất cả</Button>
+            </Col>
+            <Col>
+              <Button className="filters-item">5 Sao(1,1k)</Button>
+            </Col>
+            <Col>
+              <Button className="filters-item">4 Sao(1,2k)</Button>
+            </Col>
+            <Col>
+              <Button className="filters-item">3 Sao(1k)</Button>
+            </Col>
+            <Col>
+              <Button className="filters-item">2 Sao(45)</Button>
+            </Col>
+            <Col>
+              <Button className="filters-item">1 Sao(0)</Button>
+            </Col>
+          </Row>
         </div>
       </div>
       <Comment

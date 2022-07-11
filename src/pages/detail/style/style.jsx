@@ -93,12 +93,13 @@ const StyleContainer = styled.div`
     margin-bottom: 20px;
     border-bottom: 1px solid #f1f1f1;
     .title {
-      font-family: Arial, Helvetica, sans-serif;
       line-height: 20px;
       font-size: 22px;
       font-weight: 600;
       margin-bottom: 22px;
       color: #155263;
+      line-height: 1.25;
+      letter-spacing: 0.5px;
     }
 
     .customer-review {
@@ -118,7 +119,7 @@ const StyleContainer = styled.div`
   }
 
   p {
-    font-size: 16px;
+    font-size: 14px;
   }
   .title {
     margin-bottom: 0 !important;
@@ -157,11 +158,11 @@ const StyleContainer = styled.div`
     margin-top: 40px;
 
     & > span {
-      display: block;
       margin-right: 20px;
       width: 60px;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      white-space: nowrap;
     }
     .tag {
       width: 100%;
@@ -187,13 +188,40 @@ const StyleContainer = styled.div`
   }
 `;
 const StyleTable = styled.div`
+  font-size: 14px;
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  padding: 8px;
+  max-height: 600px;
+  overflow: hidden;
+  position: relative;
+  .more {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    filter: blur();
+    font-size: 16px;
+    color: #ff6c3c;
+    text-align: center;
+    line-height: 60px;
+    background-color: #ffffffe3;
+    cursor: pointer;
+  }
+  .table-title {
+    font-weight: 600;
+    text-align: center;
+    font-size: 18px;
+  }
   table {
     width: 100%;
   }
   td {
-    padding: 0px 20px;
-    padding-top: 15px;
-    border-right: 1px solid #f1f1f1;
+    padding: 0px 8px;
+    padding-top: 12px;
+    width: 50px;
   }
   tr {
     border: 1px solid #c1c1c1;

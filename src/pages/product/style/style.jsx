@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const StyleTopProduct = styled.div`
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
   height: 40px;
   background-color: #fff;
   display: flex;
@@ -268,8 +269,10 @@ const StyleFilterPanel = styled.div`
 `;
 const StyleSidebar = styled.div`
   background-color: #fff;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
   padding-top: 12px;
+  padding-bottom: 14px;
   .title {
     border-bottom: 1px solid #f1f1f1;
     text-align: center;

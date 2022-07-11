@@ -170,15 +170,16 @@ const StyleContentDropdown = styled.div`
   }
 
   .type {
-    padding-bottom: 8px;
     display: flex;
     align-items: center;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     cursor: pointer;
     text-transform: capitalize;
     font-weight: 600;
+    padding: 8px 12px 8px 16px;
     &:hover {
-      color: #ff9a3c;
+      background-color: rgba(145, 158, 171, 0.08);
+      border-radius: 6px;
     }
 
     svg {
@@ -301,7 +302,8 @@ const StyleFooter = styled.div`
   }
 `;
 const StyleInfoBox = styled.div`
-  border: 1px solid #155263;
+  border-top: 1px solid rgba(145, 158, 171, 0.32);
+  border-bottom: 1px dotted rgba(145, 158, 171, 0.32);
   padding: 10px 50px;
   margin-top: 12px;
 

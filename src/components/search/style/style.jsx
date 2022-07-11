@@ -15,7 +15,7 @@ const StyleSearchBar = styled.div`
     border-radius: 20px;
 
     box-sizing: border-box;
-    border: 1px solid #c1c1c1;
+    border: 1px solid rgba(145, 158, 171, 0.32);
     position: relative;
     background-color: #fff;
 
@@ -54,7 +54,7 @@ const StyleSearchBar = styled.div`
     width: 350px;
     overflow: hidden;
     box-sizing: border-box;
-    border: 1px solid #c1c1c1;
+    border: 1px solid rgba(145, 158, 171, 0.32);
     background: #fff;
     border-top: none;
     border-bottom-left-radius: 20px;

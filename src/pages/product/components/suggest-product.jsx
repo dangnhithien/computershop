@@ -1,45 +1,14 @@
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
-import { Carousel } from "antd";
-import React from "react";
-import { BiArrowFromLeft } from "react-icons/bi";
 import styled from "styled-components";
-const contentStyle = {
-  height: "160px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
+
 const StyleCarousel = styled.div`
-  .ant-carousel .slick-prev,
-  .ant-carousel .slick-next,
-  .ant-carousel .slick-prev:hover,
-  .ant-carousel .slick-next:hover,
-  .ant-carousel .slick-prev:focus,
-  .ant-carousel .slick-next:focus {
-    font-size: inherit;
-    color: currentColor !important;
-  }
-
-  .ant-carousel .slick-prev::before {
-    color: currentColor !important;
-  }
-
-  .slick-arrow.slick-prev {
-    font-size: 20px !important;
-  }
-
-  .ant-carousel .slick-next::before {
-    color: currentColor !important;
-  }
-
-  .slick-arrow.slick-next {
-    font-size: 20px !important;
+  height: 428px;
+  cursor: pointer;
+  img {
+    height: 100%;
+    aspect-ratio: 3/4;
+    box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+      rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+    border-radius: 4px;
   }
 `;
 
@@ -47,25 +16,11 @@ const Suggest = () => {
   return (
     <>
       <StyleCarousel>
-        <Carousel
-          dots={false}
-          arrows
-          prevArrow={<LeftOutlined />}
-          nextArrow={<RightOutlined />}
-        >
-          <div>
-            <h3 style={contentStyle}>1</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>3</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>4</h3>
-          </div>
-        </Carousel>
+        <img
+          src="https://cdn.create.vista.com/common/6d961d83-342f-4237-bc0a-3d8ff2caa27f_640.jpeg"
+          alt="images
+        "
+        />
       </StyleCarousel>
     </>
   );

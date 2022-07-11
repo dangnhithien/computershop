@@ -20,11 +20,9 @@ const DropdownContent = () => {
       name: "bán chạy",
       status: false,
       request: { keyword: "", pageSize: 4 },
-      components: (
-        <>
-          <Horizoncard data={data} />
-        </>
-      ),
+      components: (key) => {
+        return <Horizoncard key={key} data={data} />;
+      },
       action: (request) => actionGetProduct(request),
     },
     {
@@ -32,11 +30,9 @@ const DropdownContent = () => {
       name: "đánh giá",
       status: false,
       request: { keyword: "", pageSize: 4 },
-      components: (
-        <>
-          <Horizoncard data={data} />
-        </>
-      ),
+      components: (key) => {
+        return <Horizoncard key={key} data={data} />;
+      },
       action: (request) => actionGetProduct(request),
     },
     {
@@ -44,11 +40,9 @@ const DropdownContent = () => {
       name: "giảm giá",
       status: false,
       request: { keyword: "", pageSize: 4 },
-      components: (
-        <>
-          <Horizoncard data={data} />
-        </>
-      ),
+      components: (key) => {
+        return <Horizoncard key={key} data={data} />;
+      },
       action: (request) => actionGetProduct(request),
     },
     {
@@ -56,7 +50,10 @@ const DropdownContent = () => {
       name: "loại sản phẩm",
       status: false,
       request: { keyword: "" },
-      components: <Tags data={data} />,
+      passingLink: "categoryIds",
+      components: (key) => (
+        <Tags key={key} data={data} passingLink="categoryIds" />
+      ),
       action: (request) => actionGetCategories(request),
     },
     {
@@ -64,7 +61,10 @@ const DropdownContent = () => {
       name: "nhãn hàng",
       status: false,
       request: { keyword: "" },
-      components: <Tags data={data} />,
+      passingLink: "supplierId",
+      components: (key) => (
+        <Tags key={key} data={data} passingLink="supplierId" />
+      ),
       action: (request) => actionGetSupplier(request),
     },
   ];
@@ -139,8 +139,8 @@ const DropdownContent = () => {
             {loading ? (
               <SpinCustom />
             ) : (
-              router_menu?.map((element) => {
-                if (active.id === element.id) return element.components;
+              router_menu?.map((element, key) => {
+                if (active.id === element.id) return element.components(key);
               })
             )}
           </Row>

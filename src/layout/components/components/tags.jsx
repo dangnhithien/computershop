@@ -24,14 +24,21 @@ const StyleTag = styled.div`
     }
   }
 `;
-const Tags = ({ data }) => {
+const Tags = ({ data, passingLink }) => {
   return (
     <>
       {data?.map((item, key) => {
         return (
           <Col key={key}>
             <StyleTag>
-              <Link to={PATH.HOME}>
+              <Link
+                to={PATH.PRODUCT}
+                state={
+                  passingLink === "supplierId"
+                    ? { [passingLink]: item.id }
+                    : { [passingLink]: [item.id] }
+                }
+              >
                 <div className="broker-tag">{item.name}</div>
               </Link>
             </StyleTag>

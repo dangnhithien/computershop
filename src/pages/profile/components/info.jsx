@@ -95,13 +95,21 @@ const Info = () => {
             <form onSubmit={handleSubmit(actionPutForm)} method="post">
               <Row gutter={[8, 8]}>
                 <Col span={24}>
-                  <span className="label">Email</span>
-                  <Controller
+                  <span className="label" style={{ display: "inline-block" }}>
+                    Email
+                  </span>
+                  &nbsp;
+                  <span
+                    style={{ fontSize: 16, fontWeight: "600", marginLeft: 16 }}
+                  >
+                    {userProfile.email}
+                  </span>
+                  {/* <Controller
                     name="email"
                     control={control}
                     // rules={{ required: true }}
                     render={({ field }) => <Input {...field} />}
-                  />
+                  /> */}
                 </Col>
 
                 <Col span={24}>

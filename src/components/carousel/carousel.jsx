@@ -2,10 +2,9 @@ import Slider from "react-slick";
 
 import { NextArrow, PrevArrow } from "./arrow";
 
-import { useState } from "react";
-import ProductSingle from "../product-card/product-single";
 import { Col, Row } from "antd";
 import styled from "styled-components";
+import ProductSingle from "../product-card/product-single";
 const StyleCarousel = styled.div`
   margin-top: 12px;
   &:hover .arrow-carousel {
@@ -14,7 +13,7 @@ const StyleCarousel = styled.div`
   }
 
   h4 {
-    font-size: 26px;
+    font-size: 23px;
     font-weight: 600;
     text-transform: uppercase;
     color: #155263;
@@ -24,7 +23,7 @@ const StyleCarousel = styled.div`
   }
   .arrow-carousel {
     visibility: hidden;
-    font-size: 30px;
+    font-size: 25px;
     display: block;
     z-index: 15;
     height: 50px;
@@ -34,13 +33,12 @@ const StyleCarousel = styled.div`
     position: absolute;
     cursor: pointer;
     top: 40%;
-    background: #fff;
-    border-radius: 50%;
+
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ffc93c;
+
     &:hover {
       color: #ff6f3c;
     }
@@ -58,9 +56,6 @@ const settings = {
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
 };
-const image = [
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU",
-];
 const Carousel = ({ data, title = "" }) => {
   // const data = [
   //   {
@@ -143,7 +138,7 @@ const Carousel = ({ data, title = "" }) => {
                 {data?.map((item, key) => {
                   return (
                     <>
-                      <div style={{ margin: "5px 5px" }}>
+                      <div key={key} style={{ margin: "5px 5px" }}>
                         <ProductSingle item={item} key={key} index={key} />
                       </div>
                     </>

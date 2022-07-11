@@ -22,7 +22,7 @@ const StyleProfile = styled.div`
     .tab {
       color: #155263;
       font-size: 18px;
-      border: 1px solid #155263;
+      border: 1px solid rgba(145, 158, 171, 0.32);
       text-align: center;
       width: 150px;
       font-weight: 600;
@@ -33,7 +33,6 @@ const StyleProfile = styled.div`
       &:hover {
         background-color: #ff9a3c;
         color: #fff;
-        border: 1px solid #ff9a3c;
       }
     }
     .active {
@@ -45,7 +44,7 @@ const StyleProfile = styled.div`
   }
 
   .ant-row.main {
-    border: 1px solid #155263;
+    border: 1px solid rgba(145, 158, 171, 0.32);
     background-color: #fff;
     border-radius: 6px;
     min-height: 300px;
@@ -67,7 +66,7 @@ const StyleProfile = styled.div`
       font-size: 20px;
       font-weight: 700;
       padding-bottom: 25px;
-      border-bottom: 1px solid #155263;
+      border-bottom: 1px solid rgba(145, 158, 171, 0.32);
     }
 
     .group {
@@ -135,7 +134,7 @@ const StyleProfile = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 16px;
-    border: 1px solid #155263;
+    border: 1px solid rgba(145, 158, 171, 0.32);
     padding: 10px;
     margin: 12px 0;
     color: #443a3a;
@@ -184,9 +183,11 @@ const StyleDetail = styled.div`
 
     .purchased {
       display: flex;
-      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+        rgb(145 158 171 / 12%) 0px 12px 24px -4px;
 
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      margin-right: 8px;
       font-size: 16px;
       align-items: center;
     }

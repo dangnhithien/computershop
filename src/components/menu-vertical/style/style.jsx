@@ -15,8 +15,8 @@ const StyleMenuVertical = styled.div`
   flex-direction: column;
   align-items: center;
   .border-icon {
-    border: 1px solid #155263;
-
+    box-shadow: #15526352 0px 0px 2px 0px,
+      rgb(145 158 171 / 12%) 0px 12px 24px -4px;
     cursor: pointer !important;
     padding: 10px;
     width: 50px;
@@ -29,7 +29,6 @@ const StyleMenuVertical = styled.div`
     background-color: #fff;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     &:hover {
-      border: 1px solid #ff9a3c;
       transition: all 250ms linear;
       .icon {
         color: #ff9a3c;

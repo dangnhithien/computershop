@@ -84,6 +84,10 @@ const StyleCommentAction = styled.span`
   }
 `;
 const StyleComment = styled.div`
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  padding: 8px;
+
   .overview {
     background-color: #fff;
     min-height: 75px;
@@ -106,9 +110,6 @@ const StyleComment = styled.div`
   .filters {
     flex: 1;
     margin-left: 10px;
-  }
-  .filters-item {
-    margin-right: 10px;
   }
 `;
 export { StyleFeedback, StyleRate, StyleComment, StyleCommentAction };

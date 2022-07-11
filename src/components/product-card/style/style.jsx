@@ -103,32 +103,25 @@ const StylePrice = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  border-top: 1px solid #f1f1f1;
   margin: 0 -15px;
-  margin-top: 5px;
   border-top: 1px solid #f1f1f1;
   .btn-cart {
-    font-size: 23px;
+    font-size: 14px;
     color: #155263;
-    /* border-right: 1px solid; */
     cursor: pointer;
-    border-right: 1px solid #f1f1f1;
     width: 40%;
-    height: 50px;
     line-height: 60px;
     text-align: center;
     &:hover {
-      background-color: #ff6a3c;
-      color: #fff;
+      color: #ff6a3c;
     }
   }
 
   .price {
     width: 60%;
-
-    font-size: 14px;
-    font-weight: 500;
-    color: #333333;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff9a3c;
     text-align: center;
   }
 `;
@@ -136,8 +129,9 @@ const StyleProduct = styled.div`
   font-family: "Montserrat Alternates", sans-serif !important;
   background: #fff;
   padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
   overflow: hidden;
   position: relative;
   padding-bottom: 0;
@@ -228,6 +222,8 @@ const StyleProduct = styled.div`
     white-space: normal;
     margin: 10px 0;
     height: 45px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     &:hover {
       color: #ff6f3c;
     }

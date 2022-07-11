@@ -1,5 +1,5 @@
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Button, Col, Collapse, Radio, Rate, Row, Space } from "antd";
+import { Col, Collapse, Radio, Rate, Row, Space } from "antd";
 
 import { useCallback, useEffect, useState } from "react";
 import CATEGORIES from "../../../api/categories";
@@ -105,9 +105,9 @@ const Sidebar = ({ request, setRequest }) => {
               <SidebarSingleWidget title="Loại sản phẩm">
                 <StyleContent>
                   <ul className="list">
-                    {categories?.map((item) => {
+                    {categories?.map((item, key) => {
                       return (
-                        <li className="list__item">
+                        <li key={key} className="list__item">
                           <label className="label--checkbox">
                             <input
                               type="checkbox"

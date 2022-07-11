@@ -8,12 +8,16 @@ import { PATH } from "utils/const";
 import parseMoney from "utils/parseMoney";
 import { StylePrice } from "../style/style";
 import Comments from "components/modal-feed-back/comment";
-import { Col, InputNumber, Row, Tabs, Button } from "antd";
+import { Col, InputNumber, Row, Tabs, Button, Modal } from "antd";
 import CATEGORIES from "api/categories";
 import PRODUCT from "api/product";
 import Compare from "components/compare/compare";
-import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
-import { MdCompare } from "react-icons/md";
+import {
+  FaAngleDoubleDown,
+  FaFacebook,
+  FaFacebookMessenger,
+} from "react-icons/fa";
+import { MdCompare, MdSell } from "react-icons/md";
 import { RiShoppingCartFill } from "react-icons/ri";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { StyleContainer, StyleSocial, StyleTable } from "../style/style";
@@ -24,6 +28,7 @@ const Detail = () => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleDetail, setModalVisibleDetail] = useState(false);
   const { productId } = useParams();
   let navigate = useNavigate();
   const setCart = useStoreCart((state) => state.setCart);
@@ -31,7 +36,7 @@ const Detail = () => {
   const addToCart = useStoreCart((state) => state.addToCart);
   const userProfile = useStoreUser((state) => state.profile);
   const quantity = useRef(1);
-  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => window.scrollTo(0, 0), [loading]);
   function handleAddToCart() {
     const request = {
       productId: productId,
@@ -75,38 +80,38 @@ const Detail = () => {
             <Row gutter={[24, 0]}>
               <Col span={12}>
                 <Gallery />
-                <StyleSocial>
-                  <span>Chia sẻ: </span>
-                  <FaFacebookMessenger className="icon-messenger icon-social" />
-                  <FaFacebook className="icon-facebook icon-social" />
-                  <BsTwitter className="icon-twitter icon-social" />
-                </StyleSocial>
               </Col>
               <Col span={12}>
                 <div className="product-details-text">
-                  <h4 className="title">{data.name}</h4>
+                  <h4 className="title">
+                    {data.name ??
+                      "Laptop Dell Inspiron N3511C (P112F001CBL) (i3 1115G4/4GBRAM/256GB SSD/15.6 inch FHD/Win11+OfficeHS21/Đen)"}
+                  </h4>
 
                   <div className="product-review">
                     <RateCustom
                       size="20"
-                      value={data.rate}
+                      value={data.rate ?? 3.5}
                       rates={data.numberRate}
                     />
                   </div>
 
                   <StylePrice>
                     <span className="number">
-                      {parseMoney(data.productPrice)}
+                      {parseMoney(data.productPrice ?? 10500000)}
                       &nbsp;vnđ
                     </span>
 
                     <del className="price">
-                      {parseMoney(data.productPrice)}&nbsp;vnđ
+                      {parseMoney(data.productPrice ?? 15000000)}&nbsp;vnđ
                     </del>
                     <span class="stamp is-approved">30%</span>
                   </StylePrice>
                   <div>
-                    <p>{data.description}</p>
+                    <p>
+                      {data.description ??
+                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor veritatis non maiores. Labore aperiam laboriosam reprehenderit, non blanditiis ipsum atque cum officiis at quam nostrum explicabo voluptates, natus earum quibusdam?"}
+                    </p>
                   </div>
                 </div>
 
@@ -116,7 +121,7 @@ const Detail = () => {
                       min={1}
                       max={10}
                       defaultValue={1}
-                      style={{ width: 70 }}
+                      style={{ width: 70, height: 40, lineHeight: "40px" }}
                     />
                   </div>
                   <Button
@@ -141,11 +146,18 @@ const Detail = () => {
                   />
                 </div>
                 <div className="tag-relation">
-                  <span>Đề xuất</span>
+                  <span>
+                    <MdSell />
+                    &nbsp; Đề xuất
+                  </span>
                   <div className="tag">
                     {categories?.map((e, key) => {
                       return (
-                        <Link to={PATH.PRODUCT}>
+                        <Link
+                          key={key}
+                          to={PATH.PRODUCT}
+                          state={{ categoryIds: [e.id] }}
+                        >
                           <span>{e.name}</span>
                         </Link>
                       );
@@ -154,13 +166,16 @@ const Detail = () => {
                 </div>
               </Col>
             </Row>
-            <Tabs type="card">
-              <TabPane tab="Thông số" key="1">
+            <Row gutter={[8, 8]}>
+              <Col span={16}>
+                <Comments />
+              </Col>
+              <Col span={8}>
                 <StyleTable>
                   <table>
                     <tbody>
                       <tr>
-                        <td colspan="2">
+                        <td colspan="2" className="table-title">
                           <p>Mô tả chi tiết</p>
                         </td>
                       </tr>
@@ -368,13 +383,238 @@ const Detail = () => {
                       </tr>
                     </tbody>
                   </table>
+                  <div
+                    className="more"
+                    onClick={() => setModalVisibleDetail(true)}
+                  >
+                    Xem thêm &nbsp;
+                    <FaAngleDoubleDown />
+                  </div>
                 </StyleTable>
-              </TabPane>
-
-              <TabPane tab="Đánh giá" key="3">
-                <Comments />
-              </TabPane>
-            </Tabs>
+                <Modal
+                  style={{ top: 5 }}
+                  width={550}
+                  visible={modalVisibleDetail}
+                  onCancel={() => setModalVisibleDetail(false)}
+                  bodyStyle={{ minHeight: 590 }}
+                  footer={false}
+                >
+                  <StyleTable>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td colspan="2" className="table-title">
+                            <p>Mô tả chi tiết</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Hãng sản xuất</p>
+                          </td>
+                          <td>
+                            <p>Dell</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Chủng loại</p>
+                          </td>
+                          <td>
+                            <p>Inspiron 5406</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Part Number</p>
+                          </td>
+                          <td>
+                            <p>3661SLV</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Mầu sắc</p>
+                          </td>
+                          <td>
+                            <p>Xám</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Bộ vi xử lý</p>
+                          </td>
+                          <td>
+                            <p>Intel Core i3 1115G4&nbsp;</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Chipset</p>
+                          </td>
+                          <td>
+                            <p>Intel&nbsp;</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Bộ nhớ trong</p>
+                          </td>
+                          <td>
+                            <p>8GB DDR4 3200MHz&nbsp;</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Số khe cắm</p>
+                          </td>
+                          <td>
+                            <p>2</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Dung lượng tối đa</p>
+                          </td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>VGA</p>
+                          </td>
+                          <td>
+                            <p>Intel UHD Graphics</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Ổ cứng</p>
+                          </td>
+                          <td>
+                            <p>256GB M.2 PCIe NVMe SSD</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Ổ quang</p>
+                          </td>
+                          <td>
+                            <p>No</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Card Reader</p>
+                          </td>
+                          <td>
+                            <p>SD</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Bảo mật, công nghệ</p>
+                          </td>
+                          <td>
+                            <p>Led Keyboard</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Màn hình&nbsp;</p>
+                          </td>
+                          <td>
+                            <p>14.0-inch HD WVA LED-Backlit, Touch Screen</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Webcam</p>
+                          </td>
+                          <td>
+                            <p>HD</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Audio</p>
+                          </td>
+                          <td>
+                            <p>
+                              Realtek High Definition Audio (Speaker : 2 x 2W)
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Giao tiếp mạng</p>
+                          </td>
+                          <td>
+                            <p>Gigabit</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Giao tiếp không dây</p>
+                          </td>
+                          <td>
+                            <p>802.11ac ,Bluetooth 5.1</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Cổng giao tiếp</p>
+                          </td>
+                          <td>
+                            <p>
+                              2x&nbsp; USB 3.2 Gen 1 ports, 1x&nbsp; USB 3.2 Gen
+                              2 Type-C with DisplayPort, 1x HDMI 1.4, 1x Headset
+                              port, 1x DC-in Jack
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Pin</p>
+                          </td>
+                          <td>
+                            <p>3 cell (40Whr)</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Kích thước&nbsp;</p>
+                          </td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Cân nặng</p>
+                          </td>
+                          <td>
+                            <p>1.72kg</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Hệ điều hành</p>
+                          </td>
+                          <td>
+                            <p>Win 10&nbsp;</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Phụ kiện đi kèm</p>
+                          </td>
+                          <td>
+                            <p>AC Adapter</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </StyleTable>
+                </Modal>
+              </Col>
+            </Row>
           </StyleContainer>
         </div>
       )}

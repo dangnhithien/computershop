@@ -83,6 +83,13 @@ const StyleTextAlign = styled.div`
   }
 `;
 const StyleTable = styled.div`
+  .ant-table {
+    box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+      rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  }
+  .ant-checkbox {
+    margin-left: 15px;
+  }
   thead th {
     background: #155263 !important;
     color: #fff !important;
@@ -135,7 +142,7 @@ const StyleTitle = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: 16px;
+  font-size: 14px;
   text-transform: capitalize;
 `;
 
@@ -149,7 +156,9 @@ const StyleBoxFixed = styled.div`
   width: 575px;
   min-height: 100px;
   font-size: 16px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  border-radius: 4px;
   &.position-unset {
     position: unset;
     box-shadow: none;
@@ -173,7 +182,7 @@ const StyleBoxFixed = styled.div`
   }
   .price {
     font-size: 18px;
-
+    text-align: center;
     font-weight: 600;
   }
   .amount {

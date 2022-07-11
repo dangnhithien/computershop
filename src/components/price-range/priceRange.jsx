@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Slider, InputNumber, Button } from "antd";
-import parseMoney from "../../utils/parseMoney";
+import { Button, Slider } from "antd";
+import { useState } from "react";
 import styled from "styled-components";
+import parseMoney from "../../utils/parseMoney";
 const StylePrice = styled.div`
   .btn {
     width: 100px;
@@ -42,6 +42,7 @@ const PriceRange = ({ request, setRequest }) => {
         }}
       />
       <StylePrice>
+        <p style={{ marginBottom: 8 }}>Giá bán</p>
         <span>
           {parseMoney(currentValue[0])}&nbsp;vnđ - {parseMoney(currentValue[1])}
           &nbsp;vnđ

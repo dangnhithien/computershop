@@ -12,7 +12,7 @@ function App() {
   useEffect(setUserProfile, [setUserProfile]);
   useEffect(() => {
     setCart(user.id);
-  }, []);
+  }, [user.id]);
   // axiosConfig.defaults.headers.common["Authorization"] =
   //   "Bearer " + localStorage.getItem("token"); //the token is a variable which holds the token
 

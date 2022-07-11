@@ -18,7 +18,8 @@ const StyleView = styled.div`
 
     transition: all 0.3s;
     display: flex;
-
+    border-radius: 6px;
+    overflow: hidden;
     flex-direction: row;
 
     &:hover {
@@ -186,11 +187,11 @@ const StyleView = styled.div`
     right: 8px;
     cursor: pointer;
     font-size: 18px;
-    color: #101010;
+    color: #c3c3c3;
     z-index: 100;
     margin: 0px;
     &:hover {
-      color: #c3c3c3;
+      color: #ff6a3c;
     }
   }
 `;

@@ -58,7 +58,11 @@ const Categories = () => {
             return (
               <Col key={key} span={4} style={{ marginBottom: 24 }}>
                 <StyleCategory>
-                  <Link to={PATH.PRODUCT} className="containers">
+                  <Link
+                    to={PATH.PRODUCT}
+                    state={{ categoryIds: item.id }}
+                    className="containers"
+                  >
                     <div className="top">
                       <img src={image[key]} />
                     </div>

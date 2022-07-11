@@ -8,47 +8,23 @@ import { StyleView } from "./style/style";
 import PRODUCT from "../../api/product";
 import SpinCustom from "../spin/Spin";
 
-const Compare = ({ modalVisible, setModalVisible, productCurrent = false }) => {
-  const [listRecommend, setListRecommend] = useState([
-    {
-      id: "1",
-      name: "laptop dell chay rat la cham 1 ",
-      amount: "12000.000.000",
-      isShow: true,
-    },
-    {
-      id: "2",
-      name: "laptop dell chay rat la cham 2 ",
-      amount: "12000.000.000",
-    },
-    {
-      id: "3",
-      name: "laptop dell chay rat la cham 3 ",
-      amount: "12000.000.000",
-    },
-    {
-      id: "4",
-      name: "laptop dell chay rat la cham 4 ",
-      amount: "12000.000.000",
-    },
-    {
-      id: "5",
-      name: "laptop dell chay rat la cham 5 ",
-      amount: "12000.000.000",
-    },
-  ]);
+const Compare = ({ modalVisible, setModalVisible, productCurrent = null }) => {
+  const [listRecommend, setListRecommend] = useState([]);
   const [listRemove, setListRemove] = useState([]);
   const [showProduct, setShowProduct] = useState({
     left: productCurrent,
     right: listRecommend[1],
   });
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (listRemove.length > 0)
-      setListRecommend(() =>
-        listRecommend.filter((e) => !listRemove.includes(e.id))
-      );
+    if (listRemove.length > 0) {
+      actionGetProduct({ keyword: "", pageSize: listRemove.length + 8 });
+    } else {
+      actionGetProduct({ keyword: "", pageSize: 8 });
+    }
   }, [listRemove]);
+
   function handleCloseShowProduct(key) {
     setShowProduct({ ...showProduct, [key]: "" });
   }
@@ -61,25 +37,29 @@ const Compare = ({ modalVisible, setModalVisible, productCurrent = false }) => {
       setShowProduct({ ...showProduct, right: data });
     else setShowProduct({ ...showProduct, right: data });
   }
-  function actionGetProduct() {
+  function actionGetProduct(keyword) {
     setLoading(true);
-    PRODUCT.search({ keyword: "", pageSize: 12 })
+    PRODUCT.search(keyword)
       .then((res) => {
-        setListRecommend(res.data.data);
+        setListRecommend(
+          res.data.data.filter((e) => !listRemove.includes(e.id))
+        );
         setLoading(false);
       })
       .catch((res) => {
         setLoading(false);
       });
   }
+
   return (
     <Modal
-      style={{ top: 50 }}
+      style={{ top: 5 }}
       width={1200}
       visible={modalVisible}
       onCancel={() => setModalVisible(false)}
-      bodyStyle={{ minHeight: 600 }}
+      bodyStyle={{ minHeight: 590 }}
       footer={false}
+      className="modalStyle"
     >
       <StyleView>
         <Row>
@@ -90,8 +70,8 @@ const Compare = ({ modalVisible, setModalVisible, productCurrent = false }) => {
               <div className="top">
                 {listRecommend.map((element) => {
                   if (
-                    element.id == showProduct.left.id ||
-                    element.id == showProduct.right.id
+                    element.id === showProduct.left?.id ||
+                    element.id === showProduct.right?.id
                   )
                     return;
                   return (
@@ -117,7 +97,6 @@ const Compare = ({ modalVisible, setModalVisible, productCurrent = false }) => {
           <Col span={12}>
             {showProduct.left ? (
               <div className="card">
-                {console.log(showProduct)}
                 <span
                   className="cancel"
                   onClick={() => handleCloseShowProduct("left")}

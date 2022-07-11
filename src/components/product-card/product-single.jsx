@@ -3,14 +3,13 @@ import { HiShoppingCart } from "react-icons/hi";
 
 import RateCustom from "../modal-feed-back/rateCustom";
 
-import { Modal, Button } from "antd";
-import { IoMdEye } from "react-icons/io";
+import { Button, Modal } from "antd";
 import { Link } from "react-router-dom";
-import parseMoney from "../../utils/parseMoney";
-import { PATH } from "../../utils/const";
-import { StylePrice, StyleProduct, StyleView } from "./style/style";
 import useStoreCart from "../../store/cart";
 import useStoreUser from "../../store/personal";
+import { PATH } from "../../utils/const";
+import parseMoney from "../../utils/parseMoney";
+import { StylePrice, StyleProduct, StyleView } from "./style/style";
 const images = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl3R1nVV-o6ck3Es7PGkK9-H5aNA-EgD9ydA&usqp=CAU",
@@ -67,7 +66,7 @@ const ProductSingle = ({ item, index }) => {
             <StyleView>
               <div className="card">
                 <div className="photo">
-                  <img src={images[index]} />
+                  <img src={images[index]} alt="images" />
                 </div>
                 <div className="description">
                   <h2>{item.name}</h2>
@@ -107,7 +106,7 @@ const ProductSingle = ({ item, index }) => {
               <span>30%</span>
             </div>
             <Link to={PATH.DETAIL(item.id, item.slug)} className="image">
-              <img src={images[index]} alt="" />
+              <img src={images[index]} alt="images" />
             </Link>
 
             <div className="content">
@@ -121,7 +120,7 @@ const ProductSingle = ({ item, index }) => {
             </div>
             <StylePrice>
               <div className="btn-cart" onClick={() => setModalVisible(true)}>
-                <IoMdEye />
+                Chi tiết
               </div>
               <div className="price">
                 {item.productPrices && item.promotion

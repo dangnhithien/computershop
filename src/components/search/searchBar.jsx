@@ -1,5 +1,5 @@
 import { Empty } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import PRODUCT from "../../api/product";
 
@@ -14,6 +14,7 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
   const [resultSearch, setResultSearch] = useState([]);
   const [loading, setLoading] = useState(false);
   const [blur, setBlur] = useState(false);
+  const timeoutRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,7 +44,10 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
     }
   }
   const handleInput = (e) => {
-    actionGetProduct({ keyword: e.target.value });
+    if (timeoutRef) clearTimeout(timeoutRef.current);
+    setTimeout(() => {
+      actionGetProduct({ keyword: e.target.value });
+    }, 500);
     setSearchValue(e.target.value);
   };
 
@@ -77,7 +81,10 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
                         // onClick={() => handleClick(item)}
                       >
                         <div className="image">
-                          <img src="https://picsum.photos/300/600" />
+                          <img
+                            src="https://picsum.photos/300/600"
+                            alt="image"
+                          />
                         </div>
                         <div className="content">
                           <div className="title">{item.name}</div>

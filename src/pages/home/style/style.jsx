@@ -3,15 +3,15 @@ import styled from "styled-components";
 const StyleCategory = styled.div`
   width: 100%;
   height: 240px;
-  background: #fafafa;
   margin-top: 12px;
   position: relative;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 16px;
   box-shadow: 0;
   transform: scale(0.95);
   transition: box-shadow 0.5s, transform 0.5s;
-  border: 1px solid #a8a8a830;
+  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
   &:hover {
     transform: scale(1);
     box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);

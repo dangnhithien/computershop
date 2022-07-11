@@ -120,9 +120,9 @@ const Horizoncard = ({ data }) => {
         return (
           <Col key={key} span={8}>
             <StyleBox>
-              <div className="ribbon">
+              {/* <div className="ribbon">
                 <span>{e.amount ?? "12%"}</span>
-              </div>
+              </div> */}
               <div className="image">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU" />
               </div>

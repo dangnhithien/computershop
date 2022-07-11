@@ -45,7 +45,7 @@ const StyledSuccess = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 3rem 3rem 0;
+      padding: 1.5rem 1.5rem 0;
       a {
         padding: 0.8rem 1.2rem;
         border-radius: 4px;
@@ -59,8 +59,8 @@ const StyledSuccess = styled.div`
         &:first-child {
           background-color: #fff;
           margin-right: 5px;
-          color: #647bff;
-          border: 1px solid #647bff;
+          color: #ff6a3c;
+          border: 1px solid #ff6a3c;
           &:hover {
             background-color: rgba(240, 240, 240, 0.897);
           }
@@ -80,9 +80,9 @@ const StyledSuccess = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #ff6a3c;
-      margin-bottom: 4rem;
+      margin-bottom: 1rem;
     }
     .paid {
       padding: 1rem 0;

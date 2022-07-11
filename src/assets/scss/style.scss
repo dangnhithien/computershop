@@ -1,4 +1,5 @@
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Public+Sans:wght@100&display=swap");
 
 * {
   padding: 0;
@@ -6,7 +7,7 @@
   box-sizing: border-box;
 }
 body {
-  // font-family: "Poppins", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-weight: 400;
   font-style: normal;
@@ -15,6 +16,7 @@ body {
   visibility: visible;
   overflow-x: hidden;
   color: #666;
+  letter-spacing: 0.5px;
 }
 .container {
   max-width: 1200px;

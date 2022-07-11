@@ -30,6 +30,7 @@ import {
 } from "../style/style";
 import CART from "../../../api/cart";
 import useStoreUser from "../../../store/personal";
+import Coupon from "../components/coupon";
 
 const { confirm } = Modal;
 const Cart = () => {
@@ -39,6 +40,8 @@ const Cart = () => {
   const [selectedRowId, setselectedRowId] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [couponApplied, setCouponApplied] = useState(null);
   const [data, setData] = useState([]);
   const dataCart = useStoreCart((state) => state.cart);
   const setCart = useStoreCart((state) => state.setCart);
@@ -264,6 +267,11 @@ const Cart = () => {
   ];
   return (
     <>
+      <Coupon
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        setCouponApplied={setCouponApplied}
+      />
       <div className="container">
         <StyleTextAlign>
           {dataCart.length > 0 ? (
@@ -295,24 +303,32 @@ const Cart = () => {
                     <div className="label">Áp dụng: </div>
                   </Col>
                   <Col span={10}>
-                    <div className="amount">Giảm 90%</div>
+                    <div className="amount">
+                      {couponApplied ? couponApplied.name : "Thêm ưu đãi"}
+                    </div>
                   </Col>
                   <Col span={8}>
-                    <div className="voucher">Chọn mã giảm giá</div>
+                    <div
+                      className="voucher"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setModalVisible(true)}
+                    >
+                      Chọn mã giảm giá
+                    </div>
                   </Col>
 
-                  <Col span={11}>
+                  <Col span={10}>
                     <div className="total">
                       Tổng tiền <span>({selectedRowId.length} sản phẩm) </span>:
                     </div>
                   </Col>
-                  <Col>
+                  <Col span={8}>
                     {" "}
                     <div className="price">
                       {parseMoney(totalPrice)}&nbsp;vnđ
                     </div>
                   </Col>
-                  <Col>
+                  <Col span={6}>
                     {" "}
                     <Button
                       type="primary"
