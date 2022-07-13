@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { Col, Rate } from "antd";
+import { Col, Rate, Typography } from "antd";
 import parseMoney from "../../../utils/parseMoney";
-
+const { Title } = Typography;
 const StyleBox = styled.div`
   border-radius: 5px;
   border: 1px solid #f1f1f1;
@@ -73,13 +73,11 @@ const StyleBox = styled.div`
     margin-left: 12px;
     margin-top: 8px;
     .title {
-      font-size: 14px;
-      font-weight: 600;
       text-transform: capitalize;
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
-      color: #333333;
+      color: black;
       font-weight: 500;
       text-transform: capitalize;
       display: -webkit-box;
@@ -124,10 +122,17 @@ const Horizoncard = ({ data }) => {
                 <span>{e.amount ?? "12%"}</span>
               </div> */}
               <div className="image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZSGmO7Y4gMOqvdlR2B620ahMk667pCQOcvQ&usqp=CAU" />
+                <img src="https://zshop.vn/images/thumbnails/624/460/detailed/51/microsoft_thh_00035_12_4_multi_touch_surface_laptop_1593598_v73b-kf.jpg" />
               </div>
               <div className="content">
-                <div className="title">{e.name}</div>
+                <Title
+                  level={5}
+                  ellipsis={{ rows: 1 }}
+                  style={{ marginBottom: 0 }}
+                  className="title"
+                >
+                  {e.name}
+                </Title>
                 <div className="rate">
                   <Rate
                     disabled

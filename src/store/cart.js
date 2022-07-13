@@ -26,11 +26,15 @@ const useStoreCart = create((set) => ({
     return CART.create(data)
       .then((res) => {
         notification.success({
-          message: "thành công",
+          message: "Thêm thành công!",
           placement: "topRight",
         });
       })
       .catch((error) => {
+        notification.error({
+          message: "Thêm không thành công!",
+          placement: "topRight",
+        });
         set(() => ({ loading: false }));
       });
   },

@@ -1,28 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import Gallery from "../components/gallery";
+import { Button, Col, InputNumber, Modal, Row, Tabs } from "antd";
+import CATEGORIES from "api/categories";
+import PRODUCT from "api/product";
+import Compare from "components/compare/compare";
+import Comments from "components/modal-feed-back/comment";
 import RateCustom from "components/modal-feed-back/rateCustom";
-import { BsTwitter } from "react-icons/bs";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { FaAngleDoubleDown } from "react-icons/fa";
+import { MdCompare, MdSell } from "react-icons/md";
+import { RiShoppingCartFill } from "react-icons/ri";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useStoreCart from "store/cart";
 import useStoreUser from "store/personal";
 import { PATH } from "utils/const";
 import parseMoney from "utils/parseMoney";
-import { StylePrice } from "../style/style";
-import Comments from "components/modal-feed-back/comment";
-import { Col, InputNumber, Row, Tabs, Button, Modal } from "antd";
-import CATEGORIES from "api/categories";
-import PRODUCT from "api/product";
-import Compare from "components/compare/compare";
-import {
-  FaAngleDoubleDown,
-  FaFacebook,
-  FaFacebookMessenger,
-} from "react-icons/fa";
-import { MdCompare, MdSell } from "react-icons/md";
-import { RiShoppingCartFill } from "react-icons/ri";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { StyleContainer, StyleSocial, StyleTable } from "../style/style";
-
-const { TabPane } = Tabs;
+import Gallery from "../components/gallery";
+import { StyleContainer, StylePrice, StyleTable } from "../style/style";
 
 const Detail = () => {
   const [data, setData] = useState([]);

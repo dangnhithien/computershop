@@ -1,24 +1,30 @@
-import { Avatar, BackTop, Badge, Col, Empty, Row, Tooltip } from "antd";
-import { useEffect, useState } from "react";
+import {
+  Avatar,
+  BackTop,
+  Badge,
+  Col,
+  Empty,
+  Row,
+  Tooltip,
+  Typography,
+} from "antd";
+import { useState } from "react";
+import { FiLogOut } from "react-icons/fi";
 import { ImProfile, ImUser } from "react-icons/im";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { RiShoppingCartFill } from "react-icons/ri";
 import { TiArrowUpThick, TiHome } from "react-icons/ti";
-import { FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 
-import PRODUCT from "../../api/product";
-
-import { PATH } from "../../utils/const";
-import useStoreUser from "../../store/personal";
 import useStoreCart from "../../store/cart";
+import useStoreUser from "../../store/personal";
+import { PATH } from "../../utils/const";
 import {
   StyleMenuVertical,
   StyleSubContent,
   StyleSubContentUser,
 } from "./style/style";
-
+const { Title, Text } = Typography;
 const MenuVertical = () => {
   const [loading, setLoading] = useState(false);
   const userProfile = useStoreUser((state) => state.profile);
@@ -111,34 +117,36 @@ const MenuVertical = () => {
                         {dataCart?.slice(0, 3).map((item, key) => {
                           return (
                             <Col key={key} span={24} className="row-cart">
-                              <Row gutter={[8, 8]}>
-                                <Col span={8}>
+                              <Row gutter={[8, 8]} wrap={false} align="middle">
+                                <Col>
                                   <Avatar
-                                    size={80}
                                     shape="square"
-                                    src={
-                                      item.imgUrl ??
-                                      "https://picsum.photos/300/600"
-                                    }
-                                    className="image"
+                                    src="https://phucanhcdn.com/media/product/42440_surface_laptop_go_sandstone_h1.png"
+                                    size={64}
                                   />
                                 </Col>
-                                <Col span={16}>
-                                  <Row gutter={[24, 0]}>
+                                <Col>
+                                  <Row gutter={[0, 0]}>
                                     <Col span={24}>
-                                      <h6 className="title">
+                                      <Title
+                                        level={5}
+                                        ellipsis={{ rows: 1, expandable: true }}
+                                        style={{ marginBottom: 0 }}
+                                        className="title"
+                                      >
                                         {item.productName ?? "null"}
-                                      </h6>
+                                      </Title>
                                     </Col>
-                                    <Col span={6}>
-                                      <span className="quantity">
-                                        x{item.quantity ?? "null"}
-                                      </span>
-                                    </Col>
-                                    <Col span={18}>
-                                      <span className="price">
+                                    <Col span={24}>
+                                      <Text type="secondary">
+                                        {" "}
                                         {item.price ?? "null"} &nbsp; vnđ
-                                      </span>
+                                      </Text>
+                                    </Col>
+                                    <Col span={24}>
+                                      <Text type="warning">
+                                        x{item.quantity ?? "null"}
+                                      </Text>
                                     </Col>
                                   </Row>
                                 </Col>

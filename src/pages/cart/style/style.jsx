@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const StyleCheckout = styled.div`
   padding: 15px 20px 24px;
+  overflow-y: hidden;
 
   .box {
     width: 100px;
@@ -20,7 +21,7 @@ const StyleCheckout = styled.div`
     font-weight: 600;
   }
   .title {
-    font-size: 24px;
+    font-size: 20px;
     color: #ff6a3c;
     margin-bottom: 10px;
   }
@@ -49,22 +50,23 @@ const StyleCheckout = styled.div`
     font-size: 16px;
   }
   .total {
-    font-size: 16px;
-    padding: 8px;
+    font-size: 15px;
+    margin-bottom: 20px;
     .total-pay {
-      font-size: 20px;
+      font-size: 18px;
       color: #ff6a3c;
       font-weight: 700;
     }
+    .icon {
+      cursor: pointer;
+      font-size: 14px;
+    }
   }
-  h6 {
-    font-size: 18px;
-    font-weight: 600;
+  .note {
     margin-top: 20px;
   }
   .active {
-    color: #1890ff;
-    border: 1px solid;
+    color: #ff6a3c;
   }
   .btn-checkout {
     width: 100%;

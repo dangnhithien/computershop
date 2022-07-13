@@ -345,7 +345,10 @@ const Cart = () => {
                       onClose={onClose}
                       visible={visible}
                     >
-                      <Checkout total={totalPrice} />
+                      <Checkout
+                        total={totalPrice}
+                        setTotalPrice={setTotalPrice}
+                      />
                     </Drawer>
                   </Col>
                 </Row>

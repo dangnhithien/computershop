@@ -299,7 +299,7 @@ const StyleEmpty = styled.div`
 `;
 const StylePagination = styled.div`
   text-align: center;
-  margin-top: 16px;
+  margin: 16px;
   .ant-pagination-item {
     border: none;
   }

@@ -36,12 +36,12 @@ const BoxProduct = () => {
           <Row gutter={[8, 8]} justify="center" style={{ height: "100%" }}>
             <Col span={24}>
               <Link to="">
-                <img src="https://hanoicomputercdn.com/media/banner/01_Jul669997a67126fe62d8b44c63e2f89fd8.png" />
+                <img src="https://cdn.mediamart.vn/images/banner/laptop-dell-t7_5f1c37b6.jpg" />
               </Link>
             </Col>
             <Col span={24}>
               <Link to="">
-                <img src="https://hanoicomputercdn.com/media/banner/04_Julba4eddd7a21b2481f3aa54167df0c819.png" />
+                <img src="https://cdn.mediamart.vn/images/banner/laptop-online-t5_a19066a1.jpg" />
               </Link>
             </Col>
             <Col span={24}>

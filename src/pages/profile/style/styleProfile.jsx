@@ -135,8 +135,8 @@ const StyleProfile = styled.div`
     align-items: center;
     font-size: 16px;
     border: 1px solid rgba(145, 158, 171, 0.32);
-    padding: 10px;
-    margin: 12px 0;
+    padding: 8px;
+    margin: 4px 0;
     color: #443a3a;
     text-transform: capitalize;
     & > div {
@@ -161,9 +161,13 @@ const StyleProfile = styled.div`
   }
 `;
 const StyleDetail = styled.div`
-  .swapper {
+  .wapper {
     max-height: 350px;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5px;
+    margin-right: 5px;
+
     ::-webkit-scrollbar {
       width: 10px;
     }
@@ -180,40 +184,11 @@ const StyleDetail = styled.div`
     ::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
-
-    .purchased {
-      display: flex;
-      box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
-        rgb(145 158 171 / 12%) 0px 12px 24px -4px;
-
-      margin-bottom: 8px;
-      margin-right: 8px;
-      font-size: 16px;
-      align-items: center;
-    }
-
-    .group {
-      width: 60%;
-      margin-top: 10px;
-      padding-left: 10px;
-      color: #155263;
-    }
-    .name {
-      font-family: "Anek Malayalam", sans-serif !important;
-      overflow: hidden;
-      display: -webkit-box;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      margin: 0 0 5px;
-      font-size: 16px;
-      line-height: 22px;
-      max-height: 48px;
-      text-transform: capitalize;
-    }
-    .quantity {
-      color: #c3c3c3;
-    }
+  }
+  .item {
+    border: 1px solid #f1f1f1;
+    padding: 5px;
+    border-radius: 6px;
   }
 `;
 const StyleNotification = styled.div`

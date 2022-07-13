@@ -3,8 +3,6 @@ import styled from "styled-components";
 const StyleHeader = styled.div`
   .main-menu {
     position: relative;
-    margin-top: 15px;
-    margin-bottom: 5px;
     nav > ul > li {
       position: relative;
       display: inline-block;
@@ -94,7 +92,7 @@ const StyleHeader = styled.div`
   .mega-menu {
     position: absolute;
     min-width: 100%;
-    padding: 25px 30px 30px 30px;
+    padding: 15px;
     background: #fff;
     box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.1);
     transform: perspective(600px) rotateX(-90deg);

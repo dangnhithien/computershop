@@ -131,7 +131,7 @@ const Product = () => {
             </Row>
           </Col>
         </Row>
-
+        <BannerSingle />
         <Carousel key={3} data={data?.data} title="gợi ý cho bạn" />
       </div>
     </>
