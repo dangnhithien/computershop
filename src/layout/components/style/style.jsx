@@ -306,7 +306,7 @@ const StyleInfoBox = styled.div`
   margin-top: 12px;
 
   background-color: #fff;
-  color: #155263;
+  color: #333333;
   .item {
     display: flex;
     justify-content: center;

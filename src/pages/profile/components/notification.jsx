@@ -1,52 +1,43 @@
-import { Col, Row } from "antd";
+import { Avatar, Col, Row, Typography } from "antd";
 import { FaBell } from "react-icons/fa";
 
 import { StyleNotification } from "../style/styleProfile";
-
+const { Title, Text } = Typography;
 const Notification = () => {
   return (
-    <Row gutter={[24, 0]} className="main">
-      <Col span={14}>
-        <h5 className="title">Thông báo</h5>
+    <Row gutter={[8, 8]} className="main">
+      <Col span={14} style={{ height: 50 }}>
+        <Title level={5} className="title">
+          Thông báo
+        </Title>
       </Col>
       <Col span={24}>
-        <StyleNotification>
-          <div className="image">
-            <img src="https://picsum.photos/300/600" alt="" />
-          </div>
-          <div className="content">
-            <div className="title">Khuyến mãi lớn giảm tới 30%</div>
-            <p>Khuyễn mãi lớn dành cho khách hàng thân thiết của shop</p>
-          </div>
-          <FaBell />
-        </StyleNotification>
-        <StyleNotification>
-          <div className="image">
-            <img src="https://picsum.photos/300/600" alt="" />
-          </div>
-          <div className="content">
-            <div className="title">Khuyến mãi lớn giảm tới 30%</div>
-            <p>Khuyễn mãi lớn dành cho khách hàng thân thiết của shop</p>
-          </div>
-        </StyleNotification>
-        <StyleNotification>
-          <div className="image">
-            <img src="https://picsum.photos/300/600" alt="" />
-          </div>
-          <div className="content">
-            <div className="title">Khuyến mãi lớn giảm tới 30%</div>
-            <p>Khuyễn mãi lớn dành cho khách hàng thân thiết của shop</p>
-          </div>
-        </StyleNotification>
-        <StyleNotification>
-          <div className="image">
-            <img src="https://picsum.photos/300/600" alt="" />
-          </div>
-          <div className="content">
-            <div className="title">Khuyến mãi lớn giảm tới 30%</div>
-            <p>Khuyễn mãi lớn dành cho khách hàng thân thiết của shop</p>
-          </div>
-        </StyleNotification>
+        <Row gutter={[8, 8]}>
+          <Col span={12}>
+            <StyleNotification>
+              <Row gutter={[8, 8]} align="middle">
+                <Col>
+                  <Avatar
+                    size={50}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeH5j3LmfFGLsofpNHt5wLnIrldx_g9lI_R_XnYFJUGdetZhFZOeOnQqqVk-H3AMY2elI&usqp=CAU"
+                    alt=""
+                  />
+                </Col>
+                <Col span={18}>
+                  <Title level={5} ellipsis={true} style={{ margin: 0 }}>
+                    Khuyến mãi lớn giảm tới 30% Khuyến mãi lớn giảm tới 30%
+                  </Title>
+                  <Text ellipsis={{ rows: 2 }} type="secondary">
+                    Khuyễn mãi lớn dành cho khách hàng thân thiết của shop
+                  </Text>
+                </Col>
+                <Col span={2}>
+                  <FaBell />
+                </Col>
+              </Row>
+            </StyleNotification>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

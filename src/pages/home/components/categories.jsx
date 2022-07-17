@@ -1,24 +1,12 @@
-import { Col, Row } from "antd";
+import { Col, Row, Typography } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 
 import CATEGORIES from "../../../api/categories";
 import { PATH } from "../../../utils/const";
 import { StyleCategory } from "../style/style";
-const Title = styled.span`
-  h4 {
-    font-size: 26px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #155263;
-    margin: 0;
-    margin-left: 5px;
-    margin-top: 12px;
-    border-bottom: 2px solid #ff9a3c;
-    display: inline-block;
-  }
-`;
+const { Title } = Typography;
+
 const image = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTbooMq6_OR9QLK5qHcbfhvGBYB8clt8Rg_Q&usqp=CAU",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfDF8uJ7GTJ_Ds5ReSnzHLTJGXlWdJHFBwMY518rtmRwVAUWwCmil3zgBmH9mA_h1ULWQ&usqp=CAU",
@@ -27,31 +15,32 @@ const image = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVz78A8wc7xIbvnB20AYkLXkbh2Q4oIfMb1Q&usqp=CAU",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk7Nmr-Vwn07kVmJvuwGlVG1B7j_5lrQc9tkd7NxeDouT1jcHg1dLR-Ici5LJ8X1vpiX8&usqp=CAU",
 ];
-const Categories = () => {
-  const [loading, setLoading] = useState(false);
+const Categories = ({ requestBody, title }) => {
   const [data, setData] = useState([]);
 
   const actionGetAllCategories = useCallback((keyword) => {
-    setLoading(true);
     CATEGORIES.search(keyword)
       .then((res) => {
         setData(res.data.data);
-        setLoading(false);
       })
-      .catch((error) => {
-        setLoading(false);
-      });
+      .catch((error) => {});
   }, []);
   useEffect(() => {
-    actionGetAllCategories({ keyword: "", pageSize: 6 });
+    actionGetAllCategories(requestBody);
   }, [actionGetAllCategories]);
   return (
     <>
       <div className="container">
         <Row gutter={[8, 0]}>
           <Col span={24}>
-            <Title>
-              <h4>Danh mục</h4>
+            <Title
+              level={3}
+              underline
+              style={{
+                marginTop: 12,
+              }}
+            >
+              {title}
             </Title>
           </Col>
           {data.map((item, key) => {

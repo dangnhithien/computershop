@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { StyleBoxProduct } from "./style/style";
-import { Col, notification, Row } from "antd";
+import { Col, Row } from "antd";
 import ImageGallery from "react-image-gallery";
 import styled from "styled-components";
 const StyleBanner = styled.div`
@@ -32,25 +32,6 @@ const BoxProduct = () => {
   return (
     <StyleBoxProduct>
       <Row gutter={[8, 8]} className="vertical">
-        <Col span={6}>
-          <Row gutter={[8, 8]} justify="center" style={{ height: "100%" }}>
-            <Col span={24}>
-              <Link to="">
-                <img src="https://cdn.mediamart.vn/images/banner/laptop-dell-t7_5f1c37b6.jpg" />
-              </Link>
-            </Col>
-            <Col span={24}>
-              <Link to="">
-                <img src="https://cdn.mediamart.vn/images/banner/laptop-online-t5_a19066a1.jpg" />
-              </Link>
-            </Col>
-            <Col span={24}>
-              <Link to="">
-                <img src="https://hanoicomputercdn.com/media/banner/01_Jul6fae3a2bfc0b221d72e955d98ce7fa95.png" />
-              </Link>
-            </Col>
-          </Row>
-        </Col>
         <Col span={18}>
           <StyleBanner>
             <ImageGallery
@@ -66,21 +47,21 @@ const BoxProduct = () => {
             />
           </StyleBanner>
         </Col>
-        <Col span={24} className="horizon">
-          <Row gutter={[8, 8]}>
-            <Col span={8}>
+        <Col span={6}>
+          <Row gutter={[8, 8]} justify="center" style={{ height: "100%" }}>
+            <Col span={24}>
               <Link to="">
-                <img src="https://hanoicomputercdn.com/media/banner/23_Maya5ffcf91576e9cf49f2ade47b2ce177c.png" />
+                <img src="https://cdn.mediamart.vn/images/banner/laptop-dell-t7_5f1c37b6.jpg" />
               </Link>
             </Col>
-            <Col span={8}>
+            <Col span={24}>
               <Link to="">
-                <img src="https://hanoicomputercdn.com/media/banner/29_Jun502037e70d11989ad3047489e7179f11.png" />
+                <img src="https://cdn.mediamart.vn/images/banner/laptop-online-t5_a19066a1.jpg" />
               </Link>
             </Col>
-            <Col span={8}>
+            <Col span={24}>
               <Link to="">
-                <img src="https://hanoicomputercdn.com/media/banner/01_Jul669997a67126fe62d8b44c63e2f89fd8.png" />
+                <img src="https://hanoicomputercdn.com/media/banner/01_Jul6fae3a2bfc0b221d72e955d98ce7fa95.png" />
               </Link>
             </Col>
           </Row>

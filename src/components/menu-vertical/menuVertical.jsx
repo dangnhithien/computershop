@@ -63,9 +63,10 @@ const MenuVertical = () => {
                       </Col>
 
                       <Col span={24} className="row-sub">
-                        {" "}
-                        <ImProfile className="icon-sub" />
-                        Trang cá nhân
+                        <Link to={PATH.PROFILE} style={{ color: "#333333" }}>
+                          <ImProfile className="icon-sub" />
+                          Trang cá nhân
+                        </Link>
                       </Col>
                       <Col span={24} className="row-sub" onClick={logout}>
                         <FiLogOut className="icon-sub" />
@@ -140,7 +141,7 @@ const MenuVertical = () => {
                                     <Col span={24}>
                                       <Text type="secondary">
                                         {" "}
-                                        {item.price ?? "null"} &nbsp; vnđ
+                                        &#8363; {item.price ?? "null"} &nbsp;
                                       </Text>
                                     </Col>
                                     <Col span={24}>

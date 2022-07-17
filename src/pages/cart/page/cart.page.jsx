@@ -17,19 +17,18 @@ import { useEffect, useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-import Carousel from "../../../components/carousel/carousel";
-import { PATH } from "../../../utils/const";
+import { PATH } from "utils/const";
 import Checkout from "../components/checkout";
-import useStoreCart from "../../../store/cart";
-import parseMoney from "../../../utils/parseMoney";
+import useStoreCart from "store/cart";
+import parseMoney from "utils/parseMoney";
 import {
   StyleBoxFixed,
   StyleTable,
   StyleTextAlign,
   StyleTitle,
 } from "../style/style";
-import CART from "../../../api/cart";
-import useStoreUser from "../../../store/personal";
+import CART from "api/cart";
+import useStoreUser from "store/personal";
 import Coupon from "../components/coupon";
 
 const { confirm } = Modal;
@@ -74,74 +73,6 @@ const Cart = () => {
     });
   };
 
-  const item = [
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-  ];
   const onSelectChange = (newselectedRowId) => {
     setTotalPrice(
       dataCart
@@ -324,9 +255,7 @@ const Cart = () => {
                   </Col>
                   <Col span={8}>
                     {" "}
-                    <div className="price">
-                      {parseMoney(totalPrice)}&nbsp;vnđ
-                    </div>
+                    <div className="price">&#8363;{parseMoney(totalPrice)}</div>
                   </Col>
                   <Col span={6}>
                     {" "}
@@ -334,6 +263,7 @@ const Cart = () => {
                       type="primary"
                       className="btn-purchase"
                       onClick={showDrawer}
+                      disabled={selectedRowId.length === 0}
                     >
                       Mua hàng
                     </Button>
@@ -370,7 +300,6 @@ const Cart = () => {
             </>
           )}
         </StyleTextAlign>
-        <Carousel data={item} />
       </div>
     </>
   );

@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 const StyleCarousel = styled.div`
-  height: 428px;
+  height: 430px;
   cursor: pointer;
   img {
     height: 100%;
     aspect-ratio: 3/4;
-    box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
-      rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+    border: 1px solid #f1f1f1;
     border-radius: 4px;
   }
 `;

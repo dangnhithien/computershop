@@ -89,7 +89,7 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
                         <div className="content">
                           <div className="title">{item.name}</div>
                           <div className="price">
-                            {parseMoney(item.productPrice ?? 12000000)}&nbsp;vnđ
+                            &#8363; {parseMoney(item.productPrice ?? 12000000)}
                           </div>
                         </div>
                       </div>

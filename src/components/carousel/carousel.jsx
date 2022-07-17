@@ -1,10 +1,16 @@
 import Slider from "react-slick";
 
-import { NextArrow, PrevArrow } from "./arrow";
-
 import { Col, Row } from "antd";
 import styled from "styled-components";
 import ProductSingle from "../product-card/product-single";
+import { Typography } from "antd";
+import {
+  MdOutlineArrowForwardIos,
+  MdOutlineArrowBackIos,
+} from "react-icons/md";
+import PRODUCT from "api/product";
+import { useEffect, useState } from "react";
+const { Title } = Typography;
 const StyleCarousel = styled.div`
   margin-top: 12px;
   &:hover .arrow-carousel {
@@ -12,15 +18,6 @@ const StyleCarousel = styled.div`
     transition: all 1s ease-in;
   }
 
-  h4 {
-    font-size: 23px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #155263;
-    margin: 0;
-    margin-left: 5px;
-    border-bottom: 2px solid #ff9a3c;
-  }
   .arrow-carousel {
     visibility: hidden;
     font-size: 25px;
@@ -44,6 +41,38 @@ const StyleCarousel = styled.div`
     }
   }
 `;
+function NextArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      id={props.id}
+      style={{
+        right: 0,
+      }}
+      className="arrow-carousel"
+      onClick={onClick}
+    >
+      <MdOutlineArrowForwardIos />
+    </div>
+  );
+}
+
+function PrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      id={props.id}
+      style={{
+        left: 0,
+      }}
+      className="arrow-carousel"
+      onClick={onClick}
+    >
+      <MdOutlineArrowBackIos />
+    </div>
+  );
+}
+
 const settings = {
   adaptiveHeight: true,
   autoplay: true,
@@ -56,82 +85,28 @@ const settings = {
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
 };
-const Carousel = ({ data, title = "" }) => {
-  // const data = [
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     detail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "https://picsum.photos/300/600",
-  //   },
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     detail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "https://picsum.photos/300/600",
-  //   },
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     detail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "https://picsum.photos/300/600",
-  //   },
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     detail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "https://picsum.photos/300/600",
-  //   },
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     detail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "https://picsum.photos/300/600",
-  //   },
-  //   {
-  //     id: "",
-  //     slug: "",
-  //     amount: 1000000,
-  //     promotion: 10,
-  //     name: "New Balance Fresh Foam Kaymin Car Purts ",
-  //     detail: "new-balance-fresh-foam-kaymin-car-purts",
-  //     rate: 4,
-  //     countRate: 5,
-  //     imageUrl: "https://picsum.photos/300/600",
-  //   },
-  // ];
+const Carousel = ({ requestBody, title = "" }) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    actionGetProduct(requestBody);
+  }, [requestBody]);
+
+  function actionGetProduct(keyword) {
+    PRODUCT.search(keyword)
+      .then((res) => {
+        setData(res.data.data);
+      })
+      .catch((res) => {});
+  }
   return (
     <>
       <div className="container">
         <StyleCarousel>
           <Row gutter={[24, 0]}>
             <Col>
-              <h4>{title}</h4>
+              <Title level={3} underline>
+                {title}
+              </Title>
             </Col>
             <Col span={24}>
               <Slider {...settings}>

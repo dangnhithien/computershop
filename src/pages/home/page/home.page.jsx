@@ -1,46 +1,58 @@
-import { useEffect, useRef, useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import PRODUCT from "../../../api/product";
 import Carousel from "../../../components/carousel/carousel";
 import BannerSingle from "../../../components/product-card/bannerSingle";
 import Category from "../components/categories";
 
 import BoxProduct from "../../../components/product-card/box-product";
-import useStoreUser from "../../../store/personal";
+import CarouselPoster from "components/carousel/carousel-poster";
+import Supplier from "../components/supplier";
 
 const Home = () => {
-  const [loading, setLoading] = useState(false);
-  const [listCategory, setListCategory] = useState([]);
-  const [data, setData] = useState([]);
-  const setUser = useStoreUser((state) => state.setUser);
-
-  useEffect(() => {
-    setUser();
-    actionGetProduct({ keyword: "", status: 1, pageNumber: 1, pageSize: 10 });
-  }, []);
-
-  function actionGetProduct(keyword) {
-    setLoading(true);
-    PRODUCT.search(keyword)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((res) => {
-        setLoading(false);
-      });
-  }
+  const initialization = {
+    sale: {
+      title: "Giảm giá",
+      requestBody: {
+        keyword: "",
+        pageSize: 10,
+        pageNumber: 1,
+      },
+    },
+    category: {
+      title: "Danh mục",
+      requestBody: {
+        keyword: "",
+        pageSize: 12,
+        pageNumber: 1,
+      },
+    },
+    bestSelling: {
+      title: "Bán chạy",
+      requestBody: {
+        keyword: "",
+        pageSize: 10,
+        pageNumber: 1,
+      },
+    },
+    appreciate: {
+      title: "Đánh giá tốt",
+      requestBody: {
+        keyword: "",
+        pageSize: 10,
+        pageNumber: 1,
+      },
+    },
+  };
+  const { sale, bestSelling, category, appreciate } = initialization;
   return (
     <>
       <div className="container">
         <BoxProduct />
-        <Category />
-        <Carousel key={1} data={data} title="Bán chạy" />
-
+        <CarouselPoster {...sale} />
+        <Supplier />
         <BannerSingle />
-
-        <Carousel key={2} data={data} title="đánh giá tốt" />
+        <Category {...category} />
+        <Carousel key={1} {...bestSelling} />
       </div>
     </>
   );

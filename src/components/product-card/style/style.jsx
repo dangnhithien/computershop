@@ -87,7 +87,7 @@ const StyleBannerSingle = styled.div`
   }
 
   .banner-single:hover .banner-img {
-    transform: scale(1.2);
+    transform: scale(1.05);
   }
 
   .banner-single:hover .banner-img-link::after {
@@ -110,7 +110,7 @@ const StylePrice = styled.div`
     color: #155263;
     cursor: pointer;
     width: 40%;
-    line-height: 60px;
+    line-height: 50px;
     text-align: center;
     &:hover {
       color: #ff6a3c;
@@ -130,8 +130,7 @@ const StyleProduct = styled.div`
   background: #fff;
   padding: 15px;
   border-radius: 4px;
-  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
-    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  border: 1px solid #f1f1f1;
   overflow: hidden;
   position: relative;
   padding-bottom: 0;
@@ -187,7 +186,8 @@ const StyleProduct = styled.div`
   &:hover img {
     visibility: visible;
     opacity: 1 !important;
-    transform: scale(1.3);
+    transition: all 1s ease;
+    transform: scale(1.05);
   }
   .image {
     img {
@@ -217,11 +217,11 @@ const StyleProduct = styled.div`
     font-weight: 500;
     text-transform: capitalize;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     white-space: normal;
     margin: 10px 0;
-    height: 45px;
+    height: 25px;
     font-weight: 600;
     letter-spacing: 0.5px;
     &:hover {
@@ -257,7 +257,7 @@ const StyleView = styled.div`
 
     .photo {
       padding: 30px;
-      width: 45%;
+      width: 40%;
       text-align: center;
       float: left;
 
@@ -271,37 +271,8 @@ const StyleView = styled.div`
     .description {
       padding: 30px;
       float: left;
-      width: 55%;
+      width: 60%;
       border-left: 2px solid #efefef;
-
-      h1 {
-        font-weight: 300;
-        margin: 0;
-        font-size: 25px;
-        font-weight: 300;
-        color: #515151;
-        letter-spacing: 1px;
-      }
-
-      h2 {
-        font-family: "Anek Malayalam", sans-serif !important;
-        color: #ff6f3c;
-        margin: 0;
-        text-transform: uppercase;
-        font-weight: 500;
-        font-size: 16px;
-        padding: 5px 0;
-      }
-
-      h4 {
-        margin: 0;
-        color: #727272;
-        text-transform: uppercase;
-        font-weight: 500;
-        font-size: 14px;
-        color: #155263;
-        padding-bottom: 8px;
-      }
 
       li {
         font-size: 14px;
@@ -315,27 +286,23 @@ const StyleView = styled.div`
       }
 
       button {
-        outline: 0;
-        border: 0;
-
-        background: none;
-        border: 1px solid #d9d9d9;
+        border: 1px solid #ff6a3c;
         /* padding: 8px 0px; */
         margin-bottom: 30px;
-        color: #155263;
-        text-transform: uppercase;
-        width: 150px;
+        color: #ff6f3c;
+        width: 175px;
         font-family: inherit;
         margin-right: 5px;
         transition: all 0.3s ease;
         font-weight: 500;
-        height: 40px;
-        line-height: 40px;
+        height: 42px;
+        line-height: 42px;
+        border-radius: 4px;
 
         &:hover {
           // background: darken(white, 2%);
-          border: 1px solid #ff6f3c;
-          color: #ff6f3c;
+          background-color: #ff6f3c;
+          color: #fff;
 
           cursor: pointer;
         }

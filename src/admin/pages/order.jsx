@@ -147,7 +147,7 @@ const Order = () => {
       customer: "đặng nhị thiên",
       date: "20/05/2022",
       status: "đang giao",
-      total: "1200000 vnđ",
+      total: "1200000 ",
     },
   ];
 

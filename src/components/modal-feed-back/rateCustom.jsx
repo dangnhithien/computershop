@@ -8,13 +8,6 @@ const RateCustom = ({ size, rates, value }) => {
     <>
       <StyleRate size={size}>
         <Rate disabled defaultValue={value ? value : 0} allowHalf />
-        {rates ? (
-          <span className="rates">
-            ({Math.round(rates / 1000) + "k"} đánh giá)
-          </span>
-        ) : (
-          "(14k đánh giá)"
-        )}
       </StyleRate>
     </>
   );

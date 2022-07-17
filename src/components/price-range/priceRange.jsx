@@ -42,10 +42,9 @@ const PriceRange = ({ request, setRequest }) => {
         }}
       />
       <StylePrice>
-        <p style={{ marginBottom: 8 }}>Giá bán</p>
         <span>
-          {parseMoney(currentValue[0])}&nbsp;vnđ - {parseMoney(currentValue[1])}
-          &nbsp;vnđ
+          &#8363; {parseMoney(currentValue[0])} -&#8363;{" "}
+          {parseMoney(currentValue[1])}
         </span>
         <Button onClick={handlePrice} className="btn">
           lọc

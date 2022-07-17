@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 const StyleTopProduct = styled.div`
-  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
-    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  border: 1px solid #f1f1f1;
   height: 40px;
   background-color: #fff;
   display: flex;
@@ -31,7 +30,7 @@ const StyleContent = styled.div`
   overflow-y: auto;
   max-height: 200px;
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-track {
@@ -44,7 +43,7 @@ const StyleContent = styled.div`
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #888;
   }
 `;
 const StyleFilterPanel = styled.div`
@@ -269,17 +268,17 @@ const StyleFilterPanel = styled.div`
 `;
 const StyleSidebar = styled.div`
   background-color: #fff;
-  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px,
-    rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+  border: 1px solid #f1f1f1;
   padding-top: 12px;
-  padding-bottom: 14px;
+  padding-bottom: 8px;
+  border-radius: 4px;
   .title {
     border-bottom: 1px solid #f1f1f1;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
     h6 {
       font-size: 18px;
       font-weight: 600;

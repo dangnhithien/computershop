@@ -14,6 +14,7 @@ import FilterTop from "../components/filterTop";
 import Suggest from "../components/suggest-product";
 import { StyleEmpty, StylePagination } from "../style/style";
 import { useLocation } from "react-router-dom";
+import ProductHorizon from "components/product-card/product-horizon";
 export const initializationQuestion = {
   keyword: "",
   pageNumber: 1,
@@ -67,16 +68,6 @@ const Product = () => {
         <BannerSingle />
 
         <Row gutter={[8, 0]}>
-          <Col span={6}>
-            <Row gutter={[8, 8]}>
-              <Col span={24}>
-                <Sidebar request={request} setRequest={setRequest} />
-              </Col>
-              <Col span={24}>
-                <Suggest />
-              </Col>
-            </Row>
-          </Col>
           <Col span={18}>
             <Row gutter={[8, 8]}>
               <Col span={24}>
@@ -130,9 +121,29 @@ const Product = () => {
               </Col>
             </Row>
           </Col>
+          <Col span={6}>
+            <Row gutter={[8, 8]}>
+              <Col span={24}>
+                <Sidebar request={request} setRequest={setRequest} />
+              </Col>
+              <Col span={24}>
+                <Suggest />
+              </Col>
+            </Row>
+          </Col>
         </Row>
         <BannerSingle />
-        <Carousel key={3} data={data?.data} title="gợi ý cho bạn" />
+
+        <ProductHorizon />
+        <Carousel
+          key={3}
+          title="Gợi ý cho bạn"
+          requestBody={{
+            keyword: "",
+            pageSize: 10,
+            pageNumber: 1,
+          }}
+        />
       </div>
     </>
   );

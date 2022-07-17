@@ -58,4 +58,59 @@ const StyleBanner = styled.div`
     max-height: 100%;
   }
 `;
-export { StyleCategory, StyleBanner };
+const StyleSupplier = styled.div`
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid #f1f1f1;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  &:hover {
+    border: 1px solid #ff6a3c;
+  }
+  a:hover {
+    img {
+      transform: scale(1.015);
+    }
+    .hover-text {
+      visibility: visible;
+    }
+    .text {
+      background-color: #ff6a3c;
+      color: #fff;
+    }
+  }
+  .image {
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+    border: 1px solid #fff;
+    border-radius: 6px 6px 0 0;
+    border-bottom: none;
+    height: 160px;
+    img {
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease;
+    }
+  }
+  .hover-text {
+    margin-left: auto;
+    visibility: hidden;
+  }
+  .text {
+    background: #fff;
+    color: #333333;
+    text-transform: uppercase;
+
+    height: 38px;
+    line-height: 38px;
+    padding: 0 17px;
+    font-size: 14px;
+    border: 1px solid #fff;
+    border-radius: 0 0 6px 6px;
+    display: flex;
+    overflow: hidden;
+    transition: background 300ms ease;
+  }
+`;
+export { StyleCategory, StyleBanner, StyleSupplier };

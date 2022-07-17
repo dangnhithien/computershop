@@ -5,12 +5,6 @@ import { PATH } from "../../utils/const";
 import { StyleBannerSingle } from "./style/style";
 
 const BannerSingle = (props) => {
-  //  props = {
-  //     linkimg: "",
-  //     nameProduct:"",
-  //     promotionPrice:"",
-  //     linkDetailPorduct:""
-  // }
   return (
     <>
       <StyleBannerSingle>
@@ -22,12 +16,6 @@ const BannerSingle = (props) => {
               alt=""
             />
           </Link>
-          {/* <div className="banner-content">
-            <h3 className="banner-text-large">30% Off</h3>
-            <Link to={PATH.PRODUCT} className="banner-link">
-              Đến xem ngay
-            </Link>
-          </div> */}
         </div>
       </StyleBannerSingle>
     </>

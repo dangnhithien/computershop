@@ -1,4 +1,4 @@
-import { Button, Col, InputNumber, Modal, Row, Tabs } from "antd";
+import { Button, Col, InputNumber, Modal, Row, Typography } from "antd";
 import CATEGORIES from "api/categories";
 import PRODUCT from "api/product";
 import Compare from "components/compare/compare";
@@ -15,6 +15,7 @@ import { PATH } from "utils/const";
 import parseMoney from "utils/parseMoney";
 import Gallery from "../components/gallery";
 import { StyleContainer, StylePrice, StyleTable } from "../style/style";
+const { Title, Text } = Typography;
 
 const Detail = () => {
   const [data, setData] = useState([]);
@@ -70,41 +71,35 @@ const Detail = () => {
         <div className="container">
           <StyleContainer>
             <Row gutter={[24, 0]}>
-              <Col span={12}>
+              <Col span={14}>
                 <Gallery />
               </Col>
-              <Col span={12}>
+              <Col span={10}>
                 <div className="product-details-text">
-                  <h4 className="title">
+                  <Title level={3}>
                     {data.name ??
                       "Laptop Dell Inspiron N3511C (P112F001CBL) (i3 1115G4/4GBRAM/256GB SSD/15.6 inch FHD/Win11+OfficeHS21/Đen)"}
-                  </h4>
+                  </Title>
 
-                  <div className="product-review">
-                    <RateCustom
-                      size="20"
-                      value={data.rate ?? 3.5}
-                      rates={data.numberRate}
-                    />
-                  </div>
+                  <RateCustom
+                    value={data.rate ?? 3.5}
+                    rates={data.numberRate}
+                  />
 
                   <StylePrice>
-                    <span className="number">
-                      {parseMoney(data.productPrice ?? 10500000)}
-                      &nbsp;vnđ
-                    </span>
-
-                    <del className="price">
-                      {parseMoney(data.productPrice ?? 15000000)}&nbsp;vnđ
-                    </del>
-                    <span class="stamp is-approved">30%</span>
+                    <Text italic delete className="price-delete">
+                      &#8363;{parseMoney(data.productPrice ?? 15000000)}
+                    </Text>
+                    <Text type="danger" className="price-sale">
+                      &#8363;{parseMoney(data.productPrice ?? 10500000)}
+                    </Text>
+                    {/* <Text class="discount">30%</Text> */}
                   </StylePrice>
-                  <div>
-                    <p>
-                      {data.description ??
-                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor veritatis non maiores. Labore aperiam laboriosam reprehenderit, non blanditiis ipsum atque cum officiis at quam nostrum explicabo voluptates, natus earum quibusdam?"}
-                    </p>
-                  </div>
+
+                  <Text type="secondary">
+                    {data.description ??
+                      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor veritatis non maiores. Labore aperiam laboriosam reprehenderit, non blanditiis ipsum atque cum officiis at quam nostrum explicabo voluptates, natus earum quibusdam?"}
+                  </Text>
                 </div>
 
                 <div className="add-to-cart">
@@ -137,6 +132,7 @@ const Detail = () => {
                     setModalVisible={setModalVisible}
                   />
                 </div>
+
                 <div className="tag-relation">
                   <span>
                     <MdSell />

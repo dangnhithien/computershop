@@ -109,7 +109,7 @@ const Compare = ({ modalVisible, setModalVisible, productCurrent = null }) => {
                 <div className="description">
                   <h2>{showProduct.left.name}</h2>
 
-                  <h1>{parseMoney(12000000)}vnđ</h1>
+                  <h1>&#8363; {parseMoney(12000000)}</h1>
 
                   <div>
                     <h4>Thông số sản phẩm</h4>
@@ -165,7 +165,7 @@ const Compare = ({ modalVisible, setModalVisible, productCurrent = null }) => {
                 <div className="description">
                   <h2>{showProduct.right.name}</h2>
 
-                  <h1>{parseMoney(12000000)}vnđ</h1>
+                  <h1>&#8363; {parseMoney(12000000)}</h1>
 
                   <div>
                     <h4>Thông số sản phẩm</h4>

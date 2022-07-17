@@ -114,7 +114,7 @@ const Checkout = ({ total, setTotalPrice }) => {
             </Col>
             <Col span={24}>
               <span span={8}>Tổng tiền hàng:</span>&nbsp;
-              <span>{parseMoney(total)}&nbsp;vnđ</span>
+              <span>&#8363; {parseMoney(total)}</span>
             </Col>
             <Col span={24}>
               <span>Phí vận chuyển:</span>&nbsp;
@@ -123,7 +123,7 @@ const Checkout = ({ total, setTotalPrice }) => {
             <Col span={24}>
               <span>Tổng thanh toán:</span>&nbsp;
               <span className="total-pay">
-                {parseMoney((total * paymentLevel) / 100)} &nbsp;vnđ
+                &#8363; {parseMoney((total * paymentLevel) / 100)}
               </span>
             </Col>
           </Row>
