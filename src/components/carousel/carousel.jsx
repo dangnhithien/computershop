@@ -17,7 +17,12 @@ const StyleCarousel = styled.div`
     visibility: visible;
     transition: all 1s ease-in;
   }
-
+  .title {
+    padding-bottom: 7px;
+    border-bottom: 2px solid #ff6a3c;
+    font-size: 20px;
+    font-weight: 500;
+  }
   .arrow-carousel {
     visibility: hidden;
     font-size: 25px;
@@ -104,7 +109,7 @@ const Carousel = ({ requestBody, title = "" }) => {
         <StyleCarousel>
           <Row gutter={[24, 0]}>
             <Col>
-              <Title level={3} underline>
+              <Title level={3} className="title">
                 {title}
               </Title>
             </Col>

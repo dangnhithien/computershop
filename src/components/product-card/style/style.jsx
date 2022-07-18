@@ -103,15 +103,14 @@ const StylePrice = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  margin: 0 -15px;
   border-top: 1px solid #f1f1f1;
   .btn-cart {
     font-size: 14px;
     color: #155263;
     cursor: pointer;
     width: 40%;
-    line-height: 50px;
-    text-align: center;
+    line-height: 42px;
+
     &:hover {
       color: #ff6a3c;
     }
@@ -122,11 +121,10 @@ const StylePrice = styled.div`
     font-size: 16px;
     font-weight: 600;
     color: #ff9a3c;
-    text-align: center;
+    text-align: right;
   }
 `;
 const StyleProduct = styled.div`
-  font-family: "Montserrat Alternates", sans-serif !important;
   background: #fff;
   padding: 15px;
   border-radius: 4px;
@@ -136,53 +134,16 @@ const StyleProduct = styled.div`
   padding-bottom: 0;
   .ribbon {
     position: absolute;
-    right: -5px;
-    top: -5px;
+    top: 10px;
+    left: 10px;
+
+    border: 1px solid #ff9a3c;
+    padding: 0 8px;
+    border-radius: 4px;
+    color: #ff9a3c;
     z-index: 1;
-    overflow: hidden;
-    width: 75px;
-    height: 75px;
-    text-align: right;
   }
-  .ribbon span {
-    font-size: 13px;
-    font-weight: bold;
-    color: #fff;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 20px;
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    width: 100px;
-    display: block;
-    background: linear-gradient(#ff6f3c 0%, #ff6f3c 100%);
-    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-    position: absolute;
-    top: 19px;
-    right: -21px;
-  }
-  .ribbon span::before {
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 3px solid #7e151a;
-    border-right: 3px solid #5e050900;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #a31a21;
-  }
-  .ribbon span::after {
-    content: "";
-    position: absolute;
-    right: 0px;
-    top: 100%;
-    z-index: -1;
-    border-left: 3px solid transparent;
-    border-right: 3px solid #52070a;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #380609;
-  }
+
   &:hover img {
     visibility: visible;
     opacity: 1 !important;
@@ -208,21 +169,19 @@ const StyleProduct = styled.div`
     padding: 5px;
   }
 
-  .title {
+  .titles {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
     color: #333333;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: capitalize;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     white-space: normal;
-    margin: 10px 0;
-    height: 25px;
-    font-weight: 600;
+    margin: 8px 0;
     letter-spacing: 0.5px;
     &:hover {
       color: #ff6f3c;
@@ -257,7 +216,7 @@ const StyleView = styled.div`
 
     .photo {
       padding: 30px;
-      width: 40%;
+      width: 50%;
       text-align: center;
       float: left;
 

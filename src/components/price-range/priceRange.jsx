@@ -43,7 +43,7 @@ const PriceRange = ({ request, setRequest }) => {
       />
       <StylePrice>
         <span>
-          &#8363; {parseMoney(currentValue[0])} -&#8363;{" "}
+          &#8363; {parseMoney(currentValue[0])} - &#8363;{" "}
           {parseMoney(currentValue[1])}
         </span>
         <Button onClick={handlePrice} className="btn">

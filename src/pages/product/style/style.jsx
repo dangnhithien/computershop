@@ -56,7 +56,7 @@ const StyleFilterPanel = styled.div`
     color: black;
     font-size: 16px;
     font-weight: 500;
-    text-transform: uppercase;
+    text-transform: capitalize;
   }
   .ant-radio-inner {
     border: 2px solid #ff9a3c;

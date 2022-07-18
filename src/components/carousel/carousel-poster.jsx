@@ -15,7 +15,13 @@ const StyleCarousel = styled.div`
     visibility: visible;
     transition: all 1s ease-in;
   }
-
+  .title {
+    padding-bottom: 7px;
+    border-bottom: 2px solid #ff6a3c;
+    font-size: 20px;
+    font-weight: 500;
+    display: inline-block;
+  }
   .arrow-carousel {
     /* visibility: hidden; */
     font-size: 20px;
@@ -168,7 +174,7 @@ const CarouselPoster = ({ title = "Danh mục ưu thích" }) => {
             <Col span={18}>
               <Row gutter={[8, 8]}>
                 <Col span={24}>
-                  <Title level={3} underline>
+                  <Title level={3} className="title">
                     {title}
                   </Title>
                 </Col>

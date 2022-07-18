@@ -83,7 +83,7 @@ const Product = () => {
                         <>
                           {data?.data.map((item, key) => {
                             return (
-                              <Col key={key} span={6}>
+                              <Col key={key} span={8}>
                                 <ProductSingle
                                   key={key}
                                   item={item}

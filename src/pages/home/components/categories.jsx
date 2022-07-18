@@ -35,9 +35,13 @@ const Categories = ({ requestBody, title }) => {
           <Col span={24}>
             <Title
               level={3}
-              underline
               style={{
                 marginTop: 12,
+                paddingBottom: 7,
+                borderBottom: "2px solid #ff6a3c",
+                fontSize: 20,
+                fontWeight: 500,
+                display: "inline",
               }}
             >
               {title}

@@ -76,7 +76,7 @@ const Detail = () => {
               </Col>
               <Col span={10}>
                 <div className="product-details-text">
-                  <Title level={3}>
+                  <Title level={3} className="title">
                     {data.name ??
                       "Laptop Dell Inspiron N3511C (P112F001CBL) (i3 1115G4/4GBRAM/256GB SSD/15.6 inch FHD/Win11+OfficeHS21/Đen)"}
                   </Title>

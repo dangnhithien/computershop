@@ -303,7 +303,7 @@ const StyleInfoBox = styled.div`
   border-top: 1px solid rgba(145, 158, 171, 0.32);
   border-bottom: 1px dotted rgba(145, 158, 171, 0.32);
   padding: 10px 50px;
-  margin-top: 12px;
+  margin-top: 50px;
 
   background-color: #fff;
   color: #333333;

@@ -73,7 +73,7 @@ const ProductSingle = ({ item, index }) => {
         <>
           <Modal
             style={{ top: 15 }}
-            width={1000}
+            width={800}
             visible={modalVisible}
             onCancel={() => setModalVisible(false)}
             bodyStyle={{ minHeight: 500 }}
@@ -95,18 +95,18 @@ const ProductSingle = ({ item, index }) => {
                   <Title
                     strong
                     style={{ textTransform: "capitalize" }}
-                    level={3}
+                    level={4}
                   >
                     {item.name}
                   </Title>
                   <Row gutter={[8, 8]} align="middle">
                     <Col>
-                      <Title type="danger" level={3} style={{ marginTop: 0 }}>
+                      <Title type="danger" level={4} style={{ marginTop: 0 }}>
                         &#8363; {parseMoney(12000000)}
                       </Title>
                     </Col>
                     <Col>
-                      <Title disabled delete level={4} style={{ marginTop: 0 }}>
+                      <Title disabled delete level={5} style={{ marginTop: 0 }}>
                         &#8363; {parseMoney(12000000)}
                       </Title>
                     </Col>
@@ -153,7 +153,7 @@ const ProductSingle = ({ item, index }) => {
                 <RateCustom value={item.rate} rates={item.countRate} />
               </div>
 
-              <Link to={PATH.DETAIL(item.id, item.slug)} className="title">
+              <Link to={PATH.DETAIL(item.id, item.slug)} className="titles">
                 {item.name}
               </Link>
             </div>

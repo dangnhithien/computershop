@@ -25,12 +25,9 @@ const StyleContainer = styled.div`
     margin-bottom: 20px;
     border-bottom: 1px solid #f1f1f1;
     .title {
-      line-height: 20px;
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 22px;
-      color: #155263;
-      line-height: 1.25;
+      font-weight: 500;
+
+      text-transform: capitalize;
       letter-spacing: 0.5px;
     }
 
@@ -67,7 +64,7 @@ const StyleContainer = styled.div`
       margin-left: 12px;
       border: 1px solid;
       padding: 5px 12px;
-      border-radius: 4px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
 
