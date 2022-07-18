@@ -7,7 +7,6 @@ import Category from "../components/categories";
 import BoxProduct from "../../../components/product-card/box-product";
 import CarouselPoster from "components/carousel/carousel-poster";
 import Supplier from "../components/supplier";
-import GridProduct from "../components/grid-product";
 
 const Home = () => {
   const initialization = {
