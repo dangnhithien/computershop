@@ -1,5 +1,6 @@
 import { Button, Col, Row, Typography } from "antd";
 import PRODUCT from "api/product";
+import useProduct from "hooks/useProduct";
 import React, { useEffect, useState } from "react";
 import { HiEye, HiShoppingCart } from "react-icons/hi";
 import useStoreCart from "store/cart";
@@ -72,12 +73,15 @@ const StyleProductHorizon = styled.div`
     }
   }
 `;
+const requestBody = { keyword: "", pageSize: 7 };
 const ProductHorizon = () => {
-  const [data, setData] = useState([]);
   const addToCart = useStoreCart((state) => state.addToCart);
   const userProfile = useStoreUser((state) => state.profile);
   const setCart = useStoreCart((state) => state.setCart);
   const loading = useStoreCart((state) => state.loading);
+  const {
+    products: { data },
+  } = useProduct(requestBody);
 
   function handleAddToCart(item) {
     const request = {
@@ -90,16 +94,6 @@ const ProductHorizon = () => {
       setCart(userProfile.id);
     });
   }
-
-  useEffect(() => {
-    PRODUCT.search({ keyword: "", pageSize: 7 })
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .catch((error) => {
-        setData([]);
-      });
-  }, []);
 
   return (
     <StyleProductHorizon>

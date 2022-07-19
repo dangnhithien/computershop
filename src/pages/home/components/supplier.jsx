@@ -64,7 +64,8 @@ const Supplier = () => {
                 <div className="text">
                   <span>{e.name}</span>
                   <span className="hover-text">
-                    Đến xem <RightOutlined />
+                    xem ngay
+                    <RightOutlined />
                   </span>
                 </div>
               </Link>

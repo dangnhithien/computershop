@@ -384,10 +384,10 @@ const Detail = () => {
                   width={550}
                   visible={modalVisibleDetail}
                   onCancel={() => setModalVisibleDetail(false)}
-                  bodyStyle={{ minHeight: 590 }}
+                  bodyStyle={{ minHeight: 600 }}
                   footer={false}
                 >
-                  <StyleTable>
+                  <StyleTable style={{ maxHeight: 10000 }}>
                     <table>
                       <tbody>
                         <tr>

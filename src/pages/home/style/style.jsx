@@ -100,7 +100,7 @@ const StyleSupplier = styled.div`
   .text {
     background: #fff;
     color: #333333;
-    text-transform: uppercase;
+    text-transform: capitalize;
 
     height: 38px;
     line-height: 38px;

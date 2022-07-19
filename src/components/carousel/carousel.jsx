@@ -10,6 +10,7 @@ import {
 } from "react-icons/md";
 import PRODUCT from "api/product";
 import { useEffect, useState } from "react";
+import useProduct from "hooks/useProduct";
 const { Title } = Typography;
 const StyleCarousel = styled.div`
   margin-top: 12px;
@@ -91,44 +92,39 @@ const settings = {
   prevArrow: <PrevArrow />,
 };
 const Carousel = ({ requestBody, title = "" }) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    actionGetProduct(requestBody);
-  }, [requestBody]);
-
-  function actionGetProduct(keyword) {
-    PRODUCT.search(keyword)
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .catch((res) => {});
-  }
+  const {
+    products: { data },
+  } = useProduct(requestBody);
   return (
     <>
-      <div className="container">
-        <StyleCarousel>
-          <Row gutter={[24, 0]}>
-            <Col>
-              <Title level={3} className="title">
-                {title}
-              </Title>
-            </Col>
-            <Col span={24}>
-              <Slider {...settings}>
-                {data?.map((item, key) => {
-                  return (
-                    <>
-                      <div key={key} style={{ margin: "5px 5px" }}>
-                        <ProductSingle item={item} key={key} index={key} />
-                      </div>
-                    </>
-                  );
-                })}
-              </Slider>
-            </Col>
-          </Row>
-        </StyleCarousel>
-      </div>
+      {data.length === 0 ? (
+        <></>
+      ) : (
+        <div className="container">
+          <StyleCarousel>
+            <Row gutter={[24, 0]}>
+              <Col>
+                <Title level={3} className="title">
+                  {title}
+                </Title>
+              </Col>
+              <Col span={24}>
+                <Slider {...settings}>
+                  {data.map((item, key) => {
+                    return (
+                      <>
+                        <div key={key} style={{ margin: "5px 5px" }}>
+                          <ProductSingle item={item} key={key} index={key} />
+                        </div>
+                      </>
+                    );
+                  })}
+                </Slider>
+              </Col>
+            </Row>
+          </StyleCarousel>
+        </div>
+      )}
     </>
   );
 };
