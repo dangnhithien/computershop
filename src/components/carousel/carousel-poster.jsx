@@ -185,7 +185,7 @@ const CarouselPoster = ({ title = "Danh mục ưu thích" }) => {
                       return (
                         <>
                           <div key={key} style={{ margin: "5px 5px" }}>
-                            <ProductSingle item={item} key={key} index={key} />
+                            <ProductSingle item={item} index={key} />
                           </div>
                         </>
                       );

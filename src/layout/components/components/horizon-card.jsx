@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Col, Rate, Typography } from "antd";
 import parseMoney from "../../../utils/parseMoney";
 import ProductSmall from "components/product-card/product-small";
+import useProduct from "hooks/useProduct";
 const { Title } = Typography;
 const StyleBox = styled.div`
   border-radius: 5px;
@@ -58,7 +59,10 @@ const StyleBox = styled.div`
   }
 `;
 
-const Horizoncard = ({ data }) => {
+const Horizoncard = ({ request }) => {
+  const {
+    products: { data },
+  } = useProduct(request);
   return (
     <>
       {data.map((e, key) => {

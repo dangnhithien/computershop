@@ -1,5 +1,7 @@
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Col, Collapse, Radio, Rate, Row, Space } from "antd";
+import useCategory from "hooks/useCategory";
+import useSupplier from "hooks/useSupplier";
 
 import { useCallback, useEffect, useState } from "react";
 import CATEGORIES from "../../../api/categories";
@@ -33,27 +35,13 @@ const SidebarSingleWidget = ({ title, children }) => {
     </>
   );
 };
-
+const requestBody = {
+  keyword: "",
+};
 const Sidebar = ({ request, setRequest }) => {
   const { rate, supplierId } = request;
-  const [categories, setCategories] = useState([]);
-  const [suppliers, setSuppliers] = useState([]);
-  const actionGetCategoties = useCallback(() => {
-    CATEGORIES.search({ keyword: "" })
-      .then((res) => {
-        setCategories(res.data.data);
-      })
-      .catch((res) => {});
-  }, []);
-  const actionGetSuppliers = useCallback(() => {
-    SUPPLIERS.search({ keyword: "" })
-      .then((res) => {
-        setSuppliers(res.data.data);
-      })
-      .catch((res) => {});
-  }, []);
-  useEffect(actionGetCategoties, [actionGetCategoties]);
-  useEffect(actionGetSuppliers, [actionGetSuppliers]);
+  const { categories } = useCategory(requestBody);
+  const { suppliers } = useSupplier(requestBody);
 
   function handleCategories(e) {
     const { value, checked } = e.target;
@@ -102,48 +90,56 @@ const Sidebar = ({ request, setRequest }) => {
             </Col>
 
             <Col span={24}>
-              <SidebarSingleWidget title="Loại sản phẩm">
-                <StyleContent>
-                  <ul className="list">
-                    {categories?.map((item, key) => {
-                      return (
-                        <li key={key} className="list__item">
-                          <label className="label--checkbox">
-                            <input
-                              type="checkbox"
-                              className="checkbox"
-                              value={item.id}
-                              onChange={handleCategories}
-                            />
-                            {item.name}
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </StyleContent>
-              </SidebarSingleWidget>
-            </Col>
-            <Col span={24}>
-              <SidebarSingleWidget title="Nhãn hàng">
-                <StyleContent>
-                  <Radio.Group
-                    value={supplierId}
-                    buttonStyle="solid"
-                    onChange={handleSupplier}
-                  >
-                    <Space direction="vertical">
-                      {suppliers.map((e, key) => {
+              {categories.length === 0 ? (
+                <></>
+              ) : (
+                <SidebarSingleWidget title="Loại sản phẩm">
+                  <StyleContent>
+                    <ul className="list">
+                      {categories?.map((item, key) => {
                         return (
-                          <Radio key={key} value={e.id}>
-                            {e.name}
-                          </Radio>
+                          <li key={key} className="list__item">
+                            <label className="label--checkbox">
+                              <input
+                                type="checkbox"
+                                className="checkbox"
+                                value={item.id}
+                                onChange={handleCategories}
+                              />
+                              {item.name}
+                            </label>
+                          </li>
                         );
                       })}
-                    </Space>
-                  </Radio.Group>
-                </StyleContent>
-              </SidebarSingleWidget>
+                    </ul>
+                  </StyleContent>
+                </SidebarSingleWidget>
+              )}
+            </Col>
+            <Col span={24}>
+              {suppliers.length === 0 ? (
+                <></>
+              ) : (
+                <SidebarSingleWidget title="Nhãn hàng">
+                  <StyleContent>
+                    <Radio.Group
+                      value={supplierId}
+                      buttonStyle="solid"
+                      onChange={handleSupplier}
+                    >
+                      <Space direction="vertical">
+                        {suppliers.map((e, key) => {
+                          return (
+                            <Radio key={key} value={e.id}>
+                              {e.name}
+                            </Radio>
+                          );
+                        })}
+                      </Space>
+                    </Radio.Group>
+                  </StyleContent>
+                </SidebarSingleWidget>
+              )}
             </Col>
             <Col span={24}>
               <SidebarSingleWidget title="Đánh giá">

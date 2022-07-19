@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { PATH } from "../../../utils/const";
 import { Col } from "antd";
+import useSupplier from "hooks/useSupplier";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { PATH } from "../../../utils/const";
 const StyleTag = styled.div`
   .broker-tag {
     padding: 8px 12px;
@@ -24,21 +24,16 @@ const StyleTag = styled.div`
     }
   }
 `;
-const Tags = ({ data, passingLink }) => {
+const TagSupplier = ({ request }) => {
+  const { suppliers } = useSupplier(request);
+
   return (
     <>
-      {data?.map((item, key) => {
+      {suppliers?.map((item, key) => {
         return (
           <Col key={key}>
             <StyleTag>
-              <Link
-                to={PATH.PRODUCT}
-                state={
-                  passingLink === "supplierId"
-                    ? { [passingLink]: item.id }
-                    : { [passingLink]: [item.id] }
-                }
-              >
+              <Link to={PATH.PRODUCT} state={{ ["supplierId"]: item.id }}>
                 <div className="broker-tag">{item.name}</div>
               </Link>
             </StyleTag>
@@ -49,4 +44,4 @@ const Tags = ({ data, passingLink }) => {
   );
 };
 
-export default Tags;
+export default TagSupplier;

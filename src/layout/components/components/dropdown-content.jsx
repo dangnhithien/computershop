@@ -1,118 +1,67 @@
 import { IoIosArrowForward } from "react-icons/io";
 import { StyleContentDropdown } from "../style/style";
 import Horizoncard from "./horizon-card";
-import Tags from "./tags";
 
 import { Col, Row } from "antd";
-import { useEffect, useState } from "react";
-import PRODUCT from "../../../api/product";
-import CATEGORIES from "../../../api/categories";
+import { useState } from "react";
 import SpinCustom from "../../../components/spin/Spin";
-import SUPPLIERS from "../../../api/suppliers";
-import axios from "axios";
+import TagCategory from "./tag-category";
+import TagSupplier from "./tag-supplier";
 
 const DropdownContent = () => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+
   const router_menu = [
     {
       id: 0,
       name: "bán chạy",
       status: false,
       request: { keyword: "", pageSize: 4 },
-      components: (key) => {
-        return <Horizoncard key={key} data={data} />;
+      components: (key, request) => {
+        return <Horizoncard key={key} request={request} />;
       },
-      action: (request) => actionGetProduct(request),
     },
     {
       id: 1,
       name: "đánh giá",
       status: false,
       request: { keyword: "", pageSize: 4 },
-      components: (key) => {
-        return <Horizoncard key={key} data={data} />;
+      components: (key, request) => {
+        return <Horizoncard key={key} request={request} />;
       },
-      action: (request) => actionGetProduct(request),
     },
     {
       id: 2,
       name: "giảm giá",
       status: false,
       request: { keyword: "", pageSize: 4 },
-      components: (key) => {
-        return <Horizoncard key={key} data={data} />;
+      components: (key, request) => {
+        return <Horizoncard key={key} request={request} />;
       },
-      action: (request) => actionGetProduct(request),
     },
     {
       id: 3,
       name: "loại sản phẩm",
       status: false,
       request: { keyword: "" },
-      passingLink: "categoryIds",
-      components: (key) => (
-        <Tags key={key} data={data} passingLink="categoryIds" />
+      components: (key, request, passingLink) => (
+        <TagCategory key={key} request={request} passingLink="categoryIds" />
       ),
-      action: (request) => actionGetCategories(request),
     },
     {
       id: 4,
       name: "nhãn hàng",
       status: false,
       request: { keyword: "" },
-      passingLink: "supplierId",
-      components: (key) => (
-        <Tags key={key} data={data} passingLink="supplierId" />
+      components: (key, request, passingLink) => (
+        <TagSupplier key={key} request={request} passingLink="supplierId" />
       ),
-      action: (request) => actionGetSupplier(request),
     },
   ];
   const [active, setActive] = useState(router_menu.at(0));
   function handleActive(item) {
     setActive(item);
   }
-  useEffect(() => {
-    const { action, request } = active;
-    let source = axios.CancelToken.source();
-    action(request);
-    return source.cancel();
-  }, [active]);
-
-  function actionGetProduct(request) {
-    setLoading(true);
-    PRODUCT.search(request)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-  }
-  function actionGetCategories(request) {
-    setLoading(true);
-    CATEGORIES.search(request)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-  }
-  function actionGetSupplier(request) {
-    setLoading(true);
-    SUPPLIERS.search(request)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
-  }
-
   return (
     <StyleContentDropdown>
       <Row gutter={[8, 8]}>
@@ -140,7 +89,8 @@ const DropdownContent = () => {
               <SpinCustom />
             ) : (
               router_menu?.map((element, key) => {
-                if (active.id === element.id) return element.components(key);
+                if (active.id === element.id)
+                  return element.components(key, element.request);
               })
             )}
           </Row>

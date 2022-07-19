@@ -2,7 +2,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Carousel from "../../../components/carousel/carousel";
 import BannerSingle from "../../../components/product-card/bannerSingle";
-import Category from "../components/categories";
+import CategoryList from "../components/categories";
 
 import BoxProduct from "../../../components/product-card/box-product";
 import CarouselPoster from "components/carousel/carousel-poster";
@@ -51,7 +51,7 @@ const Home = () => {
         <CarouselPoster {...sale} />
         <Supplier />
         <BannerSingle />
-        <Category {...category} />
+        <CategoryList {...category} />
         <Carousel key={1} {...bestSelling} />
       </div>
     </>
