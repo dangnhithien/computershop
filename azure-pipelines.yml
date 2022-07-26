@@ -19,8 +19,12 @@ steps:
     git pull
     yarn install
     yarn build
+  workingDirectory: $(workDir)
+  displayName: 'Build Totostore'
+
+- script: |
     rm -rf $(webserverDir)/app/client
     mv ./build $(webserverDir)/app/client
     docker-compose -f $(webserverDir)/docker-compose.yml up --build -d
   workingDirectory: $(workDir)
-  displayName: 'Run update stack commands'
+  displayName: 'Deploy to Webserver'
