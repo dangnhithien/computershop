@@ -9,7 +9,6 @@ const useStoreUser = create((set) => ({
 
     PERSONAL.getUser()
       .then((res) => {
-        console.log(res);
         set((state) => ({
           profile: res.data,
           loading: false,

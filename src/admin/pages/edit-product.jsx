@@ -385,7 +385,7 @@ const ChooseContent = ({
                 onPreview={handlePreview}
                 onChange={handleChange}
               >
-                {fileList.length >= 7 ? null : uploadButton}
+                {fileList.length >= 7 && uploadButton}
               </Upload>
               <Modal
                 visible={previewVisible}

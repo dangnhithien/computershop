@@ -8,7 +8,7 @@ import LOGIN from "../../../api/login";
 
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { StyleForm } from "../style/style";
-import ConfirmEmail from "./confirmEmail";
+import Success from "./success";
 
 const FormRegister = () => {
   const [loading, setLoading] = useState(false);
@@ -24,24 +24,20 @@ const FormRegister = () => {
     })
       .then((res) => {
         setLoading(false);
-        console.log(res);
+
         setModalVisible(true);
       })
       .catch((error) => {
         setLoading(false);
-        setModalVisible(true);
         notification.error({
-          message: "Đăng nhập không thành công",
+          message: "Đăng kí không thành công",
           placement: "topRight",
         });
       });
   }
   return (
     <>
-      <ConfirmEmail
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
+      <Success modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <StyleForm>
         <div className="logo">totostore</div>
         <p>Đăng kí</p>

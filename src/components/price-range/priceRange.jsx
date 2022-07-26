@@ -3,13 +3,16 @@ import { useState } from "react";
 import styled from "styled-components";
 import parseMoney from "../../utils/parseMoney";
 const StylePrice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   .btn {
-    width: 100px;
+    width: 120px;
     background: #ff6a3c;
     color: #fff;
     text-transform: uppercase;
     margin-top: 12px;
-    margin-left: 50px;
   }
 `;
 const PriceRange = ({ request, setRequest }) => {

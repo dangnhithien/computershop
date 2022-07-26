@@ -1,4 +1,5 @@
 import { Col } from "antd";
+import SpinCustom from "components/spin/Spin";
 import useSupplier from "hooks/useSupplier";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -25,21 +26,27 @@ const StyleTag = styled.div`
   }
 `;
 const TagSupplier = ({ request }) => {
-  const { suppliers } = useSupplier(request);
+  const { suppliers, isLoading } = useSupplier(request);
 
   return (
     <>
-      {suppliers?.map((item, key) => {
-        return (
-          <Col key={key}>
-            <StyleTag>
-              <Link to={PATH.PRODUCT} state={{ ["supplierId"]: item.id }}>
-                <div className="broker-tag">{item.name}</div>
-              </Link>
-            </StyleTag>
-          </Col>
-        );
-      })}
+      {isLoading ? (
+        <SpinCustom />
+      ) : (
+        <>
+          {suppliers?.map((item, key) => {
+            return (
+              <Col key={key}>
+                <StyleTag>
+                  <Link to={PATH.PRODUCT} state={{ ["supplierId"]: item.id }}>
+                    <div className="broker-tag">{item.name}</div>
+                  </Link>
+                </StyleTag>
+              </Col>
+            );
+          })}
+        </>
+      )}
     </>
   );
 };

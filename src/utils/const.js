@@ -8,6 +8,7 @@ const PATH = {
   CONTACT: "/contact",
   CHECKOUT: "/thanh-toan",
   CART: "/gio-hang",
+  COMPARE: "/so-sanh",
   SINGIN: "/dang-nhap",
   SINGUP: "/dang-ki",
   PROFILE: "/trang-ca-nhan",

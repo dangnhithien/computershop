@@ -1,13 +1,4 @@
-import {
-  Col,
-  Drawer,
-  Empty,
-  InputNumber,
-  notification,
-  Row,
-  Table,
-} from "antd";
-import styled from "styled-components";
+import { Col, Drawer, Empty, InputNumber, Row, Table } from "antd";
 
 import { Avatar, Button } from "antd";
 
@@ -17,19 +8,19 @@ import { useEffect, useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-import { PATH } from "utils/const";
-import Checkout from "../components/checkout";
+import CART from "api/cart";
 import useStoreCart from "store/cart";
+import useStoreUser from "store/personal";
+import { PATH } from "utils/const";
 import parseMoney from "utils/parseMoney";
+import Checkout from "../components/checkout";
+import Coupon from "../components/coupon";
 import {
   StyleBoxFixed,
   StyleTable,
   StyleTextAlign,
   StyleTitle,
 } from "../style/style";
-import CART from "api/cart";
-import useStoreUser from "store/personal";
-import Coupon from "../components/coupon";
 
 const { confirm } = Modal;
 const Cart = () => {
@@ -41,7 +32,6 @@ const Cart = () => {
   const [visible, setVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [couponApplied, setCouponApplied] = useState(null);
-  const [data, setData] = useState([]);
   const dataCart = useStoreCart((state) => state.cart);
   const setCart = useStoreCart((state) => state.setCart);
 
@@ -254,11 +244,9 @@ const Cart = () => {
                     </div>
                   </Col>
                   <Col span={8}>
-                    {" "}
                     <div className="price">&#8363;{parseMoney(totalPrice)}</div>
                   </Col>
                   <Col span={6}>
-                    {" "}
                     <Button
                       type="primary"
                       className="btn-purchase"

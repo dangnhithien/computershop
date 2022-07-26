@@ -1,11 +1,9 @@
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Col, Input, Row, Upload, Modal, Avatar } from "antd";
-import React, { useEffect, useState } from "react";
-import { AiFillEye } from "react-icons/ai";
-import { StyleProfile } from "../style/styleProfile";
+import { Col, Row } from "antd";
+import { useEffect, useState } from "react";
 import Info from "../components/info";
 import Notification from "../components/notification";
 import Transaction from "../components/transaction";
+import { StyleProfile } from "../style/styleProfile";
 
 import Password from "../components/password";
 
@@ -13,7 +11,6 @@ const Profile = () => {
   const [display, setDisplay] = useState("info");
   useEffect(() => window.scrollTo(0, 0), []);
   function handleDisplay() {
-    console.log(display);
     if (display === "info") return <Info />;
     if (display === "transaction") return <Transaction />;
     if (display === "notification") return <Notification />;

@@ -41,7 +41,6 @@ const Info = () => {
     setLoading(true);
     CUSTOMER.search({ userId: userProfile.id })
       .then((res) => {
-        console.log(res);
         setData(res.data.data);
         setLoading(false);
       })

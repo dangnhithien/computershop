@@ -1,16 +1,13 @@
 import Slider from "react-slick";
 
-import { Col, Row } from "antd";
+import { Col, Row, Typography } from "antd";
+import useProduct from "hooks/useProduct";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 import styled from "styled-components";
 import ProductSingle from "../product-card/product-single";
-import { Typography } from "antd";
-import {
-  MdOutlineArrowForwardIos,
-  MdOutlineArrowBackIos,
-} from "react-icons/md";
-import PRODUCT from "api/product";
-import { useEffect, useState } from "react";
-import useProduct from "hooks/useProduct";
 const { Title } = Typography;
 const StyleCarousel = styled.div`
   margin-top: 12px;
@@ -96,36 +93,32 @@ const Carousel = ({ requestBody, title = "" }) => {
     products: { data },
   } = useProduct(requestBody);
   return (
-    <>
-      {data.length === 0 ? (
-        <></>
-      ) : (
-        <div className="container">
-          <StyleCarousel>
-            <Row gutter={[24, 0]}>
-              <Col>
-                <Title level={3} className="title">
-                  {title}
-                </Title>
-              </Col>
-              <Col span={24}>
-                <Slider {...settings}>
-                  {data.map((item, key) => {
-                    return (
-                      <>
-                        <div key={key} style={{ margin: "5px 5px" }}>
-                          <ProductSingle item={item} key={key} index={key} />
-                        </div>
-                      </>
-                    );
-                  })}
-                </Slider>
-              </Col>
-            </Row>
-          </StyleCarousel>
-        </div>
-      )}
-    </>
+    data.length > 0 && (
+      <div className="container">
+        <StyleCarousel>
+          <Row gutter={[24, 0]}>
+            <Col>
+              <Title level={3} className="title">
+                {title}
+              </Title>
+            </Col>
+            <Col span={24}>
+              <Slider {...settings}>
+                {data.map((item, key) => {
+                  return (
+                    <>
+                      <div key={key + "abc"} style={{ margin: "5px 5px" }}>
+                        <ProductSingle item={item} index={key} />
+                      </div>
+                    </>
+                  );
+                })}
+              </Slider>
+            </Col>
+          </Row>
+        </StyleCarousel>
+      </div>
+    )
   );
 };
 

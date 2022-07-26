@@ -21,7 +21,7 @@ const StyleHeader = styled.div`
     nav > ul > li > a {
       display: block;
       line-height: 24px;
-      padding: 15px 30px;
+      padding: 15px 30px 5px;
       font-size: 16px;
       line-height: 30px;
       text-transform: uppercase;

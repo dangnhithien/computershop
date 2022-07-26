@@ -1,8 +1,6 @@
 import { Col, Row, Typography } from "antd";
-import PRODUCT from "api/product";
 import ProductSmall from "components/product-card/product-small";
 import useProduct from "hooks/useProduct";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const StyleCarousel = styled.div`
@@ -22,51 +20,49 @@ const StyleCarousel = styled.div`
   }
 `;
 const requestBody = { keyword: "", pageSize: 7 };
+
 const Suggest = () => {
   const {
     products: { data },
   } = useProduct(requestBody);
+
   return (
-    <>
-      {data.lenght === 0 ? (
-        <></>
-      ) : (
-        <StyleCarousel>
-          <Row className="wrap">
-            <Col>
-              <Typography.Title
-                level={3}
-                style={{
-                  marginTop: 12,
-                  paddingBottom: 7,
-                  borderBottom: "2px solid #ff6a3c",
-                  fontSize: 20,
-                  fontWeight: 500,
-                  display: "inline-block",
-                }}
-              >
-                Bán chạy
-              </Typography.Title>
-            </Col>
-            <Row gutter={[12, 12]}>
-              {data?.map((e, key) => {
-                return (
-                  <Col span={24} key={key}>
-                    <ProductSmall item={e} index={key} />
-                  </Col>
-                );
-              })}
-            </Row>
+    data.length > 0 && (
+      <StyleCarousel>
+        <Row className="wrap">
+          <Col>
+            <Typography.Title
+              level={3}
+              style={{
+                marginTop: 12,
+                paddingBottom: 7,
+                borderBottom: "2px solid #ff6a3c",
+                fontSize: 20,
+                fontWeight: 500,
+                display: "inline-block",
+              }}
+            >
+              Bán chạy
+            </Typography.Title>
+          </Col>
+          <Row gutter={[12, 12]}>
+            {data?.map((e, key) => {
+              return (
+                <Col span={24} key={key}>
+                  <ProductSmall item={e} index={key} />
+                </Col>
+              );
+            })}
           </Row>
-          <div className="image">
-            <img
-              src="https://static.lenovo.com/id/in/merch/festive-sale/Festive-mob-banner.jpg?R"
-              alt=""
-            />
-          </div>
-        </StyleCarousel>
-      )}
-    </>
+        </Row>
+        <div className="image">
+          <img
+            src="https://static.lenovo.com/id/in/merch/festive-sale/Festive-mob-banner.jpg?R"
+            alt=""
+          />
+        </div>
+      </StyleCarousel>
+    )
   );
 };
 

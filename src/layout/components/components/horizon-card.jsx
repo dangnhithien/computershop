@@ -4,6 +4,7 @@ import { Col, Rate, Typography } from "antd";
 import parseMoney from "../../../utils/parseMoney";
 import ProductSmall from "components/product-card/product-small";
 import useProduct from "hooks/useProduct";
+import SpinCustom from "components/spin/Spin";
 const { Title } = Typography;
 const StyleBox = styled.div`
   border-radius: 5px;
@@ -61,19 +62,25 @@ const StyleBox = styled.div`
 
 const Horizoncard = ({ request }) => {
   const {
-    products: { data },
+    products: { data, isLoading },
   } = useProduct(request);
   return (
     <>
-      {data.map((e, key) => {
-        return (
-          <Col key={key} span={8}>
-            <StyleBox>
-              <ProductSmall item={e} index={key} />
-            </StyleBox>
-          </Col>
-        );
-      })}
+      {isLoading ? (
+        <SpinCustom />
+      ) : (
+        <>
+          {data.map((e, key) => {
+            return (
+              <Col key={key} span={8}>
+                <StyleBox>
+                  <ProductSmall item={e} index={key} />
+                </StyleBox>
+              </Col>
+            );
+          })}
+        </>
+      )}
     </>
   );
 };

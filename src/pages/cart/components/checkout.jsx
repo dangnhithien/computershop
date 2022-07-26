@@ -38,7 +38,6 @@ const Checkout = ({ total, setTotalPrice }) => {
 
     CUSTOMER.search({ userId: userProfile.id })
       .then((res) => {
-        console.log(res);
         setData(res.data.data.at(3));
       })
       .catch((error) => {});

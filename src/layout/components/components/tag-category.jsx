@@ -1,4 +1,5 @@
 import { Col } from "antd";
+import SpinCustom from "components/spin/Spin";
 import useCategory from "hooks/useCategory";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -25,21 +26,26 @@ const StyleTag = styled.div`
   }
 `;
 const TagCategory = ({ request }) => {
-  const { categories } = useCategory(request);
+  const { categories, isLoading } = useCategory(request);
   return (
     <>
-      {categories.le}
-      {categories?.map((item, key) => {
-        return (
-          <Col key={key}>
-            <StyleTag>
-              <Link to={PATH.PRODUCT} state={{ categoryId: [item.id] }}>
-                <div className="broker-tag">{item.name}</div>
-              </Link>
-            </StyleTag>
-          </Col>
-        );
-      })}
+      {isLoading ? (
+        <SpinCustom />
+      ) : (
+        <>
+          {categories?.map((item, key) => {
+            return (
+              <Col key={key}>
+                <StyleTag>
+                  <Link to={PATH.PRODUCT} state={{ categoryId: [item.id] }}>
+                    <div className="broker-tag">{item.name}</div>
+                  </Link>
+                </StyleTag>
+              </Col>
+            );
+          })}
+        </>
+      )}
     </>
   );
 };

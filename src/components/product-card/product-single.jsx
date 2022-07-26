@@ -131,10 +131,21 @@ const ProductSingle = ({ item, index }) => {
                       <li>Màu: Đen</li>
                     </ul>
                   </div>
-                  <Button onClick={handleAddToCart} loading={loading}>
-                    <HiShoppingCart />
-                    &nbsp;Thêm vào giỏ
-                  </Button>
+                  {!userProfile.id ? (
+                    <>
+                      <Button>
+                        <Link to={PATH.SINGIN}>
+                          <HiShoppingCart />
+                          &nbsp;Thêm vào giỏ
+                        </Link>
+                      </Button>
+                    </>
+                  ) : (
+                    <Button onClick={handleAddToCart} loading={loading}>
+                      <HiShoppingCart />
+                      &nbsp;Thêm vào giỏ
+                    </Button>
+                  )}
                 </div>
               </div>
             </StyleView>

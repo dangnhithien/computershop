@@ -28,6 +28,7 @@ import Profile from "../pages/profile/page/profile.page";
 import { KEY } from "../utils/localStorage";
 import Singin from "../pages/login/page/singin.page";
 import Singup from "../pages/login/page/singup.page";
+import Compare from "pages/compare/page/compare.page";
 
 const AllRouter = () => {
   return (
@@ -92,6 +93,16 @@ const client = [
     component: (
       <LayoutClient>
         <Profile />
+      </LayoutClient>
+    ),
+  },
+  {
+    exact: true,
+    private: true,
+    path: PATH.COMPARE,
+    component: (
+      <LayoutClient>
+        <Compare />
       </LayoutClient>
     ),
   },

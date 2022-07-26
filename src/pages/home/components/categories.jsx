@@ -14,15 +14,13 @@ const image = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVz78A8wc7xIbvnB20AYkLXkbh2Q4oIfMb1Q&usqp=CAU",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk7Nmr-Vwn07kVmJvuwGlVG1B7j_5lrQc9tkd7NxeDouT1jcHg1dLR-Ici5LJ8X1vpiX8&usqp=CAU",
 ];
-const requestBody = { keyword: "" };
+
 const CategoryList = ({ requestBody, title }) => {
   const { categories } = useCategory(requestBody);
-  console.log("nnnn", categories);
+
   return (
     <>
-      {categories.length === 0 ? (
-        <></>
-      ) : (
+      {categories.length > 0 && (
         <Row gutter={[8, 0]}>
           <Col span={24}>
             <Title
@@ -39,6 +37,7 @@ const CategoryList = ({ requestBody, title }) => {
               {title}
             </Title>
           </Col>
+
           {categories.map((item, key) => {
             return (
               <Col key={key} span={4} style={{ marginBottom: 24 }}>

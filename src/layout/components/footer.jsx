@@ -9,86 +9,6 @@ import { StyleFooter, StyleInfoBox } from "./style/style";
 const Footer = () => {
   return (
     <>
-      {/* <Row gutter={[8, 8]} justify="space-around" style={{ marginTop: 20 }}>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/acer-logo.png"
-            alt="Acer"
-          />
-        </Col>{" "}
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/acer-predator-logo.png"
-            alt="Predator"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/apple-logo.png"
-            alt="Apple"
-          />
-        </Col>{" "}
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/asus-logo.png"
-            alt="Asus"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/hp-omen-logo.png"
-            alt="Omen"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/dell-alienware-logo.png"
-            alt="Alienware"
-          />
-        </Col>{" "}
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/dell-logo.png"
-            alt="Dell"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/microsoft-logo.png"
-            alt="Microsoft"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/hp-logo.png"
-            alt="HP"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/lenovo-logo.png"
-            alt="Lenovo"
-          />
-        </Col>
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/msi-logo.png"
-            alt="MSI"
-          />
-        </Col>{" "}
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/razer-logo.png"
-            alt="Razer"
-          />
-        </Col>{" "}
-        <Col>
-          <img
-            src="https://laptoptitan.vn/wp-content/uploads/2021/05/asus-rog-logo.png"
-            alt="Asus Rog"
-          />
-        </Col>
-      </Row> */}
       <StyleInfoBox>
         <Row gutter={[24, 0]}>
           <Col span={8}>
@@ -134,10 +54,10 @@ const Footer = () => {
             <h2>Contact</h2>
 
             <address>
-              5534 Somewhere In. The World 22193-10212
+              quận 12,Tp Hồ Chí Minh
               <br />
               <Link className="footer__btn" to="#">
-                Email Us
+                NhiThienv@gmail.com
               </Link>
             </address>
           </div>

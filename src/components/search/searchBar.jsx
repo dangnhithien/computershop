@@ -35,9 +35,7 @@ const SearchBar = ({ isRedict = true, setSelectItem }) => {
       });
   }
   function handleClick(item) {
-    console.log("dd", item);
     if (isRedict) {
-      console.log(item);
       return navigate(PATH.DETAIL(item.id));
     } else {
       setSelectItem({ ...item });

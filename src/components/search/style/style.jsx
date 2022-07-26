@@ -97,7 +97,7 @@ const StyleSearchBar = styled.div`
       width: 100%;
       color: #5a5656;
       font-size: 13px;
-      font-weight: bold;
+      font-weight: 500;
       text-transform: capitalize;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -110,7 +110,7 @@ const StyleSearchBar = styled.div`
       margin-left: 12px;
       margin-top: 5px;
       font-size: 13px;
-      font-weight: bolder;
+      font-weight: 400;
       color: #ff6a3c;
     }
     .image {

@@ -53,6 +53,9 @@ const Header = (props) => {
                         Giỏ hàng
                       </Link>
                     </li>
+                    {/* <li>
+                      <Link to={PATH.COMPARE}>So sánh</Link>
+                    </li> */}
                     <li>
                       <Link to="" onClick={() => setModalVisible(true)}>
                         Phản hồi
