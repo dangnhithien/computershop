@@ -8,6 +8,7 @@ import {
   MdOutlineArrowForwardIos,
   MdOutlineArrowBackIos,
 } from "react-icons/md";
+import useProduct from "hooks/useProduct";
 const { Title } = Typography;
 const StyleCarousel = styled.div`
   margin-top: 12px;
@@ -80,87 +81,22 @@ const PrevArrow = (props) => {
 };
 const settings = {
   adaptiveHeight: true,
-  // autoplay: true,
+  autoplay: true,
   infinite: true,
   pauseOnFocus: true,
-  speed: 1000,
+  speed: 2000,
   slidesToShow: 4,
   slidesToScroll: 1,
   variableWidth: false,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
 };
-const CarouselPoster = ({ title = "Danh mục ưu thích" }) => {
-  const data = [
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-    {
-      id: "",
-      slug: "",
-      amount: 1000000,
-      promotion: 10,
-      name: "New Balance Fresh Foam Kaymin Car Purts ",
-      detail: "new-balance-fresh-foam-kaymin-car-purts",
-      rate: 4,
-      countRate: 5,
-      imageUrl: "https://picsum.photos/300/600",
-    },
-  ];
+const CarouselPoster = ({ requestBody, title = "" }) => {
+  const {
+    products: { data },
+  } = useProduct(requestBody);
   return (
-    <>
+    data.length > 0 && (
       <div className="container">
         <StyleCarousel>
           <Row gutter={[8, 8]}>
@@ -197,7 +133,7 @@ const CarouselPoster = ({ title = "Danh mục ưu thích" }) => {
           </Row>
         </StyleCarousel>
       </div>
-    </>
+    )
   );
 };
 

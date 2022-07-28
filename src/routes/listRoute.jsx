@@ -35,7 +35,7 @@ const AllRouter = () => {
     <BrowserRouter>
       <Routes>
         {client.map((e, key) => {
-          // if (!localStorage.getItem(KEY.TOKEN) && e.private) return <></>;
+          if (!localStorage.getItem(KEY.TOKEN) && e.private) return <></>;
           return <Route key={key} path={e.path} element={e.component} />;
         })}
       </Routes>
@@ -129,107 +129,107 @@ const client = [
     path: PATH.TEST,
     component: <Test />,
   },
-  // ];
-  // const admin = [
-  {
-    exact: true,
-    path: PATH_ADIM.DASHBOARD,
-    component: (
-      <Main>
-        <Dashboard />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.AAD_PRODUCT,
-    component: (
-      <Main>
-        <Add />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.EDIT_PRODUCT,
-    component: (
-      <Main>
-        <EditProduct />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.PRODUCT,
-    component: (
-      <Main>
-        <ListProduct />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.CATEGORY,
-    component: (
-      <Main>
-        <Categories />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.SHIPPER,
-    component: (
-      <Main>
-        <Shipper />
-      </Main>
-    ),
-  },
-
-  {
-    exact: true,
-    path: PATH_ADIM.SUPPLIER,
-    component: (
-      <Main>
-        <Supplier />
-      </Main>
-    ),
-  },
-
-  {
-    exact: true,
-    path: PATH_ADIM.ACCOUNT,
-    component: (
-      <Main>
-        <Accounts />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.ORDER,
-    component: (
-      <Main>
-        <Order />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.PROMOTION,
-    component: (
-      <Main>
-        <Promotion />
-      </Main>
-    ),
-  },
-  {
-    exact: true,
-    path: PATH_ADIM.NOTIFICATION,
-    component: (
-      <Main>
-        <Notification />
-      </Main>
-    ),
-  },
 ];
+//   const admin = [
+//   {
+//     exact: true,
+//     path: PATH_ADIM.DASHBOARD,
+//     component: (
+//       <Main>
+//         <Dashboard />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.AAD_PRODUCT,
+//     component: (
+//       <Main>
+//         <Add />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.EDIT_PRODUCT,
+//     component: (
+//       <Main>
+//         <EditProduct />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.PRODUCT,
+//     component: (
+//       <Main>
+//         <ListProduct />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.CATEGORY,
+//     component: (
+//       <Main>
+//         <Categories />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.SHIPPER,
+//     component: (
+//       <Main>
+//         <Shipper />
+//       </Main>
+//     ),
+//   },
+
+//   {
+//     exact: true,
+//     path: PATH_ADIM.SUPPLIER,
+//     component: (
+//       <Main>
+//         <Supplier />
+//       </Main>
+//     ),
+//   },
+
+//   {
+//     exact: true,
+//     path: PATH_ADIM.ACCOUNT,
+//     component: (
+//       <Main>
+//         <Accounts />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.ORDER,
+//     component: (
+//       <Main>
+//         <Order />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.PROMOTION,
+//     component: (
+//       <Main>
+//         <Promotion />
+//       </Main>
+//     ),
+//   },
+//   {
+//     exact: true,
+//     path: PATH_ADIM.NOTIFICATION,
+//     component: (
+//       <Main>
+//         <Notification />
+//       </Main>
+//     ),
+//   },
+// ];

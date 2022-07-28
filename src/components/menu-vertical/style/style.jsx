@@ -52,9 +52,9 @@ const StyleMenuVertical = styled.div`
     border-bottom: 1px solid #c1c1c1;
     padding-bottom: 20px;
     .border-round {
-      border: 1px solid #c1c1c1;
+      /* border: 1px solid #c1c1c1; */
       border-radius: 100%;
-      background-color: #fff;
+      background-color: #ffc93c;
       overflow: hidden;
       width: 55px;
       height: 55px;

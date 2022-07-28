@@ -35,7 +35,7 @@ const Info = () => {
   });
   const userProfile = useStoreUser((state) => state.profile);
   useEffect(() => {
-    // if (!userProfile.id) {
+    // if (!userProile.id) {
     //   return;
     // }
     setLoading(true);
@@ -51,14 +51,15 @@ const Info = () => {
 
   useEffect(() => {
     if (data.length) {
-      reset({ ...data.at(3), email: userProfile.email });
+      reset({ ...data.at(0), email: userProfile.email });
     }
   }, [data]);
 
   const actionPutForm = (values) => {
     delete values.address.id;
+
     const request = {
-      id: data[3].id,
+      id: data[0].id,
       userId: userProfile.id,
       mail: userProfile.email,
       ...values,
@@ -281,7 +282,7 @@ const Info = () => {
 
                 <Col span={24}>
                   <Button type="primary" htmlType="submit" className="btn-save">
-                    lưu
+                    Lưu
                   </Button>
                 </Col>
               </Row>

@@ -2,7 +2,7 @@ import axiosConfig from "../utils/axiosConfig";
 
 const NOTIFICATION = {
   search: (data) => {
-    return axiosConfig.post("v1/notifications/search", data);
+    return axiosConfig.post("v1/notifications/search-list", data);
   },
   create: (data) => {
     return axiosConfig.post("v1/products", data);

@@ -33,9 +33,7 @@ const User = () => {
                       src="https://joeschmoe.io/api/v1/random"
                     />
                   </Col>
-                  <Col span={24}>
-                    <div className="username">{userProfile.userName}</div>
-                  </Col>
+
                   <Col span={24}>
                     <div className="email">{userProfile.email}</div>
                   </Col>
@@ -57,13 +55,9 @@ const User = () => {
         >
           <div className="border-round">
             <Link to={PATH.PROFILE}>
-              <img
-                src={!userProfile.imgUrl ? new Error() : userProfile.profile}
-                className="image"
-                onError={(e) =>
-                  (e.target.src = "https://picsum.photos/200/300?random=1")
-                }
-              />
+              <span style={{ textTransform: "uppercase", color: "black" }}>
+                {userProfile.email.slice(0, 1)}
+              </span>
             </Link>
           </div>
         </Tooltip>
