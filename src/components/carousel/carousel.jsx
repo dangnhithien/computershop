@@ -99,6 +99,7 @@ const Carousel = ({ requestBody, title = "" }) => {
           <Row gutter={[24, 0]}>
             <Col>
               <Title level={3} className="title">
+                git
                 {title}
               </Title>
             </Col>
@@ -107,9 +108,12 @@ const Carousel = ({ requestBody, title = "" }) => {
                 {data.map((item, key) => {
                   return (
                     <>
-                      <div key={key + "abc"} style={{ margin: "5px 5px" }}>
-                        <ProductSingle item={item} index={key} />
-                      </div>
+                      <ProductSingle
+                        item={item}
+                        index={key}
+                        key={key + "abc"}
+                        style={{ margin: "5px 5px" }}
+                      />
                     </>
                   );
                 })}
