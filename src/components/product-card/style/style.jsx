@@ -124,23 +124,17 @@ const StylePrice = styled.div`
     text-align: right;
   }
 `;
-const StyleProduct = styled.div`
+export const StyleProduct = styled.div`
   background: #fff;
   padding: 15px;
   border-radius: 4px;
   border: 1px solid #f1f1f1;
   overflow: hidden;
   position: relative;
-  padding-bottom: 0;
-  .ribbon {
+  .promotion {
     position: absolute;
     top: 10px;
     left: 10px;
-
-    border: 1px solid #ff9a3c;
-    padding: 0 8px;
-    border-radius: 4px;
-    color: #ff9a3c;
     z-index: 1;
   }
 
@@ -153,10 +147,8 @@ const StyleProduct = styled.div`
   .image {
     img {
       width: 100%;
-
       transition: all 0.2s ease-in-out;
       border-radius: 6px;
-      opacity: 0.85;
       aspect-ratio: 3/4;
       object-fit: contain;
     }
@@ -169,28 +161,11 @@ const StyleProduct = styled.div`
     padding: 5px;
   }
 
-  .titles {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-    color: #333333;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: capitalize;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    margin: 8px 0;
-    letter-spacing: 0.5px;
+  .name {
+    margin-top: 1em;
     &:hover {
-      color: #ff6f3c;
+      color: #ff9a3c;
     }
-  }
-  .content {
-    margin-top: 10px;
-  }
-  .product-review {
   }
 `;
 const StyleView = styled.div`
@@ -276,10 +251,4 @@ const StyleBoxProduct = styled.div`
     object-fit: cover;
   }
 `;
-export {
-  StyleBannerSingle,
-  StylePrice,
-  StyleProduct,
-  StyleView,
-  StyleBoxProduct,
-};
+export { StyleBannerSingle, StylePrice, StyleView, StyleBoxProduct };
